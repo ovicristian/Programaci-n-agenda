@@ -1,624 +1,918 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>📊 Matriz Compradores-Horarios | Rueda de Negocios</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
 
-        .header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 15px 25px;
+      .header {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 15px 25px;
 
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
 
+      .home-button {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 8px 16px;
+        border-radius: 20px;
+        text-decoration: none;
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
+      .home-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
 
-        .home-button {
-            position: absolute;
-            top: 25px;
-            left: 25px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 8px 16px;
-            border-radius: 20px;
-            text-decoration: none;
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
+      .header-content {
+        text-align: center;
+        padding-left: 60px;
+      }
 
-        .home-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        }
+      .header h1 {
+        color: white;
+        font-size: 2.2em;
+        margin-bottom: 8px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
 
-        .header-content {
-            text-align: center;
-            padding-left: 60px;
+      .header p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1em;
+        margin-bottom: 15px;
+      }
+
+      .stats {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 8px 16px;
+        border-radius: 15px;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .stat-number {
+        display: block;
+        font-size: 1.4em;
+        font-weight: bold;
+        color: #ffd700;
+      }
+
+      .stat-label {
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .filters-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        margin: 20px 30px;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .filters-title {
+        font-size: 1.2em;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .filters-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        align-items: end;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .filter-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 5px;
+        font-size: 0.9em;
+      }
+
+      .filter-input {
+        padding: 8px 12px;
+        border: 2px solid #e0e6ed;
+        border-radius: 8px;
+        font-size: 0.9em;
+        transition: border-color 0.3s ease;
+      }
+
+      .filter-input:focus {
+        outline: none;
+        border-color: #4caf50;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+      }
+
+      .filter-select {
+        padding: 8px 12px;
+        border: 2px solid #e0e6ed;
+        border-radius: 8px;
+        font-size: 0.9em;
+        background: white;
+        cursor: pointer;
+        transition: border-color 0.3s ease;
+      }
+
+      .filter-select:focus {
+        outline: none;
+        border-color: #4caf50;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+      }
+
+      .clear-filters {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9em;
+      }
+
+      .clear-filters:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+      }
+
+      .container {
+        padding: 30px;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .table-container {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+        border: 1px solid #e0e6ed;
+      }
+
+      .matrix-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.85em;
+        min-width: 1200px;
+      }
+
+      .matrix-table th {
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        color: white;
+        padding: 12px 8px;
+        text-align: center;
+        font-weight: 600;
+        border: 1px solid #45a049;
+        white-space: nowrap;
+        font-size: 0.8em;
+      }
+
+      .matrix-table th:first-child {
+        background: linear-gradient(135deg, #2196f3, #1976d2);
+        border-color: #1976d2;
+        z-index: 11;
+        min-width: 200px;
+      }
+
+      .buyer-name {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        font-weight: 600;
+        padding: 12px;
+        border: 1px solid #dee2e6;
+        text-align: left;
+        color: #2196f3;
+        white-space: nowrap;
+        min-width: 200px;
+      }
+
+      .vendor-cell {
+        padding: 8px;
+        border: 1px solid #dee2e6;
+        text-align: center;
+        vertical-align: top;
+        background-color: #fafafa;
+        min-width: 100px;
+      }
+
+      .vendor-name {
+        display: inline-block;
+        background: linear-gradient(135deg, #ff6b6b, #ff5252);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        margin: 2px;
+        font-size: 0.75em;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
+        white-space: nowrap;
+      }
+
+      .empty-cell {
+        color: #999;
+        font-style: italic;
+        padding: 12px;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 15px;
         }
 
         .header h1 {
-            color: white;
-            font-size: 2.2em;
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .header p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.1em;
-            margin-bottom: 15px;
+          font-size: 1.8em;
         }
 
         .stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 8px 16px;
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .stat-number {
-            display: block;
-            font-size: 1.4em;
-            font-weight: bold;
-            color: #FFD700;
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .container {
-            padding: 30px;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        .table-container {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            overflow-x: auto;
-            border: 1px solid #e0e6ed;
+          gap: 15px;
         }
 
         .matrix-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85em;
-            min-width: 1200px;
+          font-size: 0.75em;
         }
 
-        .matrix-table th {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
-            padding: 12px 8px;
-            text-align: center;
-            font-weight: 600;
-            border: 1px solid #45a049;
-            white-space: nowrap;
-            font-size: 0.8em;
+        .home-button {
+          font-size: 16px;
+          padding: 6px 12px;
+          top: 20px;
+          left: 20px;
         }
 
-        .matrix-table th:first-child {
-            background: linear-gradient(135deg, #2196F3, #1976D2);
-            border-color: #1976D2;
-            z-index: 11;
-            min-width: 200px;
+        .header-content {
+          padding-left: 50px;
         }
-
-        .buyer-name {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            font-weight: 600;
-            padding: 12px;
-            border: 1px solid #dee2e6;
-            text-align: left;
-            color: #2196F3;
-            white-space: nowrap;
-            min-width: 200px;
-        }
-
-        .vendor-cell {
-            padding: 8px;
-            border: 1px solid #dee2e6;
-            text-align: center;
-            vertical-align: top;
-            background-color: #fafafa;
-            min-width: 100px;
-        }
-
-        .vendor-name {
-            display: inline-block;
-            background: linear-gradient(135deg, #FF6B6B, #FF5252);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            margin: 2px;
-            font-size: 0.75em;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
-            white-space: nowrap;
-        }
-
-        .empty-cell {
-            color: #999;
-            font-style: italic;
-            padding: 12px;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            .header h1 {
-                font-size: 1.8em;
-            }
-
-            .stats {
-                gap: 15px;
-            }
-
-            .matrix-table {
-                font-size: 0.75em;
-            }
-
-            .home-button {
-                font-size: 16px;
-                padding: 6px 12px;
-                top: 20px;
-                left: 20px;
-            }
-
-            .header-content {
-                padding-left: 50px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header">
-        <a href="index.html" class="home-button">🏠 Inicio</a>
-        <div class="header-content">
-            <h1>📊 Matriz Compradores-Horarios</h1>
-            <p>Vista completa de la agenda - Compradores como filas, horarios como columnas</p>
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-number">63</span>
-                    <span class="stat-label">Citas Programadas</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">11</span>
-                    <span class="stat-label">Compradores</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">15</span>
-                    <span class="stat-label">Franjas Horarias</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">16/12/2025</span>
-                    <span class="stat-label">Última Actualización</span>
-                </div>
-            </div>
+      <a href="index.html" class="home-button">🏠 Inicio</a>
+      <div class="header-content">
+        <h1>📊 Matriz Compradores-Horarios</h1>
+        <p>
+          Vista completa de la agenda - Compradores como filas, horarios como
+          columnas
+        </p>
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-number">65</span>
+            <span class="stat-label">Citas Programadas</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">11</span>
+            <span class="stat-label">Compradores</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">15</span>
+            <span class="stat-label">Franjas Horarias</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">16/12/2025</span>
+            <span class="stat-label">Última Actualización</span>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Controles de Filtrado -->
+    <div class="filters-container">
+      <div class="filters-title">🔍 Filtros de Búsqueda</div>
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label class="filter-label" for="timeFilter"
+            >⏰ Filtrar por Horario</label
+          >
+          <select id="timeFilter" class="filter-select">
+            <option value="">Todos los horarios</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="buyerFilter"
+            >🏢 Filtrar por Comprador</label
+          >
+          <select id="buyerFilter" class="filter-select">
+            <option value="">Todos los compradores</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="vendorSearch"
+            >🏪 Buscar Vendedor</label
+          >
+          <input
+            type="text"
+            id="vendorSearch"
+            class="filter-input"
+            placeholder="Escribir nombre del vendedor..."
+          />
+        </div>
+        <div class="filter-group">
+          <button class="clear-filters" onclick="clearAllFilters()">
+            🗑️ Limpiar Filtros
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="container">
-        <div class="table-container">
-            <table class="matrix-table">
-                <thead>
-                    <tr>
-                        <th>🏢 COMPRADOR</th>
-                        <th>⏰ 08:30 - 08:45</th>
-                        <th>⏰ 08:45 - 09:00</th>
-                        <th>⏰ 09:00 - 09:15</th>
-                        <th>⏰ 09:15 - 09:30</th>
-                        <th>⏰ 09:30 - 09:45</th>
-                        <th>⏰ 09:45 - 10:00</th>
-                        <th>⏰ 10:00 - 10:15</th>
-                        <th>⏰ 10:15 - 10:30</th>
-                        <th>⏰ 10:30 - 10:45</th>
-                        <th>⏰ 10:45 - 11:00</th>
-                        <th>⏰ 11:00 - 11:15</th>
-                        <th>⏰ 11:15 - 11:30</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="buyer-name">🏢 ARMANDO VELÁSQUEZ</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CINCO DAMAS</span>
-                      <span class="vendor-name">DON HEBER CAFÉ</span>
-                      <span class="vendor-name">FINCA EL CASCABEL</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                      <span class="vendor-name">DELUXE COFFEE</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">LADERAS DEL TAPIAS</span>
-                      <span class="vendor-name">DE SOL A SOL</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ MATILDE 1960</span>
-                      <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">RUNA COFFEE</span>
-                      <span class="vendor-name">CAFE FINCA MI TERRON</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                  </tr>
-                  <tr>
-                    <td class="buyer-name">🏢 BOX BRAND</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">D'CLEO COFFEE</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">LADERAS DEL TAPIAS</span>
-                      <span class="vendor-name">RUNA COFFEE</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ MATILDE 1960</span>
-                      <span class="vendor-name">SANTA CRUZ...</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFE FINCA MI TERRON</span>
-                      <span class="vendor-name">DON HEBER CAFÉ</span>
-                      <span class="vendor-name">FINCA LA RIVERA</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">VILLA CLARA...</span>
-                      <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                      <span class="vendor-name">ROJO PASIÓN</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">FINCA EL CASCABEL</span>
-                      <span class="vendor-name">DELUXE COFFEE</span>
-                      <span class="vendor-name">CAFÉ MURAL</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ GRANADA</span>
-                      <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                      <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">SIETE LEONES CAFÉ</span>
-                      <span class="vendor-name">CAFE ARTE</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                  </tr>
-                  <tr>
-                    <td class="buyer-name">🏢 CAFÉ MOLINA</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                      <span class="vendor-name">DE SOL A SOL</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">FINCA LA RIVERA</span>
-                      <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">EL ORGASMO...</span>
-                      <span class="vendor-name">DELUXE COFFEE</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">RUNA COFFEE</span>
-                      <span class="vendor-name">ROJO PASIÓN</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                  </tr>
-                  <tr>
-                    <td class="buyer-name">🏢 COLFRESH COFFEE</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ MURAL</span>
-                      <span class="vendor-name">EL ORGASMO...</span>
-                      <span class="vendor-name">LA PATRONA</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ MATILDE 1960</span>
-                      <span class="vendor-name">DE SOL A SOL</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ ERMITAÑO</span>
-                      <span class="vendor-name">RUNA COFFEE</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                      <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                      <span class="vendor-name">CAFÉ ARENILLO</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">FINCA LA RIVERA</span>
-                      <span class="vendor-name">DELUXE COFFEE</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                  </tr>
-                  <tr>
-                    <td class="buyer-name">🏢 ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">ROJO PASIÓN</span>
-                      <span class="vendor-name">FINCA EL CASCABEL</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ MATILDE 1960</span>
-                      <span class="vendor-name">RUNA COFFEE</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
-                      <span class="vendor-name">VILLA CLARA...</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                      <span class="vendor-name">CAFÉ OASIS DE SAMDA</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                  </tr>
-                  <tr>
-                    <td class="buyer-name">🏢 FLOR A FRUTO</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                      <span class="vendor-name">CAFÉ ARENILLO</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">SANTA CRUZ...</span>
-                      <span class="vendor-name">CAFÉ ERMITAÑO</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ CAMPOHERMOSO</span>
-                      <span class="vendor-name">FINCA LA RIVERA</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFE FINCA MI TERRON</span>
-                      <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                      <span class="vendor-name">DE SOL A SOL</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">RUNA COFFEE</span>
-                      <span class="vendor-name">DELUXE COFFEE</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ OASIS DE SAMDA</span>
-                      <span class="vendor-name">FINCA EL CASCABEL</span>
-                      <span class="vendor-name">ROJO PASIÓN</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                  </tr>
-                  <tr>
-                    <td class="buyer-name">🏢 INMERSSO BOUTIQUE</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ ERMITAÑO</span>
-                      <span class="vendor-name">CAFÉ GRANADA</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CINCO DAMAS</span>
-                      <span class="vendor-name">DON HEBER CAFÉ</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ LA AVANZANTE</span>
-                      <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">DELUXE COFFEE</span>
-                      <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                      <span class="vendor-name">CAFÉ MURAL</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">RUNA COFFEE</span>
-                      <span class="vendor-name">CAFÉ MATILDE 1960</span>
-                      <span class="vendor-name">FINCA LA RIVERA</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">LADERAS DEL TAPIAS</span>
-                      <span class="vendor-name">ROJO PASIÓN</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ ARENILLO</span>
-                      <span class="vendor-name">SIETE LEONES CAFÉ</span>
-                      <span class="vendor-name">CAFÉ OASIS DE SAMDA</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                  </tr>
-                  <tr>
-                    <td class="buyer-name">🏢 INTERLINK2AMERICAS</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFE FINCA MI TERRON</span>
-                      <span class="vendor-name">CAFE MIS TAITAS</span>
-                      <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">FINCA EL CASCABEL</span>
-                      <span class="vendor-name">LA PATRONA</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">D'CLEO COFFEE</span>
-                      <span class="vendor-name">CAFÉ GRANADA</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">SANTA CRUZ...</span>
-                      <span class="vendor-name">LADERAS DEL TAPIAS</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">SIETE LEONES CAFÉ</span>
-                      <span class="vendor-name">CAFÉ MURAL</span>
-                      <span class="vendor-name">CAFE ARTE</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFE GRANEAO</span>
-                      <span class="vendor-name">CAFÉ MATILDE 1960</span>
-                      <span class="vendor-name">DON HEBER CAFÉ</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">FINCA LA RIVERA</span>
-                      <span class="vendor-name">DELUXE COFFEE</span>
-                      <span class="vendor-name">CAFÉ ARENILLO</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">VILLA CLARA...</span>
-                      <span class="vendor-name">CAFÉ LA AVANZANTE</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                      <span class="vendor-name">CAFÉ ORIGEN...</span>
-                      <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="buyer-name">🏢 NEIRA YORK COFFEE</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">FINCA LA RIVERA</span>
-                      <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ CAMPOHERMOSO</span>
-                      <span class="vendor-name">CAFÉ LA AVANZANTE</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CINCO DAMAS</span>
-                      <span class="vendor-name">RUNA COFFEE</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">ROJO PASIÓN</span>
-                      <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ MURAL</span>
-                      <span class="vendor-name">DE SOL A SOL</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="buyer-name">🏢 PROCOLOMBIA</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">FINCA LA RIVERA</span>
-                      <span class="vendor-name">CAFE ARTE</span>
-                      <span class="vendor-name">CAFÉ LA AVANZANTE</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">D'CLEO COFFEE</span>
-                      <span class="vendor-name">EL ORGASMO...</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                  </tr>
-                  <tr>
-                    <td class="buyer-name">🏢 REGIONAL S.A.S</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ MATILDE 1960</span>
-                      <span class="vendor-name">DELUXE COFFEE</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">VILLA CLARA...</span>
-                      <span class="vendor-name">ROJO PASIÓN</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                      <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">EL ORGASMO...</span>
-                      <span class="vendor-name">DON HEBER CAFÉ</span>
-                    </td>
-                    <td class="vendor-cell">
-                      <span class="vendor-name">FINCA LA RIVERA</span>
-                      <span class="vendor-name">CAFE ARTE</span>
-                    </td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                    <td class="vendor-cell empty-cell">-</td>
-                  </tr>
-                </tbody>
-            </table>
-        </div>
+      <div class="table-container">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>🏢 COMPRADOR</th>
+              <th>⏰ 08:30 - 08:45</th>
+              <th>⏰ 08:45 - 09:00</th>
+              <th>⏰ 09:00 - 09:15</th>
+              <th>⏰ 09:15 - 09:30</th>
+              <th>⏰ 09:30 - 09:45</th>
+              <th>⏰ 09:45 - 10:00</th>
+              <th>⏰ 10:00 - 10:15</th>
+              <th>⏰ 10:15 - 10:30</th>
+              <th>⏰ 10:30 - 10:45</th>
+              <th>⏰ 10:45 - 11:00</th>
+              <th>⏰ 11:00 - 11:15</th>
+              <th>⏰ 11:15 - 11:30</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="buyer-name">🏢 ARMANDO VELÁSQUEZ</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CINCO DAMAS</span>
+                <span class="vendor-name">FINCA EL CASCABEL</span>
+                <span class="vendor-name">LADERAS DEL TAPIAS</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DON HEBER CAFÉ</span>
+                <span class="vendor-name">CAFE FINCA MI TERRON</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA FEDERICA</span>
+                <span class="vendor-name">DE SOL A SOL</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DELUXE COFFEE</span>
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">CAFÉ MATILDE 1960</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">RUNA COFFEE</span>
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+            </tr>
+            <tr>
+              <td class="buyer-name">🏢 BOX BRAND</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">D'CLEO COFFEE</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ MURAL</span>
+                <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DELUXE COFFEE</span>
+                <span class="vendor-name">LADERAS DEL TAPIAS</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">RUNA COFFEE</span>
+                <span class="vendor-name">CAFE FINCA MI TERRON</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+                <span class="vendor-name">FINCA EL CASCABEL</span>
+                <span class="vendor-name">FINCA LA RIVERA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">SIETE LEONES CAFÉ</span>
+                <span class="vendor-name">ROJO PASIÓN</span>
+                <span class="vendor-name">VILLA CLARA...</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ GRANADA</span>
+                <span class="vendor-name">SANTA CRUZ...</span>
+                <span class="vendor-name">CAFÉ MATILDE 1960</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ ARENILLO</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">DON HEBER CAFÉ</span>
+                <span class="vendor-name">CAFÉ ORIGEN...</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="buyer-name">🏢 CAFÉ MOLINA</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+                <span class="vendor-name">DE SOL A SOL</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DELUXE COFFEE</span>
+                <span class="vendor-name">ROJO PASIÓN</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA FEDERICA</span>
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">EL ORGASMO...</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">RUNA COFFEE</span>
+                <span class="vendor-name">FINCA LA RIVERA</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+            </tr>
+            <tr>
+              <td class="buyer-name">🏢 COLFRESH COFFEE</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ ERMITAÑO</span>
+                <span class="vendor-name">CAFÉ MATILDE 1960</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ ARENILLO</span>
+                <span class="vendor-name">DE SOL A SOL</span>
+                <span class="vendor-name">EL ORGASMO...</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DELUXE COFFEE</span>
+                <span class="vendor-name">LA PATRONA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ MURAL</span>
+                <span class="vendor-name">FINCA LA FEDERICA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA RIVERA</span>
+                <span class="vendor-name">RUNA COFFEE</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+            </tr>
+            <tr>
+              <td class="buyer-name">
+                🏢 ENCADENAMIENTOS PRODUCTIVOS - CAFE AROMAS DEL EJE / CAFÉ
+                GRANEAO.
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">ROJO PASIÓN</span>
+                <span class="vendor-name">FINCA EL CASCABEL</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ OASIS DE SAMDA</span>
+                <span class="vendor-name">RUNA COFFEE</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA FEDERICA</span>
+                <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">VILLA CLARA...</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+            </tr>
+            <tr>
+              <td class="buyer-name">🏢 FLOR A FRUTO</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ CAMPOHERMOSO</span>
+                <span class="vendor-name">CAFÉ OASIS DE SAMDA</span>
+                <span class="vendor-name">RUNA COFFEE</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA EL CASCABEL</span>
+                <span class="vendor-name">CAFÉ ARENILLO</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+                <span class="vendor-name">DE SOL A SOL</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">CAFE FINCA MI TERRON</span>
+                <span class="vendor-name">DELUXE COFFEE</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA RIVERA</span>
+                <span class="vendor-name">CAFÉ ERMITAÑO</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">SANTA CRUZ...</span>
+                <span class="vendor-name">ROJO PASIÓN</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+            </tr>
+            <tr>
+              <td class="buyer-name">🏢 INMERSSO BOUTIQUE</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ GRANADA</span>
+                <span class="vendor-name">CAFÉ LA AVANZANTE</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">RUNA COFFEE</span>
+                <span class="vendor-name">CINCO DAMAS</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA RIVERA</span>
+                <span class="vendor-name">ROJO PASIÓN</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DELUXE COFFEE</span>
+                <span class="vendor-name">FINCA LA FEDERICA</span>
+                <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DON HEBER CAFÉ</span>
+                <span class="vendor-name">LADERAS DEL TAPIAS</span>
+                <span class="vendor-name">CAFÉ MURAL</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ ERMITAÑO</span>
+                <span class="vendor-name">CAFÉ OASIS DE SAMDA</span>
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">CAFÉ ARENILLO</span>
+                <span class="vendor-name">SIETE LEONES CAFÉ</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+            </tr>
+            <tr>
+              <td class="buyer-name">🏢 INTERLINK2AMERICAS</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">CAFÉ ARENILLO</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">VILLA CLARA...</span>
+                <span class="vendor-name">CAFÉ GRANADA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ MURAL</span>
+                <span class="vendor-name">DON HEBER CAFÉ</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">SIETE LEONES CAFÉ</span>
+                <span class="vendor-name">LA PATRONA</span>
+                <span class="vendor-name">CAFE MIS TAITAS</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
+                <span class="vendor-name">CAFE ARTE</span>
+                <span class="vendor-name">D'CLEO COFFEE</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFE FINCA MI TERRON</span>
+                <span class="vendor-name">FINCA EL CASCABEL</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">SANTA CRUZ...</span>
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+                <span class="vendor-name">CAFE GRANEAO</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA FEDERICA</span>
+                <span class="vendor-name">DELUXE COFFEE</span>
+                <span class="vendor-name">CAFÉ MATILDE 1960</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+            </tr>
+            <tr>
+              <td class="buyer-name">🏢 NEIRA YORK COFFEE</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ LA AVANZANTE</span>
+                <span class="vendor-name">RUNA COFFEE</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CINCO DAMAS</span>
+                <span class="vendor-name">FINCA LA RIVERA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">ROJO PASIÓN</span>
+                <span class="vendor-name">CAFÉ CAMPOHERMOSO</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ MURAL</span>
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+            </tr>
+            <tr>
+              <td class="buyer-name">🏢 PROCOLOMBIA</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA RIVERA</span>
+                <span class="vendor-name">CAFE ARTE</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+            </tr>
+            <tr>
+              <td class="buyer-name">🏢 REGIONAL S.A.S</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DELUXE COFFEE</span>
+                <span class="vendor-name">DON HEBER CAFÉ</span>
+                <span class="vendor-name">EL ORGASMO...</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ MATILDE 1960</span>
+                <span class="vendor-name">FINCA LA FEDERICA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA RIVERA</span>
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">VILLA CLARA...</span>
+                <span class="vendor-name">ROJO PASIÓN</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-</body>
+
+    <script>
+      // Inicializar filtros cuando se carga la página
+      document.addEventListener("DOMContentLoaded", function () {
+        populateFilterOptions();
+        setupFilterListeners();
+      });
+
+      function populateFilterOptions() {
+        const table = document.querySelector(".matrix-table");
+        if (!table) return;
+
+        // Obtener horarios únicos de los encabezados
+        const timeHeaders = Array.from(
+          table.querySelectorAll("th:not(:first-child)")
+        );
+        const timeSelect = document.getElementById("timeFilter");
+
+        timeHeaders.forEach((th) => {
+          if (th.textContent.trim() && th.textContent.includes("⏰")) {
+            const option = document.createElement("option");
+            const timeText = th.textContent.replace("⏰ ", "");
+            option.value = timeText;
+            option.textContent = timeText;
+            timeSelect.appendChild(option);
+          }
+        });
+
+        // Obtener compradores únicos de las filas
+        const buyerCells = Array.from(table.querySelectorAll(".buyer-name"));
+        const buyerSelect = document.getElementById("buyerFilter");
+        const uniqueBuyers = new Set();
+
+        buyerCells.forEach((cell) => {
+          if (cell.textContent.trim()) {
+            uniqueBuyers.add(cell.textContent.trim());
+          }
+        });
+
+        Array.from(uniqueBuyers)
+          .sort()
+          .forEach((buyer) => {
+            const option = document.createElement("option");
+            option.value = buyer;
+            option.textContent = buyer;
+            buyerSelect.appendChild(option);
+          });
+      }
+
+      function setupFilterListeners() {
+        document
+          .getElementById("timeFilter")
+          .addEventListener("change", applyFilters);
+        document
+          .getElementById("buyerFilter")
+          .addEventListener("change", applyFilters);
+        document
+          .getElementById("vendorSearch")
+          .addEventListener("input", applyFilters);
+      }
+
+      function applyFilters() {
+        const timeFilter = document
+          .getElementById("timeFilter")
+          .value.toLowerCase();
+        const buyerFilter = document
+          .getElementById("buyerFilter")
+          .value.toLowerCase();
+        const vendorSearch = document
+          .getElementById("vendorSearch")
+          .value.toLowerCase();
+
+        const table = document.querySelector(".matrix-table");
+        if (!table) return;
+
+        // Filtrar columnas por horario
+        const headers = Array.from(table.querySelectorAll("th"));
+        const rows = Array.from(table.querySelectorAll("tr"));
+
+        // Mostrar/ocultar columnas basado en filtro de tiempo
+        headers.forEach((th, colIndex) => {
+          if (colIndex === 0) return; // Siempre mostrar primera columna (compradores)
+
+          const shouldShow =
+            !timeFilter || th.textContent.toLowerCase().includes(timeFilter);
+          th.style.display = shouldShow ? "" : "none";
+
+          // Aplicar el mismo filtro a todas las celdas de esta columna
+          rows.forEach((row) => {
+            const cell = row.cells[colIndex];
+            if (cell) {
+              cell.style.display = shouldShow ? "" : "none";
+            }
+          });
+        });
+
+        // Filtrar filas por comprador y vendedor
+        rows.forEach((row, rowIndex) => {
+          if (rowIndex === 0) return; // Siempre mostrar encabezado
+
+          const buyerCell = row.querySelector(".buyer-name");
+          if (!buyerCell) return;
+
+          const buyerName = buyerCell.textContent.toLowerCase();
+          const buyerMatch = !buyerFilter || buyerName.includes(buyerFilter);
+
+          // Verificar si alguna celda de la fila contiene el vendedor buscado
+          let vendorMatch = true;
+          if (vendorSearch) {
+            vendorMatch = false;
+            const cells = Array.from(
+              row.querySelectorAll("td:not(.buyer-name)")
+            );
+            cells.forEach((cell) => {
+              if (
+                cell.style.display !== "none" &&
+                cell.textContent.toLowerCase().includes(vendorSearch)
+              ) {
+                vendorMatch = true;
+              }
+            });
+          }
+
+          row.style.display = buyerMatch && vendorMatch ? "" : "none";
+        });
+
+        updateVisibleCount();
+      }
+
+      function updateVisibleCount() {
+        const table = document.querySelector(".matrix-table");
+        if (!table) return;
+
+        const visibleRows = Array.from(table.querySelectorAll("tr")).filter(
+          (row) =>
+            row.style.display !== "none" && row.querySelector(".buyer-name")
+        ).length;
+
+        const visibleCols =
+          Array.from(table.querySelectorAll("th")).filter(
+            (th) => th.style.display !== "none"
+          ).length - 1; // -1 para excluir columna de compradores
+
+        // Actualizar estadísticas si existen
+        const statItems = document.querySelectorAll(".stat-item");
+        if (statItems.length >= 2) {
+          const buyerStat = statItems[1].querySelector(".stat-number");
+          const timeStat = statItems[2].querySelector(".stat-number");
+          if (buyerStat) buyerStat.textContent = visibleRows;
+          if (timeStat) timeStat.textContent = visibleCols;
+        }
+      }
+
+      function clearAllFilters() {
+        document.getElementById("timeFilter").value = "";
+        document.getElementById("buyerFilter").value = "";
+        document.getElementById("vendorSearch").value = "";
+
+        // Mostrar todas las filas y columnas
+        const table = document.querySelector(".matrix-table");
+        if (table) {
+          const allElements = table.querySelectorAll("tr, th, td");
+          allElements.forEach((el) => (el.style.display = ""));
+        }
+
+        updateVisibleCount();
+      }
+    </script>
+  </body>
 </html>

@@ -1,6 +1,6 @@
 {
   "configuracion": {
-    "vendedores": 31,
+    "vendedores": 32,
     "compradores": 11,
     "duracion_total": "270 minutos",
     "duracion_cita": "15 minutos",
@@ -9,641 +9,563 @@
     "vendedores_por_cita": 3,
     "horario_inicio": "08:30",
     "horario_fin": "13:00",
-    "preferencias_cargadas": 138
+    "preferencias_cargadas": 145
   },
   "agenda": {
     "08:30 - 08:45": [
       {
         "comprador": "BOX BRAND",
-        "vendedores": [
-          "D'CLEO COFFEE"
-        ]
+        "vendedores": ["D'CLEO COFFEE"]
       },
       {
-        "comprador": "FLOR A FRUTO",
-        "vendedores": [
-          "CAFÉ AGUA VIVA",
-          "CAFÉ ARENILLO"
-        ]
+        "comprador": "INTERLINK2AMERICAS",
+        "vendedores": ["CAFÉ AGUA VIVA", "CAFÉ ARENILLO"]
       },
       {
         "comprador": "CAFÉ MOLINA",
-        "vendedores": [
-          "CAFÉ VALLE DE LIRIO",
-          "DE SOL A SOL"
-        ]
+        "vendedores": ["CAFÉ VALLE DE LIRIO", "DE SOL A SOL"]
+      },
+      {
+        "comprador": "COLFRESH COFFEE",
+        "vendedores": ["CAFÉ ERMITAÑO", "CAFÉ MATILDE 1960"]
+      },
+      {
+        "comprador": "INMERSSO BOUTIQUE",
+        "vendedores": ["CAFÉ GRANADA", "CAFÉ LA AVANZANTE"]
+      },
+      {
+        "comprador": "PROCOLOMBIA",
+        "vendedores": ["FINCA LA RIVERA", "CAFE ARTE"]
       },
       {
         "comprador": "REGIONAL S.A.S",
         "vendedores": [
-          "CAFÉ MATILDE 1960",
-          "DELUXE COFFEE"
-        ]
-      },
-      {
-        "comprador": "INMERSSO BOUTIQUE",
-        "vendedores": [
-          "CAFÉ ERMITAÑO",
-          "CAFÉ GRANADA"
-        ]
-      },
-      {
-        "comprador": "COLFRESH COFFEE",
-        "vendedores": [
-          "CAFÉ MURAL",
-          "EL ORGASMO DE LOS SAINOS",
-          "LA PATRONA"
-        ]
-      },
-      {
-        "comprador": "PROCOLOMBIA",
-        "vendedores": [
-          "FINCA LA RIVERA",
-          "CAFE ARTE",
-          "CAFÉ LA AVANZANTE"
-        ]
-      },
-      {
-        "comprador": "INTERLINK2AMERICAS",
-        "vendedores": [
-          "CAFE FINCA MI TERRON",
-          "CAFE MIS TAITAS",
-          "CAFÉ TRADICIÓN NEIRA"
+          "DELUXE COFFEE",
+          "DON HEBER CAFÉ",
+          "EL ORGASMO DE LOS SAINOS"
         ]
       },
       {
         "comprador": "ARMANDO VELÁSQUEZ",
+        "vendedores": ["CINCO DAMAS", "FINCA EL CASCABEL", "LADERAS DEL TAPIAS"]
+      },
+      {
+        "comprador": "FLOR A FRUTO",
         "vendedores": [
-          "CINCO DAMAS",
-          "DON HEBER CAFÉ",
-          "FINCA EL CASCABEL"
+          "CAFÉ CAMPOHERMOSO",
+          "CAFÉ OASIS DE SAMDA",
+          "RUNA COFFEE"
         ]
       }
     ],
     "08:45 - 09:00": [
       {
         "comprador": "BOX BRAND",
-        "vendedores": [
-          "LADERAS DEL TAPIAS",
-          "RUNA COFFEE"
-        ]
+        "vendedores": ["CAFÉ MURAL", "CAFÉ TRADICIÓN NEIRA"]
+      },
+      {
+        "comprador": "INMERSSO BOUTIQUE",
+        "vendedores": ["RUNA COFFEE", "CINCO DAMAS"]
+      },
+      {
+        "comprador": "CAFÉ MOLINA",
+        "vendedores": ["DELUXE COFFEE", "ROJO PASIÓN"]
+      },
+      {
+        "comprador": "COLFRESH COFFEE",
+        "vendedores": ["CAFÉ VALLE DE LIRIO", "CAFÉ AGUA VIVA"]
+      },
+      {
+        "comprador": "REGIONAL S.A.S",
+        "vendedores": ["CAFÉ MATILDE 1960", "FINCA LA FEDERICA"]
+      },
+      {
+        "comprador": "FLOR A FRUTO",
+        "vendedores": ["FINCA EL CASCABEL", "CAFÉ ARENILLO"]
+      },
+      {
+        "comprador": "ARMANDO VELÁSQUEZ",
+        "vendedores": ["DON HEBER CAFÉ", "CAFE FINCA MI TERRON"]
       },
       {
         "comprador": "INTERLINK2AMERICAS",
         "vendedores": [
-          "FINCA EL CASCABEL",
-          "LA PATRONA"
-        ]
-      },
-      {
-        "comprador": "INMERSSO BOUTIQUE",
-        "vendedores": [
-          "CINCO DAMAS",
-          "DON HEBER CAFÉ"
-        ]
-      },
-      {
-        "comprador": "CAFÉ MOLINA",
-        "vendedores": [
-          "FINCA LA RIVERA",
-          "CAFÉ AGUA VIVA"
-        ]
-      },
-      {
-        "comprador": "COLFRESH COFFEE",
-        "vendedores": [
-          "CAFÉ MATILDE 1960",
-          "DE SOL A SOL"
-        ]
-      },
-      {
-        "comprador": "REGIONAL S.A.S",
-        "vendedores": [
           "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS",
-          "ROJO PASIÓN"
-        ]
-      },
-      {
-        "comprador": "ARMANDO VELÁSQUEZ",
-        "vendedores": [
-          "CAFÉ VALLE DE LIRIO",
-          "DELUXE COFFEE"
-        ]
-      },
-      {
-        "comprador": "FLOR A FRUTO",
-        "vendedores": [
-          "SANTA CRUZ DE LAS AGUAS",
-          "CAFÉ ERMITAÑO"
-        ]
-      },
-      {
-        "comprador": "PROCOLOMBIA",
-        "vendedores": [
-          "D'CLEO COFFEE",
-          "EL ORGASMO DE LOS SAINOS"
+          "CAFÉ GRANADA"
         ]
       }
     ],
     "09:00 - 09:15": [
       {
-        "comprador": "INTERLINK2AMERICAS",
-        "vendedores": [
-          "D'CLEO COFFEE",
-          "CAFÉ GRANADA"
-        ]
-      },
-      {
         "comprador": "BOX BRAND",
-        "vendedores": [
-          "CAFÉ MATILDE 1960",
-          "SANTA CRUZ DE LAS AGUAS"
-        ]
+        "vendedores": ["DELUXE COFFEE", "LADERAS DEL TAPIAS"]
       },
       {
         "comprador": "INMERSSO BOUTIQUE",
-        "vendedores": [
-          "CAFÉ LA AVANZANTE",
-          "CAFÉ TRADICIÓN NEIRA"
-        ]
+        "vendedores": ["FINCA LA RIVERA", "ROJO PASIÓN"]
       },
       {
         "comprador": "CAFÉ MOLINA",
-        "vendedores": [
-          "EL ORGASMO DE LOS SAINOS",
-          "DELUXE COFFEE"
-        ]
+        "vendedores": ["FINCA LA FEDERICA", "CAFÉ AGUA VIVA"]
       },
       {
         "comprador": "COLFRESH COFFEE",
         "vendedores": [
-          "CAFÉ ERMITAÑO",
-          "RUNA COFFEE"
+          "CAFÉ ARENILLO",
+          "DE SOL A SOL",
+          "EL ORGASMO DE LOS SAINOS"
         ]
       },
       {
         "comprador": "REGIONAL S.A.S",
-        "vendedores": [
-          "CAFÉ VALLE DE LIRIO",
-          "CAFÉ AGUA VIVA"
-        ]
+        "vendedores": ["CAFÉ VALLE DE LIRIO"]
       },
       {
-        "comprador": "ARMANDO VELÁSQUEZ",
-        "vendedores": [
-          "LADERAS DEL TAPIAS",
-          "DE SOL A SOL"
-        ]
-      },
-      {
-        "comprador": "FLOR A FRUTO",
-        "vendedores": [
-          "CAFÉ CAMPOHERMOSO",
-          "FINCA LA RIVERA"
-        ]
+        "comprador": "INTERLINK2AMERICAS",
+        "vendedores": ["CAFÉ MURAL", "DON HEBER CAFÉ"]
       }
     ],
     "09:15 - 09:30": [
       {
-        "comprador": "INTERLINK2AMERICAS",
-        "vendedores": [
-          "SANTA CRUZ DE LAS AGUAS",
-          "LADERAS DEL TAPIAS"
-        ]
-      },
-      {
         "comprador": "BOX BRAND",
-        "vendedores": [
-          "CAFE FINCA MI TERRON",
-          "DON HEBER CAFÉ",
-          "FINCA LA RIVERA"
-        ]
+        "vendedores": ["RUNA COFFEE", "CAFE FINCA MI TERRON"]
       },
       {
         "comprador": "INMERSSO BOUTIQUE",
         "vendedores": [
           "DELUXE COFFEE",
-          "CAFÉ VALLE DE LIRIO",
-          "CAFÉ MURAL"
+          "FINCA LA FEDERICA",
+          "CAFÉ TRADICIÓN NEIRA"
         ]
       },
       {
-        "comprador": "CAFÉ MOLINA",
-        "vendedores": [
-          "RUNA COFFEE",
-          "ROJO PASIÓN"
-        ]
+        "comprador": "REGIONAL S.A.S",
+        "vendedores": ["FINCA LA RIVERA", "CAFÉ AGUA VIVA"]
       },
       {
-        "comprador": "ARMANDO VELÁSQUEZ",
-        "vendedores": [
-          "CAFÉ MATILDE 1960",
-          "CAFÉ AGUA VIVA"
-        ]
+        "comprador": "FLOR A FRUTO",
+        "vendedores": ["CAFÉ VALLE DE LIRIO", "DE SOL A SOL"]
+      },
+      {
+        "comprador": "INTERLINK2AMERICAS",
+        "vendedores": ["SIETE LEONES CAFÉ", "LA PATRONA", "CAFE MIS TAITAS"]
       }
     ],
     "09:30 - 09:45": [
       {
-        "comprador": "INTERLINK2AMERICAS",
-        "vendedores": [
-          "SIETE LEONES CAFÉ",
-          "CAFÉ MURAL",
-          "CAFE ARTE"
-        ]
-      },
-      {
         "comprador": "BOX BRAND",
         "vendedores": [
-          "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS",
           "CAFÉ VALLE DE LIRIO",
-          "ROJO PASIÓN"
-        ]
-      },
-      {
-        "comprador": "INMERSSO BOUTIQUE",
-        "vendedores": [
-          "RUNA COFFEE",
-          "CAFÉ MATILDE 1960",
+          "FINCA EL CASCABEL",
           "FINCA LA RIVERA"
         ]
       },
       {
+        "comprador": "INMERSSO BOUTIQUE",
+        "vendedores": ["DON HEBER CAFÉ", "LADERAS DEL TAPIAS", "CAFÉ MURAL"]
+      },
+      {
+        "comprador": "CAFÉ MOLINA",
+        "vendedores": ["EL ORGASMO DE LOS SAINOS"]
+      },
+      {
+        "comprador": "COLFRESH COFFEE",
+        "vendedores": ["DELUXE COFFEE", "LA PATRONA"]
+      },
+      {
         "comprador": "REGIONAL S.A.S",
         "vendedores": [
-          "EL ORGASMO DE LOS SAINOS",
-          "DON HEBER CAFÉ"
+          "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS",
+          "ROJO PASIÓN"
         ]
+      },
+      {
+        "comprador": "ARMANDO VELÁSQUEZ",
+        "vendedores": ["FINCA LA FEDERICA", "DE SOL A SOL"]
+      },
+      {
+        "comprador": "INTERLINK2AMERICAS",
+        "vendedores": ["CAFÉ TRADICIÓN NEIRA", "CAFE ARTE", "D'CLEO COFFEE"]
       }
     ],
     "09:45 - 10:00": [
       {
-        "comprador": "INTERLINK2AMERICAS",
-        "vendedores": [
-          "CAFE GRANEAO",
-          "CAFÉ MATILDE 1960",
-          "DON HEBER CAFÉ"
-        ]
-      },
-      {
         "comprador": "BOX BRAND",
         "vendedores": [
-          "FINCA EL CASCABEL",
-          "DELUXE COFFEE",
-          "CAFÉ MURAL"
+          "SIETE LEONES CAFÉ",
+          "ROJO PASIÓN",
+          "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"
         ]
       },
       {
         "comprador": "INMERSSO BOUTIQUE",
         "vendedores": [
-          "LADERAS DEL TAPIAS",
-          "ROJO PASIÓN"
+          "CAFÉ ERMITAÑO",
+          "CAFÉ OASIS DE SAMDA",
+          "CAFÉ VALLE DE LIRIO"
         ]
+      },
+      {
+        "comprador": "CAFÉ MOLINA",
+        "vendedores": ["RUNA COFFEE", "FINCA LA RIVERA"]
       },
       {
         "comprador": "COLFRESH COFFEE",
+        "vendedores": ["CAFÉ MURAL", "FINCA LA FEDERICA"]
+      },
+      {
+        "comprador": "FLOR A FRUTO",
         "vendedores": [
           "CAFÉ AGUA VIVA",
-          "CAFÉ VALLE DE LIRIO",
-          "CAFÉ ARENILLO"
-        ]
-      },
-      {
-        "comprador": "REGIONAL S.A.S",
-        "vendedores": [
-          "FINCA LA RIVERA",
-          "CAFE ARTE"
-        ]
-      },
-      {
-        "comprador": "ARMANDO VELÁSQUEZ",
-        "vendedores": [
-          "RUNA COFFEE",
-          "CAFE FINCA MI TERRON"
+          "CAFE FINCA MI TERRON",
+          "DELUXE COFFEE"
         ]
       }
     ],
     "10:00 - 10:15": [
       {
-        "comprador": "INTERLINK2AMERICAS",
-        "vendedores": [
-          "FINCA LA RIVERA",
-          "DELUXE COFFEE",
-          "CAFÉ ARENILLO"
-        ]
-      },
-      {
         "comprador": "BOX BRAND",
         "vendedores": [
           "CAFÉ GRANADA",
-          "CAFÉ AGUA VIVA",
-          "CAFÉ TRADICIÓN NEIRA"
+          "SANTA CRUZ DE LAS AGUAS",
+          "CAFÉ MATILDE 1960"
         ]
       },
       {
-        "comprador": "FLOR A FRUTO",
-        "vendedores": [
-          "CAFE FINCA MI TERRON",
-          "CAFÉ VALLE DE LIRIO",
-          "DE SOL A SOL"
-        ]
+        "comprador": "INMERSSO BOUTIQUE",
+        "vendedores": ["CAFÉ AGUA VIVA", "CAFÉ ARENILLO", "SIETE LEONES CAFÉ"]
+      },
+      {
+        "comprador": "COLFRESH COFFEE",
+        "vendedores": ["FINCA LA RIVERA", "RUNA COFFEE"]
+      },
+      {
+        "comprador": "INTERLINK2AMERICAS",
+        "vendedores": ["CAFE FINCA MI TERRON", "FINCA EL CASCABEL"]
+      },
+      {
+        "comprador": "PROCOLOMBIA",
+        "vendedores": ["CAFÉ VALLE DE LIRIO"]
       }
     ],
     "10:15 - 10:30": [
       {
-        "comprador": "INTERLINK2AMERICAS",
-        "vendedores": [
-          "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS",
-          "CAFÉ LA AVANZANTE"
-        ]
-      },
-      {
         "comprador": "BOX BRAND",
-        "vendedores": [
-          "SIETE LEONES CAFÉ",
-          "CAFE ARTE"
-        ]
+        "vendedores": ["CAFÉ ARENILLO"]
       },
       {
         "comprador": "NEIRA YORK COFFEE",
-        "vendedores": [
-          "FINCA LA RIVERA",
-          "CAFÉ AGUA VIVA"
-        ]
-      },
-      {
-        "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
-        "vendedores": [
-          "ROJO PASIÓN",
-          "FINCA EL CASCABEL"
-        ]
+        "vendedores": ["CAFÉ LA AVANZANTE", "RUNA COFFEE"]
       },
       {
         "comprador": "FLOR A FRUTO",
+        "vendedores": ["FINCA LA RIVERA", "CAFÉ ERMITAÑO"]
+      },
+      {
+        "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
+        "vendedores": ["ROJO PASIÓN", "FINCA EL CASCABEL"]
+      },
+      {
+        "comprador": "ARMANDO VELÁSQUEZ",
+        "vendedores": ["DELUXE COFFEE", "CAFÉ AGUA VIVA", "CAFÉ MATILDE 1960"]
+      },
+      {
+        "comprador": "INTERLINK2AMERICAS",
         "vendedores": [
-          "RUNA COFFEE",
-          "DELUXE COFFEE"
+          "SANTA CRUZ DE LAS AGUAS",
+          "CAFÉ VALLE DE LIRIO",
+          "CAFE GRANEAO"
         ]
       }
     ],
     "10:30 - 10:45": [
       {
-        "comprador": "INMERSSO BOUTIQUE",
-        "vendedores": [
-          "CAFÉ ARENILLO",
-          "SIETE LEONES CAFÉ",
-          "CAFÉ OASIS DE SAMDA"
-        ]
-      },
-      {
         "comprador": "NEIRA YORK COFFEE",
-        "vendedores": [
-          "CAFÉ CAMPOHERMOSO",
-          "CAFÉ LA AVANZANTE"
-        ]
+        "vendedores": ["CINCO DAMAS", "FINCA LA RIVERA"]
       },
       {
-        "comprador": "COLFRESH COFFEE",
-        "vendedores": [
-          "FINCA LA RIVERA",
-          "DELUXE COFFEE"
-        ]
+        "comprador": "FLOR A FRUTO",
+        "vendedores": ["SANTA CRUZ DE LAS AGUAS", "ROJO PASIÓN"]
       },
       {
         "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
+        "vendedores": ["CAFÉ OASIS DE SAMDA", "RUNA COFFEE"]
+      },
+      {
+        "comprador": "INTERLINK2AMERICAS",
         "vendedores": [
-          "CAFÉ MATILDE 1960",
-          "RUNA COFFEE"
+          "FINCA LA FEDERICA",
+          "DELUXE COFFEE",
+          "CAFÉ MATILDE 1960"
         ]
       }
     ],
     "10:45 - 11:00": [
       {
         "comprador": "NEIRA YORK COFFEE",
-        "vendedores": [
-          "CINCO DAMAS",
-          "RUNA COFFEE"
-        ]
+        "vendedores": ["ROJO PASIÓN", "CAFÉ CAMPOHERMOSO"]
       },
       {
         "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
-        "vendedores": [
-          "CAFÉ TRADICIÓN NEIRA",
-          "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"
-        ]
+        "vendedores": ["FINCA LA FEDERICA", "CAFÉ TRADICIÓN NEIRA"]
       },
       {
-        "comprador": "FLOR A FRUTO",
-        "vendedores": [
-          "CAFÉ OASIS DE SAMDA",
-          "FINCA EL CASCABEL",
-          "ROJO PASIÓN"
-        ]
+        "comprador": "ARMANDO VELÁSQUEZ",
+        "vendedores": ["RUNA COFFEE", "CAFÉ VALLE DE LIRIO"]
       }
     ],
     "11:00 - 11:15": [
       {
         "comprador": "NEIRA YORK COFFEE",
-        "vendedores": [
-          "ROJO PASIÓN",
-          "CAFÉ VALLE DE LIRIO"
-        ]
+        "vendedores": ["CAFÉ MURAL", "CAFÉ VALLE DE LIRIO"]
       },
       {
         "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
         "vendedores": [
           "CAFÉ AGUA VIVA",
-          "CAFÉ OASIS DE SAMDA"
+          "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"
         ]
       }
     ],
     "11:15 - 11:30": [
       {
-        "comprador": "INTERLINK2AMERICAS",
+        "comprador": "BOX BRAND",
         "vendedores": [
           "CAFÉ AGUA VIVA",
-          "CAFÉ ORIGEN DE LA MONTAÑA",
-          "CAFÉ VALLE DE LIRIO"
-        ]
-      },
-      {
-        "comprador": "NEIRA YORK COFFEE",
-        "vendedores": [
-          "CAFÉ MURAL",
-          "DE SOL A SOL"
+          "DON HEBER CAFÉ",
+          "CAFÉ ORIGEN DE LA MONTAÑA"
         ]
       }
     ],
     "11:30 - 11:45": [
       {
-        "comprador": "BOX BRAND",
-        "vendedores": [
-          "CAFÉ ARENILLO",
-          "CAFÉ ORIGEN DE LA MONTAÑA"
-        ]
+        "comprador": "INMERSSO BOUTIQUE",
+        "vendedores": ["CAFÉ MATILDE 1960", "CAFÉ ORIGEN DE LA MONTAÑA"]
+      },
+      {
+        "comprador": "NEIRA YORK COFFEE",
+        "vendedores": ["DE SOL A SOL", "CAFÉ AGUA VIVA"]
       }
     ],
     "11:45 - 12:00": [
       {
-        "comprador": "INMERSSO BOUTIQUE",
+        "comprador": "INTERLINK2AMERICAS",
         "vendedores": [
           "CAFÉ ORIGEN DE LA MONTAÑA",
-          "CAFÉ AGUA VIVA"
+          "FINCA LA RIVERA",
+          "LADERAS DEL TAPIAS"
         ]
       }
     ],
     "12:00 - 12:15": [
       {
         "comprador": "PROCOLOMBIA",
-        "vendedores": [
-          "CAFÉ ORIGEN DE LA MONTAÑA",
-          "CAFÉ VALLE DE LIRIO"
-        ]
+        "vendedores": ["CAFÉ ORIGEN DE LA MONTAÑA", "D'CLEO COFFEE"]
       }
     ]
   },
   "estadisticas": {
-    "total_citas_programadas": 63,
-    "total_encuentros_individuales": 143,
-    "porcentaje_utilizacion_slots": "350.0%",
-    "citas_promedio_por_vendedor": "4.6",
-    "citas_promedio_por_comprador": "5.7",
-    "preferencias_cumplidas": 139,
-    "total_preferencias": 138
+    "total_citas_programadas": 65,
+    "total_encuentros_individuales": 149,
+    "porcentaje_utilizacion_slots": "361.1%",
+    "citas_promedio_por_vendedor": "4.7",
+    "citas_promedio_por_comprador": "5.9",
+    "preferencias_cumplidas": 145,
+    "total_preferencias": 145
   },
   "resumen_por_vendedor": {
-    "CAFE ARTE": {
-      "total_citas": 4,
+    "CAFE FINCA MI TERRON": {
+      "total_citas": 7,
       "citas": [
         {
           "horario": "08:30 - 08:45",
           "comprador": "PROCOLOMBIA",
-          "otros_vendedores": [
-            "FINCA LA RIVERA",
-            "CAFÉ LA AVANZANTE"
-          ]
+          "otros_vendedores": ["FINCA LA RIVERA", "CAFE ARTE"]
         },
         {
-          "horario": "09:30 - 09:45",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "SIETE LEONES CAFÉ",
-            "CAFÉ MURAL"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "comprador": "REGIONAL S.A.S",
-          "otros_vendedores": [
-            "FINCA LA RIVERA"
-          ]
-        },
-        {
-          "horario": "10:15 - 10:30",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "SIETE LEONES CAFÉ"
-          ]
-        }
-      ]
-    },
-    "CAFÉ LA AVANZANTE": {
-      "total_citas": 4,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "comprador": "PROCOLOMBIA",
-          "otros_vendedores": [
-            "FINCA LA RIVERA",
-            "CAFE ARTE"
-          ]
+          "horario": "08:45 - 09:00",
+          "comprador": "ARMANDO VELÁSQUEZ",
+          "otros_vendedores": ["DON HEBER CAFÉ"]
         },
         {
           "horario": "09:00 - 09:15",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "CAFÉ TRADICIÓN NEIRA"
-          ]
+          "comprador": "REGIONAL S.A.S",
+          "otros_vendedores": ["CAFÉ VALLE DE LIRIO"]
         },
         {
-          "horario": "10:15 - 10:30",
+          "horario": "09:15 - 09:30",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["RUNA COFFEE"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "comprador": "CAFÉ MOLINA",
+          "otros_vendedores": ["EL ORGASMO DE LOS SAINOS"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["CAFÉ AGUA VIVA", "DELUXE COFFEE"]
+        },
+        {
+          "horario": "10:00 - 10:15",
           "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"
-          ]
-        },
-        {
-          "horario": "10:30 - 10:45",
-          "comprador": "NEIRA YORK COFFEE",
-          "otros_vendedores": [
-            "CAFÉ CAMPOHERMOSO"
-          ]
+          "otros_vendedores": ["FINCA EL CASCABEL"]
         }
       ]
     },
     "EL ORGASMO DE LOS SAINOS": {
-      "total_citas": 4,
+      "total_citas": 5,
       "citas": [
         {
           "horario": "08:30 - 08:45",
-          "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "CAFÉ MURAL",
-            "LA PATRONA"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "PROCOLOMBIA",
-          "otros_vendedores": [
-            "D'CLEO COFFEE"
-          ]
+          "comprador": "REGIONAL S.A.S",
+          "otros_vendedores": ["DELUXE COFFEE", "DON HEBER CAFÉ"]
         },
         {
           "horario": "09:00 - 09:15",
-          "comprador": "CAFÉ MOLINA",
-          "otros_vendedores": [
-            "DELUXE COFFEE"
-          ]
+          "comprador": "COLFRESH COFFEE",
+          "otros_vendedores": ["CAFÉ ARENILLO", "DE SOL A SOL"]
         },
         {
           "horario": "09:30 - 09:45",
-          "comprador": "REGIONAL S.A.S",
-          "otros_vendedores": [
-            "DON HEBER CAFÉ"
-          ]
+          "comprador": "CAFÉ MOLINA",
+          "otros_vendedores": ["CAFE FINCA MI TERRON"]
+        },
+        {
+          "horario": "10:00 - 10:15",
+          "comprador": "PROCOLOMBIA",
+          "otros_vendedores": ["CAFÉ VALLE DE LIRIO"]
+        },
+        {
+          "horario": "10:15 - 10:30",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["CAFÉ ARENILLO"]
         }
       ]
     },
-    "LADERAS DEL TAPIAS": {
+    "CAFÉ ARENILLO": {
+      "total_citas": 5,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["CAFÉ AGUA VIVA"]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["FINCA EL CASCABEL"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "comprador": "COLFRESH COFFEE",
+          "otros_vendedores": ["DE SOL A SOL", "EL ORGASMO DE LOS SAINOS"]
+        },
+        {
+          "horario": "10:00 - 10:15",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["CAFÉ AGUA VIVA", "SIETE LEONES CAFÉ"]
+        },
+        {
+          "horario": "10:15 - 10:30",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["EL ORGASMO DE LOS SAINOS"]
+        }
+      ]
+    },
+    "SANTA CRUZ DE LAS AGUAS": {
+      "total_citas": 3,
+      "citas": [
+        {
+          "horario": "10:00 - 10:15",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["CAFÉ GRANADA", "CAFÉ MATILDE 1960"]
+        },
+        {
+          "horario": "10:15 - 10:30",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["CAFÉ VALLE DE LIRIO", "CAFE GRANEAO"]
+        },
+        {
+          "horario": "10:30 - 10:45",
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["ROJO PASIÓN"]
+        }
+      ]
+    },
+    "DON HEBER CAFÉ": {
+      "total_citas": 5,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "comprador": "REGIONAL S.A.S",
+          "otros_vendedores": ["DELUXE COFFEE", "EL ORGASMO DE LOS SAINOS"]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "comprador": "ARMANDO VELÁSQUEZ",
+          "otros_vendedores": ["CAFE FINCA MI TERRON"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["CAFÉ MURAL"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["LADERAS DEL TAPIAS", "CAFÉ MURAL"]
+        },
+        {
+          "horario": "11:15 - 11:30",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["CAFÉ AGUA VIVA", "CAFÉ ORIGEN DE LA MONTAÑA"]
+        }
+      ]
+    },
+    "CAFÉ TRADICIÓN NEIRA": {
       "total_citas": 4,
       "citas": [
         {
           "horario": "08:45 - 09:00",
           "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "RUNA COFFEE"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "comprador": "ARMANDO VELÁSQUEZ",
-          "otros_vendedores": [
-            "DE SOL A SOL"
-          ]
+          "otros_vendedores": ["CAFÉ MURAL"]
         },
         {
           "horario": "09:15 - 09:30",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["DELUXE COFFEE", "FINCA LA FEDERICA"]
+        },
+        {
+          "horario": "09:30 - 09:45",
           "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "SANTA CRUZ DE LAS AGUAS"
-          ]
+          "otros_vendedores": ["CAFE ARTE", "D'CLEO COFFEE"]
+        },
+        {
+          "horario": "10:45 - 11:00",
+          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
+          "otros_vendedores": ["FINCA LA FEDERICA"]
+        }
+      ]
+    },
+    "CAFÉ OASIS DE SAMDA": {
+      "total_citas": 3,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["CAFÉ CAMPOHERMOSO", "RUNA COFFEE"]
         },
         {
           "horario": "09:45 - 10:00",
           "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "ROJO PASIÓN"
-          ]
+          "otros_vendedores": ["CAFÉ ERMITAÑO", "CAFÉ VALLE DE LIRIO"]
+        },
+        {
+          "horario": "10:30 - 10:45",
+          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
+          "otros_vendedores": ["RUNA COFFEE"]
         }
       ]
     },
@@ -651,32 +573,14 @@
       "total_citas": 2,
       "citas": [
         {
-          "horario": "08:30 - 08:45",
-          "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "CAFÉ MURAL",
-            "EL ORGASMO DE LOS SAINOS"
-          ]
+          "horario": "09:15 - 09:30",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["SIETE LEONES CAFÉ", "CAFE MIS TAITAS"]
         },
         {
-          "horario": "08:45 - 09:00",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "FINCA EL CASCABEL"
-          ]
-        }
-      ]
-    },
-    "CAFE MIS TAITAS": {
-      "total_citas": 1,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFE FINCA MI TERRON",
-            "CAFÉ TRADICIÓN NEIRA"
-          ]
+          "horario": "09:30 - 09:45",
+          "comprador": "COLFRESH COFFEE",
+          "otros_vendedores": ["DELUXE COFFEE"]
         }
       ]
     },
@@ -686,110 +590,47 @@
         {
           "horario": "08:30 - 08:45",
           "comprador": "ARMANDO VELÁSQUEZ",
-          "otros_vendedores": [
-            "CINCO DAMAS",
-            "DON HEBER CAFÉ"
-          ]
+          "otros_vendedores": ["CINCO DAMAS", "LADERAS DEL TAPIAS"]
         },
         {
           "horario": "08:45 - 09:00",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "LA PATRONA"
-          ]
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["CAFÉ ARENILLO"]
         },
         {
-          "horario": "09:45 - 10:00",
+          "horario": "09:30 - 09:45",
           "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "DELUXE COFFEE",
-            "CAFÉ MURAL"
-          ]
+          "otros_vendedores": ["CAFÉ VALLE DE LIRIO", "FINCA LA RIVERA"]
+        },
+        {
+          "horario": "10:00 - 10:15",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["CAFE FINCA MI TERRON"]
         },
         {
           "horario": "10:15 - 10:30",
           "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
-          "otros_vendedores": [
-            "ROJO PASIÓN"
-          ]
-        },
-        {
-          "horario": "10:45 - 11:00",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "CAFÉ OASIS DE SAMDA",
-            "ROJO PASIÓN"
-          ]
+          "otros_vendedores": ["ROJO PASIÓN"]
         }
       ]
     },
-    "CAFE FINCA MI TERRON": {
-      "total_citas": 4,
+    "CAFÉ ERMITAÑO": {
+      "total_citas": 3,
       "citas": [
         {
           "horario": "08:30 - 08:45",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFE MIS TAITAS",
-            "CAFÉ TRADICIÓN NEIRA"
-          ]
-        },
-        {
-          "horario": "09:15 - 09:30",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "DON HEBER CAFÉ",
-            "FINCA LA RIVERA"
-          ]
+          "comprador": "COLFRESH COFFEE",
+          "otros_vendedores": ["CAFÉ MATILDE 1960"]
         },
         {
           "horario": "09:45 - 10:00",
-          "comprador": "ARMANDO VELÁSQUEZ",
-          "otros_vendedores": [
-            "RUNA COFFEE"
-          ]
-        },
-        {
-          "horario": "10:00 - 10:15",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "CAFÉ VALLE DE LIRIO",
-            "DE SOL A SOL"
-          ]
-        }
-      ]
-    },
-    "CAFÉ ORIGEN DE LA MONTAÑA": {
-      "total_citas": 4,
-      "citas": [
-        {
-          "horario": "11:15 - 11:30",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA",
-            "CAFÉ VALLE DE LIRIO"
-          ]
-        },
-        {
-          "horario": "11:30 - 11:45",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "CAFÉ ARENILLO"
-          ]
-        },
-        {
-          "horario": "11:45 - 12:00",
           "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA"
-          ]
+          "otros_vendedores": ["CAFÉ OASIS DE SAMDA", "CAFÉ VALLE DE LIRIO"]
         },
         {
-          "horario": "12:00 - 12:15",
-          "comprador": "PROCOLOMBIA",
-          "otros_vendedores": [
-            "CAFÉ VALLE DE LIRIO"
-          ]
+          "horario": "10:15 - 10:30",
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["FINCA LA RIVERA"]
         }
       ]
     },
@@ -799,61 +640,152 @@
         {
           "horario": "08:30 - 08:45",
           "comprador": "REGIONAL S.A.S",
-          "otros_vendedores": [
-            "CAFÉ MATILDE 1960"
-          ]
+          "otros_vendedores": ["DON HEBER CAFÉ", "EL ORGASMO DE LOS SAINOS"]
         },
         {
           "horario": "08:45 - 09:00",
-          "comprador": "ARMANDO VELÁSQUEZ",
-          "otros_vendedores": [
-            "CAFÉ VALLE DE LIRIO"
-          ]
+          "comprador": "CAFÉ MOLINA",
+          "otros_vendedores": ["ROJO PASIÓN"]
         },
         {
           "horario": "09:00 - 09:15",
-          "comprador": "CAFÉ MOLINA",
-          "otros_vendedores": [
-            "EL ORGASMO DE LOS SAINOS"
-          ]
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["LADERAS DEL TAPIAS"]
         },
         {
           "horario": "09:15 - 09:30",
           "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "CAFÉ VALLE DE LIRIO",
-            "CAFÉ MURAL"
-          ]
+          "otros_vendedores": ["FINCA LA FEDERICA", "CAFÉ TRADICIÓN NEIRA"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "comprador": "COLFRESH COFFEE",
+          "otros_vendedores": ["LA PATRONA"]
         },
         {
           "horario": "09:45 - 10:00",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "FINCA EL CASCABEL",
-            "CAFÉ MURAL"
-          ]
-        },
-        {
-          "horario": "10:00 - 10:15",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "FINCA LA RIVERA",
-            "CAFÉ ARENILLO"
-          ]
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["CAFÉ AGUA VIVA", "CAFE FINCA MI TERRON"]
         },
         {
           "horario": "10:15 - 10:30",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "RUNA COFFEE"
-          ]
+          "comprador": "ARMANDO VELÁSQUEZ",
+          "otros_vendedores": ["CAFÉ AGUA VIVA", "CAFÉ MATILDE 1960"]
         },
         {
           "horario": "10:30 - 10:45",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["FINCA LA FEDERICA", "CAFÉ MATILDE 1960"]
+        }
+      ]
+    },
+    "RUNA COFFEE": {
+      "total_citas": 8,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["CAFÉ CAMPOHERMOSO", "CAFÉ OASIS DE SAMDA"]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["CINCO DAMAS"]
+        },
+        {
+          "horario": "09:15 - 09:30",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["CAFE FINCA MI TERRON"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "comprador": "CAFÉ MOLINA",
+          "otros_vendedores": ["FINCA LA RIVERA"]
+        },
+        {
+          "horario": "10:00 - 10:15",
           "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "FINCA LA RIVERA"
-          ]
+          "otros_vendedores": ["FINCA LA RIVERA"]
+        },
+        {
+          "horario": "10:15 - 10:30",
+          "comprador": "NEIRA YORK COFFEE",
+          "otros_vendedores": ["CAFÉ LA AVANZANTE"]
+        },
+        {
+          "horario": "10:30 - 10:45",
+          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
+          "otros_vendedores": ["CAFÉ OASIS DE SAMDA"]
+        },
+        {
+          "horario": "10:45 - 11:00",
+          "comprador": "ARMANDO VELÁSQUEZ",
+          "otros_vendedores": ["CAFÉ VALLE DE LIRIO"]
+        }
+      ]
+    },
+    "CAFE GRANEAO": {
+      "total_citas": 1,
+      "citas": [
+        {
+          "horario": "10:15 - 10:30",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["SANTA CRUZ DE LAS AGUAS", "CAFÉ VALLE DE LIRIO"]
+        }
+      ]
+    },
+    "CAFÉ VALLE DE LIRIO": {
+      "total_citas": 10,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "comprador": "CAFÉ MOLINA",
+          "otros_vendedores": ["DE SOL A SOL"]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "comprador": "COLFRESH COFFEE",
+          "otros_vendedores": ["CAFÉ AGUA VIVA"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "comprador": "REGIONAL S.A.S",
+          "otros_vendedores": ["CAFE FINCA MI TERRON"]
+        },
+        {
+          "horario": "09:15 - 09:30",
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["DE SOL A SOL"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["FINCA EL CASCABEL", "FINCA LA RIVERA"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["CAFÉ ERMITAÑO", "CAFÉ OASIS DE SAMDA"]
+        },
+        {
+          "horario": "10:00 - 10:15",
+          "comprador": "PROCOLOMBIA",
+          "otros_vendedores": ["EL ORGASMO DE LOS SAINOS"]
+        },
+        {
+          "horario": "10:15 - 10:30",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["SANTA CRUZ DE LAS AGUAS", "CAFE GRANEAO"]
+        },
+        {
+          "horario": "10:45 - 11:00",
+          "comprador": "ARMANDO VELÁSQUEZ",
+          "otros_vendedores": ["RUNA COFFEE"]
+        },
+        {
+          "horario": "11:00 - 11:15",
+          "comprador": "NEIRA YORK COFFEE",
+          "otros_vendedores": ["CAFÉ MURAL"]
         }
       ]
     },
@@ -863,102 +795,220 @@
         {
           "horario": "08:30 - 08:45",
           "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "CAFÉ ERMITAÑO"
-          ]
+          "otros_vendedores": ["CAFÉ LA AVANZANTE"]
         },
         {
-          "horario": "09:00 - 09:15",
+          "horario": "08:45 - 09:00",
           "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "D'CLEO COFFEE"
-          ]
+          "otros_vendedores": ["VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"]
         },
         {
           "horario": "10:00 - 10:15",
           "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA",
-            "CAFÉ TRADICIÓN NEIRA"
-          ]
+          "otros_vendedores": ["SANTA CRUZ DE LAS AGUAS", "CAFÉ MATILDE 1960"]
         }
       ]
     },
-    "CAFÉ TRADICIÓN NEIRA": {
-      "total_citas": 4,
+    "CAFÉ MATILDE 1960": {
+      "total_citas": 6,
       "citas": [
         {
           "horario": "08:30 - 08:45",
+          "comprador": "COLFRESH COFFEE",
+          "otros_vendedores": ["CAFÉ ERMITAÑO"]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "comprador": "REGIONAL S.A.S",
+          "otros_vendedores": ["FINCA LA FEDERICA"]
+        },
+        {
+          "horario": "10:00 - 10:15",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["CAFÉ GRANADA", "SANTA CRUZ DE LAS AGUAS"]
+        },
+        {
+          "horario": "10:15 - 10:30",
+          "comprador": "ARMANDO VELÁSQUEZ",
+          "otros_vendedores": ["DELUXE COFFEE", "CAFÉ AGUA VIVA"]
+        },
+        {
+          "horario": "10:30 - 10:45",
           "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFE FINCA MI TERRON",
-            "CAFE MIS TAITAS"
-          ]
+          "otros_vendedores": ["FINCA LA FEDERICA", "DELUXE COFFEE"]
+        },
+        {
+          "horario": "11:30 - 11:45",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["CAFÉ ORIGEN DE LA MONTAÑA"]
+        }
+      ]
+    },
+    "CINCO DAMAS": {
+      "total_citas": 3,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "comprador": "ARMANDO VELÁSQUEZ",
+          "otros_vendedores": ["FINCA EL CASCABEL", "LADERAS DEL TAPIAS"]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["RUNA COFFEE"]
+        },
+        {
+          "horario": "10:30 - 10:45",
+          "comprador": "NEIRA YORK COFFEE",
+          "otros_vendedores": ["FINCA LA RIVERA"]
+        }
+      ]
+    },
+    "FINCA LA RIVERA": {
+      "total_citas": 9,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "comprador": "PROCOLOMBIA",
+          "otros_vendedores": ["CAFE ARTE", "CAFE FINCA MI TERRON"]
         },
         {
           "horario": "09:00 - 09:15",
           "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "CAFÉ LA AVANZANTE"
-          ]
+          "otros_vendedores": ["ROJO PASIÓN"]
+        },
+        {
+          "horario": "09:15 - 09:30",
+          "comprador": "REGIONAL S.A.S",
+          "otros_vendedores": ["CAFÉ AGUA VIVA"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["CAFÉ VALLE DE LIRIO", "FINCA EL CASCABEL"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "comprador": "CAFÉ MOLINA",
+          "otros_vendedores": ["RUNA COFFEE"]
         },
         {
           "horario": "10:00 - 10:15",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "CAFÉ GRANADA",
-            "CAFÉ AGUA VIVA"
-          ]
+          "comprador": "COLFRESH COFFEE",
+          "otros_vendedores": ["RUNA COFFEE"]
         },
         {
-          "horario": "10:45 - 11:00",
-          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
+          "horario": "10:15 - 10:30",
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["CAFÉ ERMITAÑO"]
+        },
+        {
+          "horario": "10:30 - 10:45",
+          "comprador": "NEIRA YORK COFFEE",
+          "otros_vendedores": ["CINCO DAMAS"]
+        },
+        {
+          "horario": "11:45 - 12:00",
+          "comprador": "INTERLINK2AMERICAS",
           "otros_vendedores": [
-            "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"
+            "CAFÉ ORIGEN DE LA MONTAÑA",
+            "LADERAS DEL TAPIAS"
           ]
         }
       ]
     },
-    "CAFÉ ARENILLO": {
-      "total_citas": 5,
+    "CAFE MIS TAITAS": {
+      "total_citas": 1,
+      "citas": [
+        {
+          "horario": "09:15 - 09:30",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["SIETE LEONES CAFÉ", "LA PATRONA"]
+        }
+      ]
+    },
+    "CAFÉ CAMPOHERMOSO": {
+      "total_citas": 2,
       "citas": [
         {
           "horario": "08:30 - 08:45",
           "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA"
-          ]
+          "otros_vendedores": ["CAFÉ OASIS DE SAMDA", "RUNA COFFEE"]
+        },
+        {
+          "horario": "10:45 - 11:00",
+          "comprador": "NEIRA YORK COFFEE",
+          "otros_vendedores": ["ROJO PASIÓN"]
+        }
+      ]
+    },
+    "CAFÉ MURAL": {
+      "total_citas": 5,
+      "citas": [
+        {
+          "horario": "08:45 - 09:00",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["CAFÉ TRADICIÓN NEIRA"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["DON HEBER CAFÉ"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["DON HEBER CAFÉ", "LADERAS DEL TAPIAS"]
         },
         {
           "horario": "09:45 - 10:00",
           "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA",
-            "CAFÉ VALLE DE LIRIO"
-          ]
+          "otros_vendedores": ["FINCA LA FEDERICA"]
         },
         {
-          "horario": "10:00 - 10:15",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "FINCA LA RIVERA",
-            "DELUXE COFFEE"
-          ]
+          "horario": "11:00 - 11:15",
+          "comprador": "NEIRA YORK COFFEE",
+          "otros_vendedores": ["CAFÉ VALLE DE LIRIO"]
+        }
+      ]
+    },
+    "FINCA LA FEDERICA": {
+      "total_citas": 7,
+      "citas": [
+        {
+          "horario": "08:45 - 09:00",
+          "comprador": "REGIONAL S.A.S",
+          "otros_vendedores": ["CAFÉ MATILDE 1960"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "comprador": "CAFÉ MOLINA",
+          "otros_vendedores": ["CAFÉ AGUA VIVA"]
+        },
+        {
+          "horario": "09:15 - 09:30",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["DELUXE COFFEE", "CAFÉ TRADICIÓN NEIRA"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "comprador": "ARMANDO VELÁSQUEZ",
+          "otros_vendedores": ["DE SOL A SOL"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "comprador": "COLFRESH COFFEE",
+          "otros_vendedores": ["CAFÉ MURAL"]
         },
         {
           "horario": "10:30 - 10:45",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "SIETE LEONES CAFÉ",
-            "CAFÉ OASIS DE SAMDA"
-          ]
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["DELUXE COFFEE", "CAFÉ MATILDE 1960"]
         },
         {
-          "horario": "11:30 - 11:45",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "CAFÉ ORIGEN DE LA MONTAÑA"
-          ]
+          "horario": "10:45 - 11:00",
+          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
+          "otros_vendedores": ["CAFÉ TRADICIÓN NEIRA"]
         }
       ]
     },
@@ -971,117 +1021,182 @@
           "otros_vendedores": []
         },
         {
-          "horario": "08:45 - 09:00",
-          "comprador": "PROCOLOMBIA",
-          "otros_vendedores": [
-            "EL ORGASMO DE LOS SAINOS"
-          ]
+          "horario": "09:30 - 09:45",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["CAFÉ TRADICIÓN NEIRA", "CAFE ARTE"]
         },
         {
-          "horario": "09:00 - 09:15",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFÉ GRANADA"
-          ]
+          "horario": "12:00 - 12:15",
+          "comprador": "PROCOLOMBIA",
+          "otros_vendedores": ["CAFÉ ORIGEN DE LA MONTAÑA"]
         }
       ]
     },
-    "CINCO DAMAS": {
+    "CAFÉ ORIGEN DE LA MONTAÑA": {
+      "total_citas": 4,
+      "citas": [
+        {
+          "horario": "11:15 - 11:30",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["CAFÉ AGUA VIVA", "DON HEBER CAFÉ"]
+        },
+        {
+          "horario": "11:30 - 11:45",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["CAFÉ MATILDE 1960"]
+        },
+        {
+          "horario": "11:45 - 12:00",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["FINCA LA RIVERA", "LADERAS DEL TAPIAS"]
+        },
+        {
+          "horario": "12:00 - 12:15",
+          "comprador": "PROCOLOMBIA",
+          "otros_vendedores": ["D'CLEO COFFEE"]
+        }
+      ]
+    },
+    "SIETE LEONES CAFÉ": {
       "total_citas": 3,
       "citas": [
         {
-          "horario": "08:30 - 08:45",
-          "comprador": "ARMANDO VELÁSQUEZ",
-          "otros_vendedores": [
-            "DON HEBER CAFÉ",
-            "FINCA EL CASCABEL"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "DON HEBER CAFÉ"
-          ]
-        },
-        {
-          "horario": "10:45 - 11:00",
-          "comprador": "NEIRA YORK COFFEE",
-          "otros_vendedores": [
-            "RUNA COFFEE"
-          ]
-        }
-      ]
-    },
-    "FINCA LA RIVERA": {
-      "total_citas": 9,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "comprador": "PROCOLOMBIA",
-          "otros_vendedores": [
-            "CAFE ARTE",
-            "CAFÉ LA AVANZANTE"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "CAFÉ MOLINA",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "CAFÉ CAMPOHERMOSO"
-          ]
-        },
-        {
           "horario": "09:15 - 09:30",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "CAFE FINCA MI TERRON",
-            "DON HEBER CAFÉ"
-          ]
-        },
-        {
-          "horario": "09:30 - 09:45",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "RUNA COFFEE",
-            "CAFÉ MATILDE 1960"
-          ]
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["LA PATRONA", "CAFE MIS TAITAS"]
         },
         {
           "horario": "09:45 - 10:00",
-          "comprador": "REGIONAL S.A.S",
+          "comprador": "BOX BRAND",
           "otros_vendedores": [
-            "CAFE ARTE"
+            "ROJO PASIÓN",
+            "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"
           ]
         },
         {
           "horario": "10:00 - 10:15",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["CAFÉ AGUA VIVA", "CAFÉ ARENILLO"]
+        }
+      ]
+    },
+    "CAFE ARTE": {
+      "total_citas": 2,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "comprador": "PROCOLOMBIA",
+          "otros_vendedores": ["FINCA LA RIVERA", "CAFE FINCA MI TERRON"]
+        },
+        {
+          "horario": "09:30 - 09:45",
           "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "DELUXE COFFEE",
-            "CAFÉ ARENILLO"
-          ]
+          "otros_vendedores": ["CAFÉ TRADICIÓN NEIRA", "D'CLEO COFFEE"]
+        }
+      ]
+    },
+    "CAFÉ AGUA VIVA": {
+      "total_citas": 10,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["CAFÉ ARENILLO"]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "comprador": "COLFRESH COFFEE",
+          "otros_vendedores": ["CAFÉ VALLE DE LIRIO"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "comprador": "CAFÉ MOLINA",
+          "otros_vendedores": ["FINCA LA FEDERICA"]
+        },
+        {
+          "horario": "09:15 - 09:30",
+          "comprador": "REGIONAL S.A.S",
+          "otros_vendedores": ["FINCA LA RIVERA"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["CAFE FINCA MI TERRON", "DELUXE COFFEE"]
+        },
+        {
+          "horario": "10:00 - 10:15",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["CAFÉ ARENILLO", "SIETE LEONES CAFÉ"]
         },
         {
           "horario": "10:15 - 10:30",
-          "comprador": "NEIRA YORK COFFEE",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA"
-          ]
+          "comprador": "ARMANDO VELÁSQUEZ",
+          "otros_vendedores": ["DELUXE COFFEE", "CAFÉ MATILDE 1960"]
         },
         {
-          "horario": "10:30 - 10:45",
-          "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "DELUXE COFFEE"
-          ]
+          "horario": "11:00 - 11:15",
+          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
+          "otros_vendedores": ["VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"]
+        },
+        {
+          "horario": "11:15 - 11:30",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["DON HEBER CAFÉ", "CAFÉ ORIGEN DE LA MONTAÑA"]
+        },
+        {
+          "horario": "11:30 - 11:45",
+          "comprador": "NEIRA YORK COFFEE",
+          "otros_vendedores": ["DE SOL A SOL"]
+        }
+      ]
+    },
+    "LADERAS DEL TAPIAS": {
+      "total_citas": 4,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "comprador": "ARMANDO VELÁSQUEZ",
+          "otros_vendedores": ["CINCO DAMAS", "FINCA EL CASCABEL"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["DELUXE COFFEE"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["DON HEBER CAFÉ", "CAFÉ MURAL"]
+        },
+        {
+          "horario": "11:45 - 12:00",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["CAFÉ ORIGEN DE LA MONTAÑA", "FINCA LA RIVERA"]
+        }
+      ]
+    },
+    "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS": {
+      "total_citas": 4,
+      "citas": [
+        {
+          "horario": "08:45 - 09:00",
+          "comprador": "INTERLINK2AMERICAS",
+          "otros_vendedores": ["CAFÉ GRANADA"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "comprador": "REGIONAL S.A.S",
+          "otros_vendedores": ["ROJO PASIÓN"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "comprador": "BOX BRAND",
+          "otros_vendedores": ["SIETE LEONES CAFÉ", "ROJO PASIÓN"]
+        },
+        {
+          "horario": "11:00 - 11:15",
+          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
+          "otros_vendedores": ["CAFÉ AGUA VIVA"]
         }
       ]
     },
@@ -1091,161 +1206,27 @@
         {
           "horario": "08:30 - 08:45",
           "comprador": "CAFÉ MOLINA",
-          "otros_vendedores": [
-            "CAFÉ VALLE DE LIRIO"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "CAFÉ MATILDE 1960"
-          ]
+          "otros_vendedores": ["CAFÉ VALLE DE LIRIO"]
         },
         {
           "horario": "09:00 - 09:15",
-          "comprador": "ARMANDO VELÁSQUEZ",
-          "otros_vendedores": [
-            "LADERAS DEL TAPIAS"
-          ]
+          "comprador": "COLFRESH COFFEE",
+          "otros_vendedores": ["CAFÉ ARENILLO", "EL ORGASMO DE LOS SAINOS"]
         },
         {
-          "horario": "10:00 - 10:15",
+          "horario": "09:15 - 09:30",
           "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "CAFE FINCA MI TERRON",
-            "CAFÉ VALLE DE LIRIO"
-          ]
+          "otros_vendedores": ["CAFÉ VALLE DE LIRIO"]
         },
         {
-          "horario": "11:15 - 11:30",
+          "horario": "09:30 - 09:45",
+          "comprador": "ARMANDO VELÁSQUEZ",
+          "otros_vendedores": ["FINCA LA FEDERICA"]
+        },
+        {
+          "horario": "11:30 - 11:45",
           "comprador": "NEIRA YORK COFFEE",
-          "otros_vendedores": [
-            "CAFÉ MURAL"
-          ]
-        }
-      ]
-    },
-    "SANTA CRUZ DE LAS AGUAS": {
-      "total_citas": 3,
-      "citas": [
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "CAFÉ ERMITAÑO"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "CAFÉ MATILDE 1960"
-          ]
-        },
-        {
-          "horario": "09:15 - 09:30",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "LADERAS DEL TAPIAS"
-          ]
-        }
-      ]
-    },
-    "DON HEBER CAFÉ": {
-      "total_citas": 5,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "comprador": "ARMANDO VELÁSQUEZ",
-          "otros_vendedores": [
-            "CINCO DAMAS",
-            "FINCA EL CASCABEL"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "CINCO DAMAS"
-          ]
-        },
-        {
-          "horario": "09:15 - 09:30",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "CAFE FINCA MI TERRON",
-            "FINCA LA RIVERA"
-          ]
-        },
-        {
-          "horario": "09:30 - 09:45",
-          "comprador": "REGIONAL S.A.S",
-          "otros_vendedores": [
-            "EL ORGASMO DE LOS SAINOS"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFE GRANEAO",
-            "CAFÉ MATILDE 1960"
-          ]
-        }
-      ]
-    },
-    "SIETE LEONES CAFÉ": {
-      "total_citas": 3,
-      "citas": [
-        {
-          "horario": "09:30 - 09:45",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFÉ MURAL",
-            "CAFE ARTE"
-          ]
-        },
-        {
-          "horario": "10:15 - 10:30",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "CAFE ARTE"
-          ]
-        },
-        {
-          "horario": "10:30 - 10:45",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "CAFÉ ARENILLO",
-            "CAFÉ OASIS DE SAMDA"
-          ]
-        }
-      ]
-    },
-    "CAFÉ ERMITAÑO": {
-      "total_citas": 3,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "CAFÉ GRANADA"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "SANTA CRUZ DE LAS AGUAS"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "RUNA COFFEE"
-          ]
+          "otros_vendedores": ["CAFÉ AGUA VIVA"]
         }
       ]
     },
@@ -1254,941 +1235,113 @@
       "citas": [
         {
           "horario": "08:45 - 09:00",
+          "comprador": "CAFÉ MOLINA",
+          "otros_vendedores": ["DELUXE COFFEE"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["FINCA LA RIVERA"]
+        },
+        {
+          "horario": "09:30 - 09:45",
           "comprador": "REGIONAL S.A.S",
+          "otros_vendedores": ["VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "comprador": "BOX BRAND",
           "otros_vendedores": [
+            "SIETE LEONES CAFÉ",
             "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"
           ]
         },
         {
-          "horario": "09:15 - 09:30",
-          "comprador": "CAFÉ MOLINA",
-          "otros_vendedores": [
-            "RUNA COFFEE"
-          ]
-        },
-        {
-          "horario": "09:30 - 09:45",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS",
-            "CAFÉ VALLE DE LIRIO"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "LADERAS DEL TAPIAS"
-          ]
-        },
-        {
           "horario": "10:15 - 10:30",
           "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
-          "otros_vendedores": [
-            "FINCA EL CASCABEL"
-          ]
-        },
-        {
-          "horario": "10:45 - 11:00",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "CAFÉ OASIS DE SAMDA",
-            "FINCA EL CASCABEL"
-          ]
-        },
-        {
-          "horario": "11:00 - 11:15",
-          "comprador": "NEIRA YORK COFFEE",
-          "otros_vendedores": [
-            "CAFÉ VALLE DE LIRIO"
-          ]
-        }
-      ]
-    },
-    "RUNA COFFEE": {
-      "total_citas": 8,
-      "citas": [
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "LADERAS DEL TAPIAS"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "CAFÉ ERMITAÑO"
-          ]
-        },
-        {
-          "horario": "09:15 - 09:30",
-          "comprador": "CAFÉ MOLINA",
-          "otros_vendedores": [
-            "ROJO PASIÓN"
-          ]
-        },
-        {
-          "horario": "09:30 - 09:45",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "CAFÉ MATILDE 1960",
-            "FINCA LA RIVERA"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "comprador": "ARMANDO VELÁSQUEZ",
-          "otros_vendedores": [
-            "CAFE FINCA MI TERRON"
-          ]
-        },
-        {
-          "horario": "10:15 - 10:30",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "DELUXE COFFEE"
-          ]
+          "otros_vendedores": ["FINCA EL CASCABEL"]
         },
         {
           "horario": "10:30 - 10:45",
-          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
-          "otros_vendedores": [
-            "CAFÉ MATILDE 1960"
-          ]
+          "comprador": "FLOR A FRUTO",
+          "otros_vendedores": ["SANTA CRUZ DE LAS AGUAS"]
         },
         {
           "horario": "10:45 - 11:00",
           "comprador": "NEIRA YORK COFFEE",
-          "otros_vendedores": [
-            "CINCO DAMAS"
-          ]
+          "otros_vendedores": ["CAFÉ CAMPOHERMOSO"]
         }
       ]
     },
-    "CAFÉ OASIS DE SAMDA": {
-      "total_citas": 3,
-      "citas": [
-        {
-          "horario": "10:30 - 10:45",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "CAFÉ ARENILLO",
-            "SIETE LEONES CAFÉ"
-          ]
-        },
-        {
-          "horario": "10:45 - 11:00",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "FINCA EL CASCABEL",
-            "ROJO PASIÓN"
-          ]
-        },
-        {
-          "horario": "11:00 - 11:15",
-          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA"
-          ]
-        }
-      ]
-    },
-    "CAFÉ AGUA VIVA": {
-      "total_citas": 10,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "CAFÉ ARENILLO"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "CAFÉ MOLINA",
-          "otros_vendedores": [
-            "FINCA LA RIVERA"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "comprador": "REGIONAL S.A.S",
-          "otros_vendedores": [
-            "CAFÉ VALLE DE LIRIO"
-          ]
-        },
-        {
-          "horario": "09:15 - 09:30",
-          "comprador": "ARMANDO VELÁSQUEZ",
-          "otros_vendedores": [
-            "CAFÉ MATILDE 1960"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "CAFÉ VALLE DE LIRIO",
-            "CAFÉ ARENILLO"
-          ]
-        },
-        {
-          "horario": "10:00 - 10:15",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "CAFÉ GRANADA",
-            "CAFÉ TRADICIÓN NEIRA"
-          ]
-        },
-        {
-          "horario": "10:15 - 10:30",
-          "comprador": "NEIRA YORK COFFEE",
-          "otros_vendedores": [
-            "FINCA LA RIVERA"
-          ]
-        },
-        {
-          "horario": "11:00 - 11:15",
-          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
-          "otros_vendedores": [
-            "CAFÉ OASIS DE SAMDA"
-          ]
-        },
-        {
-          "horario": "11:15 - 11:30",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFÉ ORIGEN DE LA MONTAÑA",
-            "CAFÉ VALLE DE LIRIO"
-          ]
-        },
-        {
-          "horario": "11:45 - 12:00",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "CAFÉ ORIGEN DE LA MONTAÑA"
-          ]
-        }
-      ]
-    },
-    "CAFÉ MURAL": {
-      "total_citas": 5,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "EL ORGASMO DE LOS SAINOS",
-            "LA PATRONA"
-          ]
-        },
-        {
-          "horario": "09:15 - 09:30",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "DELUXE COFFEE",
-            "CAFÉ VALLE DE LIRIO"
-          ]
-        },
-        {
-          "horario": "09:30 - 09:45",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "SIETE LEONES CAFÉ",
-            "CAFE ARTE"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "FINCA EL CASCABEL",
-            "DELUXE COFFEE"
-          ]
-        },
-        {
-          "horario": "11:15 - 11:30",
-          "comprador": "NEIRA YORK COFFEE",
-          "otros_vendedores": [
-            "DE SOL A SOL"
-          ]
-        }
-      ]
-    },
-    "CAFÉ VALLE DE LIRIO": {
-      "total_citas": 10,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "comprador": "CAFÉ MOLINA",
-          "otros_vendedores": [
-            "DE SOL A SOL"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "ARMANDO VELÁSQUEZ",
-          "otros_vendedores": [
-            "DELUXE COFFEE"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "comprador": "REGIONAL S.A.S",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA"
-          ]
-        },
-        {
-          "horario": "09:15 - 09:30",
-          "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "DELUXE COFFEE",
-            "CAFÉ MURAL"
-          ]
-        },
-        {
-          "horario": "09:30 - 09:45",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS",
-            "ROJO PASIÓN"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA",
-            "CAFÉ ARENILLO"
-          ]
-        },
-        {
-          "horario": "10:00 - 10:15",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "CAFE FINCA MI TERRON",
-            "DE SOL A SOL"
-          ]
-        },
-        {
-          "horario": "11:00 - 11:15",
-          "comprador": "NEIRA YORK COFFEE",
-          "otros_vendedores": [
-            "ROJO PASIÓN"
-          ]
-        },
-        {
-          "horario": "11:15 - 11:30",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA",
-            "CAFÉ ORIGEN DE LA MONTAÑA"
-          ]
-        },
-        {
-          "horario": "12:00 - 12:15",
-          "comprador": "PROCOLOMBIA",
-          "otros_vendedores": [
-            "CAFÉ ORIGEN DE LA MONTAÑA"
-          ]
-        }
-      ]
-    },
-    "CAFÉ CAMPOHERMOSO": {
+    "CAFÉ LA AVANZANTE": {
       "total_citas": 2,
       "citas": [
         {
-          "horario": "09:00 - 09:15",
-          "comprador": "FLOR A FRUTO",
-          "otros_vendedores": [
-            "FINCA LA RIVERA"
-          ]
-        },
-        {
-          "horario": "10:30 - 10:45",
-          "comprador": "NEIRA YORK COFFEE",
-          "otros_vendedores": [
-            "CAFÉ LA AVANZANTE"
-          ]
-        }
-      ]
-    },
-    "CAFÉ MATILDE 1960": {
-      "total_citas": 7,
-      "citas": [
-        {
           "horario": "08:30 - 08:45",
-          "comprador": "REGIONAL S.A.S",
-          "otros_vendedores": [
-            "DELUXE COFFEE"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "COLFRESH COFFEE",
-          "otros_vendedores": [
-            "DE SOL A SOL"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "SANTA CRUZ DE LAS AGUAS"
-          ]
-        },
-        {
-          "horario": "09:15 - 09:30",
-          "comprador": "ARMANDO VELÁSQUEZ",
-          "otros_vendedores": [
-            "CAFÉ AGUA VIVA"
-          ]
-        },
-        {
-          "horario": "09:30 - 09:45",
           "comprador": "INMERSSO BOUTIQUE",
-          "otros_vendedores": [
-            "RUNA COFFEE",
-            "FINCA LA RIVERA"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFE GRANEAO",
-            "DON HEBER CAFÉ"
-          ]
-        },
-        {
-          "horario": "10:30 - 10:45",
-          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
-          "otros_vendedores": [
-            "RUNA COFFEE"
-          ]
-        }
-      ]
-    },
-    "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS": {
-      "total_citas": 4,
-      "citas": [
-        {
-          "horario": "08:45 - 09:00",
-          "comprador": "REGIONAL S.A.S",
-          "otros_vendedores": [
-            "ROJO PASIÓN"
-          ]
-        },
-        {
-          "horario": "09:30 - 09:45",
-          "comprador": "BOX BRAND",
-          "otros_vendedores": [
-            "CAFÉ VALLE DE LIRIO",
-            "ROJO PASIÓN"
-          ]
+          "otros_vendedores": ["CAFÉ GRANADA"]
         },
         {
           "horario": "10:15 - 10:30",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFÉ LA AVANZANTE"
-          ]
-        },
-        {
-          "horario": "10:45 - 11:00",
-          "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
-          "otros_vendedores": [
-            "CAFÉ TRADICIÓN NEIRA"
-          ]
-        }
-      ]
-    },
-    "CAFE GRANEAO": {
-      "total_citas": 1,
-      "citas": [
-        {
-          "horario": "09:45 - 10:00",
-          "comprador": "INTERLINK2AMERICAS",
-          "otros_vendedores": [
-            "CAFÉ MATILDE 1960",
-            "DON HEBER CAFÉ"
-          ]
+          "comprador": "NEIRA YORK COFFEE",
+          "otros_vendedores": ["RUNA COFFEE"]
         }
       ]
     }
   },
   "resumen_por_comprador": {
-    "FLOR A FRUTO": {
-      "total_citas": 6,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "vendedores": [
-            "CAFÉ AGUA VIVA",
-            "CAFÉ ARENILLO"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "vendedores": [
-            "SANTA CRUZ DE LAS AGUAS",
-            "CAFÉ ERMITAÑO"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "vendedores": [
-            "CAFÉ CAMPOHERMOSO",
-            "FINCA LA RIVERA"
-          ]
-        },
-        {
-          "horario": "10:00 - 10:15",
-          "vendedores": [
-            "CAFE FINCA MI TERRON",
-            "CAFÉ VALLE DE LIRIO",
-            "DE SOL A SOL"
-          ]
-        },
-        {
-          "horario": "10:15 - 10:30",
-          "vendedores": [
-            "RUNA COFFEE",
-            "DELUXE COFFEE"
-          ]
-        },
-        {
-          "horario": "10:45 - 11:00",
-          "vendedores": [
-            "CAFÉ OASIS DE SAMDA",
-            "FINCA EL CASCABEL",
-            "ROJO PASIÓN"
-          ]
-        }
-      ]
-    },
-    "BOX BRAND": {
+    "INTERLINK2AMERICAS": {
       "total_citas": 9,
       "citas": [
         {
           "horario": "08:30 - 08:45",
-          "vendedores": [
-            "D'CLEO COFFEE"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "vendedores": [
-            "LADERAS DEL TAPIAS",
-            "RUNA COFFEE"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "vendedores": [
-            "CAFÉ MATILDE 1960",
-            "SANTA CRUZ DE LAS AGUAS"
-          ]
-        },
-        {
-          "horario": "09:15 - 09:30",
-          "vendedores": [
-            "CAFE FINCA MI TERRON",
-            "DON HEBER CAFÉ",
-            "FINCA LA RIVERA"
-          ]
-        },
-        {
-          "horario": "09:30 - 09:45",
-          "vendedores": [
-            "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS",
-            "CAFÉ VALLE DE LIRIO",
-            "ROJO PASIÓN"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "vendedores": [
-            "FINCA EL CASCABEL",
-            "DELUXE COFFEE",
-            "CAFÉ MURAL"
-          ]
-        },
-        {
-          "horario": "10:00 - 10:15",
-          "vendedores": [
-            "CAFÉ GRANADA",
-            "CAFÉ AGUA VIVA",
-            "CAFÉ TRADICIÓN NEIRA"
-          ]
-        },
-        {
-          "horario": "10:15 - 10:30",
-          "vendedores": [
-            "SIETE LEONES CAFÉ",
-            "CAFE ARTE"
-          ]
-        },
-        {
-          "horario": "11:30 - 11:45",
-          "vendedores": [
-            "CAFÉ ARENILLO",
-            "CAFÉ ORIGEN DE LA MONTAÑA"
-          ]
-        }
-      ]
-    },
-    "CAFÉ MOLINA": {
-      "total_citas": 4,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "vendedores": [
-            "CAFÉ VALLE DE LIRIO",
-            "DE SOL A SOL"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "vendedores": [
-            "FINCA LA RIVERA",
-            "CAFÉ AGUA VIVA"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "vendedores": [
-            "EL ORGASMO DE LOS SAINOS",
-            "DELUXE COFFEE"
-          ]
-        },
-        {
-          "horario": "09:15 - 09:30",
-          "vendedores": [
-            "RUNA COFFEE",
-            "ROJO PASIÓN"
-          ]
-        }
-      ]
-    },
-    "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.": {
-      "total_citas": 4,
-      "citas": [
-        {
-          "horario": "10:15 - 10:30",
-          "vendedores": [
-            "ROJO PASIÓN",
-            "FINCA EL CASCABEL"
-          ]
-        },
-        {
-          "horario": "10:30 - 10:45",
-          "vendedores": [
-            "CAFÉ MATILDE 1960",
-            "RUNA COFFEE"
-          ]
-        },
-        {
-          "horario": "10:45 - 11:00",
-          "vendedores": [
-            "CAFÉ TRADICIÓN NEIRA",
-            "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"
-          ]
-        },
-        {
-          "horario": "11:00 - 11:15",
-          "vendedores": [
-            "CAFÉ AGUA VIVA",
-            "CAFÉ OASIS DE SAMDA"
-          ]
-        }
-      ]
-    },
-    "REGIONAL S.A.S": {
-      "total_citas": 5,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "vendedores": [
-            "CAFÉ MATILDE 1960",
-            "DELUXE COFFEE"
-          ]
+          "vendedores": ["CAFÉ AGUA VIVA", "CAFÉ ARENILLO"]
         },
         {
           "horario": "08:45 - 09:00",
           "vendedores": [
             "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS",
-            "ROJO PASIÓN"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "vendedores": [
-            "CAFÉ VALLE DE LIRIO",
-            "CAFÉ AGUA VIVA"
-          ]
-        },
-        {
-          "horario": "09:30 - 09:45",
-          "vendedores": [
-            "EL ORGASMO DE LOS SAINOS",
-            "DON HEBER CAFÉ"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "vendedores": [
-            "FINCA LA RIVERA",
-            "CAFE ARTE"
-          ]
-        }
-      ]
-    },
-    "INMERSSO BOUTIQUE": {
-      "total_citas": 8,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "vendedores": [
-            "CAFÉ ERMITAÑO",
             "CAFÉ GRANADA"
           ]
         },
         {
-          "horario": "08:45 - 09:00",
-          "vendedores": [
-            "CINCO DAMAS",
-            "DON HEBER CAFÉ"
-          ]
-        },
-        {
           "horario": "09:00 - 09:15",
-          "vendedores": [
-            "CAFÉ LA AVANZANTE",
-            "CAFÉ TRADICIÓN NEIRA"
-          ]
+          "vendedores": ["CAFÉ MURAL", "DON HEBER CAFÉ"]
         },
         {
           "horario": "09:15 - 09:30",
-          "vendedores": [
-            "DELUXE COFFEE",
-            "CAFÉ VALLE DE LIRIO",
-            "CAFÉ MURAL"
-          ]
+          "vendedores": ["SIETE LEONES CAFÉ", "LA PATRONA", "CAFE MIS TAITAS"]
         },
         {
           "horario": "09:30 - 09:45",
-          "vendedores": [
-            "RUNA COFFEE",
-            "CAFÉ MATILDE 1960",
-            "FINCA LA RIVERA"
-          ]
+          "vendedores": ["CAFÉ TRADICIÓN NEIRA", "CAFE ARTE", "D'CLEO COFFEE"]
         },
         {
-          "horario": "09:45 - 10:00",
+          "horario": "10:00 - 10:15",
+          "vendedores": ["CAFE FINCA MI TERRON", "FINCA EL CASCABEL"]
+        },
+        {
+          "horario": "10:15 - 10:30",
           "vendedores": [
-            "LADERAS DEL TAPIAS",
-            "ROJO PASIÓN"
+            "SANTA CRUZ DE LAS AGUAS",
+            "CAFÉ VALLE DE LIRIO",
+            "CAFE GRANEAO"
           ]
         },
         {
           "horario": "10:30 - 10:45",
           "vendedores": [
-            "CAFÉ ARENILLO",
-            "SIETE LEONES CAFÉ",
-            "CAFÉ OASIS DE SAMDA"
+            "FINCA LA FEDERICA",
+            "DELUXE COFFEE",
+            "CAFÉ MATILDE 1960"
           ]
         },
         {
           "horario": "11:45 - 12:00",
           "vendedores": [
             "CAFÉ ORIGEN DE LA MONTAÑA",
-            "CAFÉ AGUA VIVA"
-          ]
-        }
-      ]
-    },
-    "COLFRESH COFFEE": {
-      "total_citas": 5,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "vendedores": [
-            "CAFÉ MURAL",
-            "EL ORGASMO DE LOS SAINOS",
-            "LA PATRONA"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "vendedores": [
-            "CAFÉ MATILDE 1960",
-            "DE SOL A SOL"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "vendedores": [
-            "CAFÉ ERMITAÑO",
-            "RUNA COFFEE"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "vendedores": [
-            "CAFÉ AGUA VIVA",
-            "CAFÉ VALLE DE LIRIO",
-            "CAFÉ ARENILLO"
-          ]
-        },
-        {
-          "horario": "10:30 - 10:45",
-          "vendedores": [
             "FINCA LA RIVERA",
-            "DELUXE COFFEE"
-          ]
-        }
-      ]
-    },
-    "PROCOLOMBIA": {
-      "total_citas": 3,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "vendedores": [
-            "FINCA LA RIVERA",
-            "CAFE ARTE",
-            "CAFÉ LA AVANZANTE"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "vendedores": [
-            "D'CLEO COFFEE",
-            "EL ORGASMO DE LOS SAINOS"
-          ]
-        },
-        {
-          "horario": "12:00 - 12:15",
-          "vendedores": [
-            "CAFÉ ORIGEN DE LA MONTAÑA",
-            "CAFÉ VALLE DE LIRIO"
-          ]
-        }
-      ]
-    },
-    "INTERLINK2AMERICAS": {
-      "total_citas": 9,
-      "citas": [
-        {
-          "horario": "08:30 - 08:45",
-          "vendedores": [
-            "CAFE FINCA MI TERRON",
-            "CAFE MIS TAITAS",
-            "CAFÉ TRADICIÓN NEIRA"
-          ]
-        },
-        {
-          "horario": "08:45 - 09:00",
-          "vendedores": [
-            "FINCA EL CASCABEL",
-            "LA PATRONA"
-          ]
-        },
-        {
-          "horario": "09:00 - 09:15",
-          "vendedores": [
-            "D'CLEO COFFEE",
-            "CAFÉ GRANADA"
-          ]
-        },
-        {
-          "horario": "09:15 - 09:30",
-          "vendedores": [
-            "SANTA CRUZ DE LAS AGUAS",
             "LADERAS DEL TAPIAS"
-          ]
-        },
-        {
-          "horario": "09:30 - 09:45",
-          "vendedores": [
-            "SIETE LEONES CAFÉ",
-            "CAFÉ MURAL",
-            "CAFE ARTE"
-          ]
-        },
-        {
-          "horario": "09:45 - 10:00",
-          "vendedores": [
-            "CAFE GRANEAO",
-            "CAFÉ MATILDE 1960",
-            "DON HEBER CAFÉ"
-          ]
-        },
-        {
-          "horario": "10:00 - 10:15",
-          "vendedores": [
-            "FINCA LA RIVERA",
-            "DELUXE COFFEE",
-            "CAFÉ ARENILLO"
-          ]
-        },
-        {
-          "horario": "10:15 - 10:30",
-          "vendedores": [
-            "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS",
-            "CAFÉ LA AVANZANTE"
-          ]
-        },
-        {
-          "horario": "11:15 - 11:30",
-          "vendedores": [
-            "CAFÉ AGUA VIVA",
-            "CAFÉ ORIGEN DE LA MONTAÑA",
-            "CAFÉ VALLE DE LIRIO"
-          ]
-        }
-      ]
-    },
-    "NEIRA YORK COFFEE": {
-      "total_citas": 5,
-      "citas": [
-        {
-          "horario": "10:15 - 10:30",
-          "vendedores": [
-            "FINCA LA RIVERA",
-            "CAFÉ AGUA VIVA"
-          ]
-        },
-        {
-          "horario": "10:30 - 10:45",
-          "vendedores": [
-            "CAFÉ CAMPOHERMOSO",
-            "CAFÉ LA AVANZANTE"
-          ]
-        },
-        {
-          "horario": "10:45 - 11:00",
-          "vendedores": [
-            "CINCO DAMAS",
-            "RUNA COFFEE"
-          ]
-        },
-        {
-          "horario": "11:00 - 11:15",
-          "vendedores": [
-            "ROJO PASIÓN",
-            "CAFÉ VALLE DE LIRIO"
-          ]
-        },
-        {
-          "horario": "11:15 - 11:30",
-          "vendedores": [
-            "CAFÉ MURAL",
-            "DE SOL A SOL"
           ]
         }
       ]
@@ -2200,37 +1353,320 @@
           "horario": "08:30 - 08:45",
           "vendedores": [
             "CINCO DAMAS",
-            "DON HEBER CAFÉ",
-            "FINCA EL CASCABEL"
+            "FINCA EL CASCABEL",
+            "LADERAS DEL TAPIAS"
           ]
         },
         {
           "horario": "08:45 - 09:00",
-          "vendedores": [
-            "CAFÉ VALLE DE LIRIO",
-            "DELUXE COFFEE"
-          ]
+          "vendedores": ["DON HEBER CAFÉ", "CAFE FINCA MI TERRON"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "vendedores": ["FINCA LA FEDERICA", "DE SOL A SOL"]
+        },
+        {
+          "horario": "10:15 - 10:30",
+          "vendedores": ["DELUXE COFFEE", "CAFÉ AGUA VIVA", "CAFÉ MATILDE 1960"]
+        },
+        {
+          "horario": "10:45 - 11:00",
+          "vendedores": ["RUNA COFFEE", "CAFÉ VALLE DE LIRIO"]
+        }
+      ]
+    },
+    "BOX BRAND": {
+      "total_citas": 9,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "vendedores": ["D'CLEO COFFEE"]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "vendedores": ["CAFÉ MURAL", "CAFÉ TRADICIÓN NEIRA"]
         },
         {
           "horario": "09:00 - 09:15",
-          "vendedores": [
-            "LADERAS DEL TAPIAS",
-            "DE SOL A SOL"
-          ]
+          "vendedores": ["DELUXE COFFEE", "LADERAS DEL TAPIAS"]
         },
         {
           "horario": "09:15 - 09:30",
+          "vendedores": ["RUNA COFFEE", "CAFE FINCA MI TERRON"]
+        },
+        {
+          "horario": "09:30 - 09:45",
           "vendedores": [
-            "CAFÉ MATILDE 1960",
-            "CAFÉ AGUA VIVA"
+            "CAFÉ VALLE DE LIRIO",
+            "FINCA EL CASCABEL",
+            "FINCA LA RIVERA"
           ]
         },
         {
           "horario": "09:45 - 10:00",
           "vendedores": [
-            "RUNA COFFEE",
-            "CAFE FINCA MI TERRON"
+            "SIETE LEONES CAFÉ",
+            "ROJO PASIÓN",
+            "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"
           ]
+        },
+        {
+          "horario": "10:00 - 10:15",
+          "vendedores": [
+            "CAFÉ GRANADA",
+            "SANTA CRUZ DE LAS AGUAS",
+            "CAFÉ MATILDE 1960"
+          ]
+        },
+        {
+          "horario": "10:15 - 10:30",
+          "vendedores": ["CAFÉ ARENILLO", "EL ORGASMO DE LOS SAINOS"]
+        },
+        {
+          "horario": "11:15 - 11:30",
+          "vendedores": [
+            "CAFÉ AGUA VIVA",
+            "DON HEBER CAFÉ",
+            "CAFÉ ORIGEN DE LA MONTAÑA"
+          ]
+        }
+      ]
+    },
+    "COLFRESH COFFEE": {
+      "total_citas": 6,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "vendedores": ["CAFÉ ERMITAÑO", "CAFÉ MATILDE 1960"]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "vendedores": ["CAFÉ VALLE DE LIRIO", "CAFÉ AGUA VIVA"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "vendedores": [
+            "CAFÉ ARENILLO",
+            "DE SOL A SOL",
+            "EL ORGASMO DE LOS SAINOS"
+          ]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "vendedores": ["DELUXE COFFEE", "LA PATRONA"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "vendedores": ["CAFÉ MURAL", "FINCA LA FEDERICA"]
+        },
+        {
+          "horario": "10:00 - 10:15",
+          "vendedores": ["FINCA LA RIVERA", "RUNA COFFEE"]
+        }
+      ]
+    },
+    "REGIONAL S.A.S": {
+      "total_citas": 5,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "vendedores": [
+            "DELUXE COFFEE",
+            "DON HEBER CAFÉ",
+            "EL ORGASMO DE LOS SAINOS"
+          ]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "vendedores": ["CAFÉ MATILDE 1960", "FINCA LA FEDERICA"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "vendedores": ["CAFÉ VALLE DE LIRIO", "CAFE FINCA MI TERRON"]
+        },
+        {
+          "horario": "09:15 - 09:30",
+          "vendedores": ["FINCA LA RIVERA", "CAFÉ AGUA VIVA"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "vendedores": [
+            "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS",
+            "ROJO PASIÓN"
+          ]
+        }
+      ]
+    },
+    "INMERSSO BOUTIQUE": {
+      "total_citas": 8,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "vendedores": ["CAFÉ GRANADA", "CAFÉ LA AVANZANTE"]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "vendedores": ["RUNA COFFEE", "CINCO DAMAS"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "vendedores": ["FINCA LA RIVERA", "ROJO PASIÓN"]
+        },
+        {
+          "horario": "09:15 - 09:30",
+          "vendedores": [
+            "DELUXE COFFEE",
+            "FINCA LA FEDERICA",
+            "CAFÉ TRADICIÓN NEIRA"
+          ]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "vendedores": ["DON HEBER CAFÉ", "LADERAS DEL TAPIAS", "CAFÉ MURAL"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "vendedores": [
+            "CAFÉ ERMITAÑO",
+            "CAFÉ OASIS DE SAMDA",
+            "CAFÉ VALLE DE LIRIO"
+          ]
+        },
+        {
+          "horario": "10:00 - 10:15",
+          "vendedores": ["CAFÉ AGUA VIVA", "CAFÉ ARENILLO", "SIETE LEONES CAFÉ"]
+        },
+        {
+          "horario": "11:30 - 11:45",
+          "vendedores": ["CAFÉ MATILDE 1960", "CAFÉ ORIGEN DE LA MONTAÑA"]
+        }
+      ]
+    },
+    "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.": {
+      "total_citas": 4,
+      "citas": [
+        {
+          "horario": "10:15 - 10:30",
+          "vendedores": ["ROJO PASIÓN", "FINCA EL CASCABEL"]
+        },
+        {
+          "horario": "10:30 - 10:45",
+          "vendedores": ["CAFÉ OASIS DE SAMDA", "RUNA COFFEE"]
+        },
+        {
+          "horario": "10:45 - 11:00",
+          "vendedores": ["FINCA LA FEDERICA", "CAFÉ TRADICIÓN NEIRA"]
+        },
+        {
+          "horario": "11:00 - 11:15",
+          "vendedores": [
+            "CAFÉ AGUA VIVA",
+            "VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS"
+          ]
+        }
+      ]
+    },
+    "PROCOLOMBIA": {
+      "total_citas": 3,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "vendedores": ["FINCA LA RIVERA", "CAFE ARTE", "CAFE FINCA MI TERRON"]
+        },
+        {
+          "horario": "10:00 - 10:15",
+          "vendedores": ["CAFÉ VALLE DE LIRIO", "EL ORGASMO DE LOS SAINOS"]
+        },
+        {
+          "horario": "12:00 - 12:15",
+          "vendedores": ["CAFÉ ORIGEN DE LA MONTAÑA", "D'CLEO COFFEE"]
+        }
+      ]
+    },
+    "CAFÉ MOLINA": {
+      "total_citas": 5,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "vendedores": ["CAFÉ VALLE DE LIRIO", "DE SOL A SOL"]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "vendedores": ["DELUXE COFFEE", "ROJO PASIÓN"]
+        },
+        {
+          "horario": "09:00 - 09:15",
+          "vendedores": ["FINCA LA FEDERICA", "CAFÉ AGUA VIVA"]
+        },
+        {
+          "horario": "09:30 - 09:45",
+          "vendedores": ["EL ORGASMO DE LOS SAINOS", "CAFE FINCA MI TERRON"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "vendedores": ["RUNA COFFEE", "FINCA LA RIVERA"]
+        }
+      ]
+    },
+    "NEIRA YORK COFFEE": {
+      "total_citas": 5,
+      "citas": [
+        {
+          "horario": "10:15 - 10:30",
+          "vendedores": ["CAFÉ LA AVANZANTE", "RUNA COFFEE"]
+        },
+        {
+          "horario": "10:30 - 10:45",
+          "vendedores": ["CINCO DAMAS", "FINCA LA RIVERA"]
+        },
+        {
+          "horario": "10:45 - 11:00",
+          "vendedores": ["ROJO PASIÓN", "CAFÉ CAMPOHERMOSO"]
+        },
+        {
+          "horario": "11:00 - 11:15",
+          "vendedores": ["CAFÉ MURAL", "CAFÉ VALLE DE LIRIO"]
+        },
+        {
+          "horario": "11:30 - 11:45",
+          "vendedores": ["DE SOL A SOL", "CAFÉ AGUA VIVA"]
+        }
+      ]
+    },
+    "FLOR A FRUTO": {
+      "total_citas": 6,
+      "citas": [
+        {
+          "horario": "08:30 - 08:45",
+          "vendedores": [
+            "CAFÉ CAMPOHERMOSO",
+            "CAFÉ OASIS DE SAMDA",
+            "RUNA COFFEE"
+          ]
+        },
+        {
+          "horario": "08:45 - 09:00",
+          "vendedores": ["FINCA EL CASCABEL", "CAFÉ ARENILLO"]
+        },
+        {
+          "horario": "09:15 - 09:30",
+          "vendedores": ["CAFÉ VALLE DE LIRIO", "DE SOL A SOL"]
+        },
+        {
+          "horario": "09:45 - 10:00",
+          "vendedores": [
+            "CAFÉ AGUA VIVA",
+            "CAFE FINCA MI TERRON",
+            "DELUXE COFFEE"
+          ]
+        },
+        {
+          "horario": "10:15 - 10:30",
+          "vendedores": ["FINCA LA RIVERA", "CAFÉ ERMITAÑO"]
+        },
+        {
+          "horario": "10:30 - 10:45",
+          "vendedores": ["SANTA CRUZ DE LAS AGUAS", "ROJO PASIÓN"]
         }
       ]
     }
@@ -2371,7 +1807,7 @@
       },
       {
         "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
-        "cumplida": true
+        "cumplida": false
       },
       {
         "comprador": "ARMANDO VELÁSQUEZ",
@@ -2847,6 +2283,36 @@
       },
       {
         "comprador": "FLOR A FRUTO",
+        "cumplida": true
+      }
+    ],
+    "FINCA LA FEDERICA": [
+      {
+        "comprador": "INTERLINK2AMERICAS",
+        "cumplida": true
+      },
+      {
+        "comprador": "INMERSSO BOUTIQUE",
+        "cumplida": true
+      },
+      {
+        "comprador": "CAFÉ MOLINA",
+        "cumplida": true
+      },
+      {
+        "comprador": "COLFRESH COFFEE",
+        "cumplida": true
+      },
+      {
+        "comprador": "REGIONAL S.A.S",
+        "cumplida": true
+      },
+      {
+        "comprador": "ENCADENAMIENTOS PRODUCTIVOS -  CAFE AROMAS DEL EJE / CAFÉ GRANEAO.",
+        "cumplida": true
+      },
+      {
+        "comprador": "ARMANDO VELÁSQUEZ",
         "cumplida": true
       }
     ]
