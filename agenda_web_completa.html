@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda - Rueda de Negocios</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        color: white;
+        padding: 30px;
+        padding-left: 60px;
+        text-align: center;
+        position: relative;
+      }
+      .home-button {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 12px 20px;
+        margin: 10px 0;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-radius: 10px;
+        text-decoration: none;
+        text-align: left;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .home-button:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.7);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        font-weight: 300;
+      }
+
+      .header p {
+        font-size: 1.2em;
+        opacity: 0.9;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 30px;
+        background: #f8f9fa;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-number {
+        font-size: 2em;
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9em;
+      }
+
+      .schedule-container {
+        padding: 30px;
+      }
+
+      .schedule-title {
+        font-size: 2em;
+        margin-bottom: 30px;
+        text-align: center;
+        color: #2c3e50;
+      }
+
+      .time-slot {
+        margin-bottom: 30px;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .time-header {
+        background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+        color: white;
+        padding: 15px 20px;
+        font-size: 1.3em;
+        font-weight: 500;
+      }
+
+      .meetings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        background: #fafafa;
+      }
+
+      .meeting-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid #3498db;
+        transition: all 0.3s ease;
+      }
+
+      .meeting-card:hover {
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .meeting-title {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      .meeting-icon {
+        background: #3498db;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        font-weight: bold;
+      }
+
+      .buyer-name {
+        font-size: 1.2em;
+        color: #e74c3c;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .vendors-list {
+        list-style: none;
+      }
+
+      .vendor-item {
+        background: #ecf0f1;
+        padding: 8px 12px;
+        margin: 5px 0;
+        border-radius: 5px;
+        color: #2c3e50;
+        display: flex;
+        align-items: center;
+      }
+
+      .vendor-icon {
+        background: #27ae60;
+        color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 8px;
+        font-size: 0.8em;
+      }
+
+      .footer {
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: 0.9em;
+      }
+
+      .legend {
+        background: #f8f9fa;
+        padding: 20px;
+        margin: 20px 30px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+      }
+
+      .legend h3 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+      }
+
+      .legend-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .no-meetings {
+        text-align: center;
+        padding: 40px;
+        color: #7f8c8d;
+        font-style: italic;
+      }
+
+      .summary-section {
+        background: #f8f9fa;
+        padding: 30px;
+        margin: 0 30px 30px 30px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+      }
+
+      .summary-title {
+        color: #2c3e50;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .preferences-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .preference-item {
+        background: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .preference-status {
+        margin-right: 10px;
+        font-size: 1.2em;
+      }
+
+      .cumplida {
+        color: #27ae60;
+      }
+
+      .no-cumplida {
+        color: #e74c3c;
+      }
+
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .meetings-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .preferences-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .header {
+          padding: 20px;
+        }
+
+        .schedule-container {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <a href="index.html" class="home-button">🏠 Inicio</a>
+        <h1>Agenda - Rueda de Negocios</h1>
+        <p>Programa de citas empresariales optimizado</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">25</div>
+          <div class="stat-label">Vendedores</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10</div>
+          <div class="stat-label">Compradores</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">15 minutos</div>
+          <div class="stat-label">Duración (min)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10:15 - 13:00</div>
+          <div class="stat-label">Horario</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">40</div>
+          <div class="stat-label">Citas programadas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">111/111</div>
+          <div class="stat-label">Preferencias cumplidas</div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <h3>Información del evento:</h3>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #e74c3c"></div>
+          <span><strong>Comprador:</strong> Empresa que busca proveedores</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #27ae60"></div>
+          <span
+            ><strong>Vendedor:</strong> Empresa que ofrece
+            productos/servicios</span
+          >
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #3498db"></div>
+          <span
+            ><strong>Formato:</strong> 3 vendedores se reúnen simultáneamente
+            con 1 comprador</span
+          >
+        </div>
+      </div>
+
+      <div class="schedule-container">
+        <h2 class="schedule-title">Agenda por Horarios</h2>
+
+        <div class="time-slot">
+          <div class="time-header">10:15 - 10:30</div>
+          <div class="meetings-grid">
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">1</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 BOX BRAND</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café ALMA VERDE
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  WeedNevado SAS
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Aris
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">2</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 PROCOLOMBIA</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Del Tajo
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Marietta Cafe
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Leonora Coffee
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">3</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 NEIRA YORK COFFEE</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Cervecería Montelargo
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Las Delicias 2
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Tradición Premium
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">4</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 CAFÉ MOLINA</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Nogales 1800
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca La Estrella
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca la Esperanza
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">5</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 ORIGEN CALDAS</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Quercus Coffee SAS
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca El Rubí
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Las Peñas
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slot">
+          <div class="time-header">10:30 - 10:45</div>
+          <div class="meetings-grid">
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">1</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 BOX BRAND</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Marietta Cafe
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  CAFE TAZA COLIBRI
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Don Marco
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">2</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 PROCOLOMBIA</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  WeedNevado SAS
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  hotel san antonio
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Quercus Coffee SAS
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">3</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 INMERSSO BOUTIQUE</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café ALMA VERDE
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Aris
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Tradición Premium
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slot">
+          <div class="time-header">10:45 - 11:00</div>
+          <div class="meetings-grid">
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">1</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 BOX BRAND</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Leonora Coffee
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Las Delicias 2
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Quercus Coffee SAS
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">2</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 PROCOLOMBIA</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Don Marco
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  CAFE TAZA COLIBRI
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Tradición Premium
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">3</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 ENCADENAMIENTOS PRODUCTIVOS</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Nube
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café de Familia®
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  WeedNevado SAS
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">4</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 COLFRESH COFFEE</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca La Estrella
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Nogales 1800
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Marietta Cafe
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slot">
+          <div class="time-header">11:00 - 11:15</div>
+          <div class="meetings-grid">
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">1</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 BOX BRAND</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Octavio
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Las Peñas
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca la Esperanza
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">2</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 PROCOLOMBIA</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Cervecería Montelargo
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  La vuelta
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Nube
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">3</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 ENCADENAMIENTOS PRODUCTIVOS</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Del Tajo
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  CAFE TAZA COLIBRI
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  hotel san antonio
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">4</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 NEIRA YORK COFFEE</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Marietta Cafe
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca La Estrella
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Quercus Coffee SAS
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">5</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 INMERSSO BOUTIQUE</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Don Marco
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Affogato
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  WeedNevado SAS
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slot">
+          <div class="time-header">11:15 - 11:30</div>
+          <div class="meetings-grid">
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">1</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 BOX BRAND</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  hotel san antonio
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca El Rubí
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Tradición Premium
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">2</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 PROCOLOMBIA</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Cafe azucenas finca la primavera
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café de Familia®
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Affogato
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">3</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 INMERSSO BOUTIQUE</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Quercus Coffee SAS
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Marietta Cafe
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Nube
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">4</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 ORIGEN CALDAS</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Aris
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Don Marco
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  La vuelta
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slot">
+          <div class="time-header">11:30 - 11:45</div>
+          <div class="meetings-grid">
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">1</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 BOX BRAND</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Nogales 1800
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Nube
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Cervecería Montelargo
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">2</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 ENCADENAMIENTOS PRODUCTIVOS</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca El Rubí
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Marietta Cafe
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Octavio
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">3</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 CAFÉ MOLINA</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café ALMA VERDE
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Quercus Coffee SAS
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Don Marco
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">4</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 ORIGEN CALDAS</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Las Delicias 2
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  hotel san antonio
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Affogato
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">5</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 COLFRESH COFFEE</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca la Esperanza
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Tradición Premium
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Aris
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slot">
+          <div class="time-header">11:45 - 12:00</div>
+          <div class="meetings-grid">
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">1</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 BOX BRAND</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca La Estrella
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Del Tajo
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Affogato
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">2</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 INMERSSO BOUTIQUE</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Las Delicias 2
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca El Rubí
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  CAFE TAZA COLIBRI
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">3</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 CAFÉ MOLINA</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Nube
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Cafe azucenas finca la primavera
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Marietta Cafe
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">4</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 REGIONAL SAS</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Quercus Coffee SAS
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca la Esperanza
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  hotel san antonio
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slot">
+          <div class="time-header">12:00 - 12:15</div>
+          <div class="meetings-grid">
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">1</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 INMERSSO BOUTIQUE</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Leonora Coffee
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Octavio
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Cervecería Montelargo
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">2</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 ORIGEN CALDAS</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Marietta Cafe
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Nube
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Cafe azucenas finca la primavera
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">3</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 COLFRESH COFFEE</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Affogato
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Don Marco
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café ALMA VERDE
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">4</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 KUNDE - ARMANDO VELÁSQUEZ</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Nogales 1800
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Quercus Coffee SAS
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca El Rubí
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slot">
+          <div class="time-header">12:15 - 12:30</div>
+          <div class="meetings-grid">
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">1</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 CAFÉ MOLINA</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  hotel san antonio
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Las Delicias 2
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Octavio
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">2</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 ORIGEN CALDAS</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café de Familia®
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  CAFE TAZA COLIBRI
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  WeedNevado SAS
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">3</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 KUNDE - ARMANDO VELÁSQUEZ</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca la Esperanza
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Cafe azucenas finca la primavera
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Marietta Cafe
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">4</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 REGIONAL SAS</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca El Rubí
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Tradición Premium
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Nube
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="time-slot">
+          <div class="time-header">12:30 - 12:45</div>
+          <div class="meetings-grid">
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">1</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 ORIGEN CALDAS</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Tradición Premium
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café ALMA VERDE
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Finca La Estrella
+                </li>
+              </ul>
+            </div>
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">2</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 COLFRESH COFFEE</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Quercus Coffee SAS
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  WeedNevado SAS
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  Café Nube
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-section">
+        <h3 class="summary-title">Resumen de Preferencias</h3>
+        <p style="text-align: center; margin-bottom: 20px">
+          <strong>111</strong> de <strong>111</strong>
+          preferencias cumplidas (100.0%)
+        </p>
+        <div class="preferences-grid">
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Del Tajo → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Del Tajo → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Del Tajo → ENCADENAMIENTOS PRODUCTIVOS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Cervecería Montelargo → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Cervecería Montelargo → NEIRA YORK COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Cervecería Montelargo → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Cervecería Montelargo → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Octavio → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Octavio → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Octavio → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Octavio → ENCADENAMIENTOS PRODUCTIVOS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>CAFE TAZA COLIBRI → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>CAFE TAZA COLIBRI → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>CAFE TAZA COLIBRI → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>CAFE TAZA COLIBRI → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>CAFE TAZA COLIBRI → ENCADENAMIENTOS PRODUCTIVOS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Nube → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Nube → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Nube → COLFRESH COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Nube → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Nube → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Nube → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Nube → ENCADENAMIENTOS PRODUCTIVOS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Cafe azucenas finca la primavera → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Cafe azucenas finca la primavera → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Cafe azucenas finca la primavera → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span
+              >Cafe azucenas finca la primavera → KUNDE - ARMANDO
+              VELÁSQUEZ</span
+            >
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca El Rubí → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca El Rubí → REGIONAL SAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca El Rubí → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca El Rubí → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca El Rubí → KUNDE - ARMANDO VELÁSQUEZ</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca El Rubí → ENCADENAMIENTOS PRODUCTIVOS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca La Estrella → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca La Estrella → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca La Estrella → NEIRA YORK COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca La Estrella → COLFRESH COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Quercus Coffee SAS → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Quercus Coffee SAS → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Quercus Coffee SAS → NEIRA YORK COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Quercus Coffee SAS → COLFRESH COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Quercus Coffee SAS → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Quercus Coffee SAS → REGIONAL SAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Quercus Coffee SAS → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Quercus Coffee SAS → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Quercus Coffee SAS → KUNDE - ARMANDO VELÁSQUEZ</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Tradición Premium → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Tradición Premium → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Tradición Premium → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Tradición Premium → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Affogato → COLFRESH COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Affogato → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Affogato → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café ALMA VERDE → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café ALMA VERDE → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café ALMA VERDE → COLFRESH COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café ALMA VERDE → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>WeedNevado SAS → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>WeedNevado SAS → COLFRESH COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>WeedNevado SAS → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>WeedNevado SAS → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>WeedNevado SAS → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>WeedNevado SAS → ENCADENAMIENTOS PRODUCTIVOS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Marietta Cafe → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Marietta Cafe → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Marietta Cafe → NEIRA YORK COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Marietta Cafe → COLFRESH COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Marietta Cafe → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Marietta Cafe → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Marietta Cafe → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Marietta Cafe → ENCADENAMIENTOS PRODUCTIVOS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Marietta Cafe → KUNDE - ARMANDO VELÁSQUEZ</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café de Familia® → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café de Familia® → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café de Familia® → ENCADENAMIENTOS PRODUCTIVOS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Leonora Coffee → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Leonora Coffee → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Leonora Coffee → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Nogales 1800 → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Nogales 1800 → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Nogales 1800 → COLFRESH COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Nogales 1800 → KUNDE - ARMANDO VELÁSQUEZ</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Don Marco → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Don Marco → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Don Marco → COLFRESH COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Don Marco → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Don Marco → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Don Marco → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Las Delicias 2 → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Las Delicias 2 → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Las Delicias 2 → NEIRA YORK COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Las Delicias 2 → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Las Delicias 2 → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca la Esperanza → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca la Esperanza → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca la Esperanza → COLFRESH COFFEE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca la Esperanza → REGIONAL SAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Finca la Esperanza → KUNDE - ARMANDO VELÁSQUEZ</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>hotel san antonio → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>hotel san antonio → CAFÉ MOLINA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>hotel san antonio → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>hotel san antonio → REGIONAL SAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>hotel san antonio → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>hotel san antonio → ENCADENAMIENTOS PRODUCTIVOS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>La vuelta → PROCOLOMBIA</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>La vuelta → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Aris → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Aris → ORIGEN CALDAS</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Aris → INMERSSO BOUTIQUE</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Las Peñas → BOX BRAND</span>
+          </div>
+          <div class="preference-item">
+            <span class="preference-status cumplida">✓</span>
+            <span>Café Las Peñas → ORIGEN CALDAS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>
+          &copy; 2025 Sistema de Agenda para Rueda de Negocios | Generado
+          automáticamente
+        </p>
+        <p>
+          Total de encuentros individuales: 120 | Utilización de slots: 363.6%
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // JavaScript para funcionalidades adicionales
+      document.addEventListener("DOMContentLoaded", function () {
+        // Efecto de hover en las tarjetas
+        const cards = document.querySelectorAll(".meeting-card, .stat-card");
+        cards.forEach((card) => {
+          card.addEventListener("mouseenter", function () {
+            this.style.transform = "translateY(-5px)";
+          });
+          card.addEventListener("mouseleave", function () {
+            this.style.transform = "translateY(0)";
+          });
+        });
+
+        // Animar entrada de elementos
+        const timeSlots = document.querySelectorAll(".time-slot");
+        timeSlots.forEach((slot, index) => {
+          slot.style.opacity = "0";
+          slot.style.transform = "translateY(20px)";
+          slot.style.transition = "all 0.5s ease";
+          slot.style.animationDelay = `${index * 0.1}s`;
+
+          setTimeout(() => {
+            slot.style.opacity = "1";
+            slot.style.transform = "translateY(0)";
+          }, index * 100);
+        });
+
+        // Scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute("href")).scrollIntoView({
+              behavior: "smooth",
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

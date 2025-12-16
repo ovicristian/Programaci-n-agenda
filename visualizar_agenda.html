@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda de Rueda de Negocios</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        color: white;
+        padding: 30px;
+        padding-left: 60px;
+        text-align: center;
+        position: relative;
+      }
+
+      .home-button {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 12px 20px;
+        margin: 10px 0;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-radius: 10px;
+        text-decoration: none;
+        text-align: left;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .home-button:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.7);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .header p {
+        font-size: 1.2em;
+        opacity: 0.9;
+      }
+
+      .content {
+        padding: 30px;
+      }
+
+      .config-section {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-left: 5px solid #3498db;
+      }
+
+      .config-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .config-item {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .config-item strong {
+        color: #2c3e50;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .stats-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        transform: translateY(0);
+        transition: transform 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-card .number {
+        font-size: 2.5em;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .agenda-section {
+        margin-bottom: 30px;
+      }
+
+      .section-title {
+        color: #2c3e50;
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #3498db;
+      }
+
+      .time-slot {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .time-slot:hover {
+        transform: translateX(10px);
+      }
+
+      .time-header {
+        background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        color: white;
+        padding: 15px 20px;
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+
+      .meeting {
+        padding: 20px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .meeting:last-child {
+        border-bottom: none;
+      }
+
+      .buyer {
+        color: #e74c3c;
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 10px;
+      }
+
+      .sellers {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .seller-tag {
+        background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        font-weight: 500;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .preferences-section {
+        margin-top: 30px;
+      }
+
+      .preferences-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .preference-item {
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #27ae60;
+        background: #d5f4e6;
+      }
+
+      .preference-item.not-fulfilled {
+        border-left-color: #e74c3c;
+        background: #fdf2f2;
+      }
+
+      .vendor-name {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 5px;
+      }
+
+      .buyer-list {
+        font-size: 0.9em;
+        color: #555;
+      }
+
+      .load-section {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+      }
+
+      .file-input {
+        margin: 10px;
+        padding: 10px;
+        border: 2px dashed #3498db;
+        border-radius: 10px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .file-input:hover {
+        background: #ecf0f1;
+        border-color: #2980b9;
+      }
+
+      .btn {
+        background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .loading {
+        display: none;
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .error {
+        color: #e74c3c;
+        background: #fdf2f2;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #e74c3c;
+        margin: 20px 0;
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          margin: 10px;
+        }
+
+        .content {
+          padding: 20px;
+        }
+
+        .sellers {
+          flex-direction: column;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <a href="index.html" class="home-button">🏠 Inicio</a>
+        <h1>📅 Agenda de Rueda de Negocios</h1>
+        <p>Visualización interactiva de la agenda</p>
+      </div>
+
+      <div class="content">
+        <!-- Sección de carga de archivo deshabilitada -->
+        <!--
+        <div class="load-section">
+          <h3>Cargar archivo de agenda</h3>
+          <input type="file" id="jsonFile" accept=".json" class="file-input" />
+          <button onclick="loadDefaultFile()" class="btn">
+            Cargar agenda_completa.json
+          </button>
+        </div>
+        -->
+
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <p>Cargando agenda...</p>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div id="agendaContent" style="display: none">
+          <!-- El contenido se generará aquí dinámicamente -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let agendaData = null;
+
+      // Event listener para cargar archivo deshabilitado
+      /*
+      document
+        .getElementById("jsonFile")
+        .addEventListener("change", function (event) {
+          const file = event.target.files[0];
+          if (file) {
+            loadJsonFile(file);
+          }
+        });
+      */
+
+      // Cargar archivo por defecto
+      function loadDefaultFile() {
+        showLoading();
+        fetch("./agenda_completa.json")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                "No se pudo cargar el archivo agenda_completa.json"
+              );
+            }
+            return response.json();
+          })
+          .then((data) => {
+            agendaData = data;
+            renderAgenda();
+            hideLoading();
+          })
+          .catch((error) => {
+            showError("Error al cargar el archivo: " + error.message);
+            hideLoading();
+          });
+      }
+
+      // Función de carga de archivo JSON deshabilitada
+      /*
+      function loadJsonFile(file) {
+        showLoading();
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            agendaData = JSON.parse(e.target.result);
+            renderAgenda();
+            hideLoading();
+          } catch (error) {
+            showError("Error al procesar el archivo JSON: " + error.message);
+            hideLoading();
+          }
+        };
+        reader.readAsText(file);
+      }
+      */
+
+      // Mostrar/ocultar elementos de UI
+      function showLoading() {
+        document.getElementById("loading").style.display = "block";
+        document.getElementById("error").style.display = "none";
+        document.getElementById("agendaContent").style.display = "none";
+      }
+
+      function hideLoading() {
+        document.getElementById("loading").style.display = "none";
+      }
+
+      function showError(message) {
+        const errorDiv = document.getElementById("error");
+        errorDiv.textContent = message;
+        errorDiv.style.display = "block";
+      }
+
+      // Renderizar la agenda completa
+      function renderAgenda() {
+        if (!agendaData) return;
+
+        const content = document.getElementById("agendaContent");
+        content.innerHTML = "";
+
+        // Configuración
+        content.appendChild(createConfigSection());
+
+        // Estadísticas
+        content.appendChild(createStatsSection());
+
+        // Agenda
+        content.appendChild(createAgendaSection());
+
+        // Preferencias cumplidas
+        content.appendChild(createPreferencesSection());
+
+        content.style.display = "block";
+      }
+
+      // Crear sección de configuración
+      function createConfigSection() {
+        const section = document.createElement("div");
+        section.className = "config-section";
+
+        const config = agendaData.configuracion;
+
+        section.innerHTML = `
+                <h2 class="section-title">⚙️ Configuración</h2>
+                <div class="config-grid">
+                    <div class="config-item">
+                        <strong>Vendedores:</strong>
+                        ${config.vendedores}
+                    </div>
+                    <div class="config-item">
+                        <strong>Compradores:</strong>
+                        ${config.compradores}
+                    </div>
+                    <div class="config-item">
+                        <strong>Duración total:</strong>
+                        ${config.duracion_total}
+                    </div>
+                    <div class="config-item">
+                        <strong>Duración por cita:</strong>
+                        ${config.duracion_cita}
+                    </div>
+                    <div class="config-item">
+                        <strong>Horario:</strong>
+                        ${config.horario_inicio} - ${config.horario_fin}
+                    </div>
+                    <div class="config-item">
+                        <strong>Slots disponibles:</strong>
+                        ${config.slots_disponibles}
+                    </div>
+                    <div class="config-item">
+                        <strong>Máx. citas por vendedor:</strong>
+                        ${config.max_citas_por_vendedor}
+                    </div>
+                    <div class="config-item">
+                        <strong>Preferencias cargadas:</strong>
+                        ${config.preferencias_cargadas}
+                    </div>
+                </div>
+            `;
+
+        return section;
+      }
+
+      // Crear sección de estadísticas
+      function createStatsSection() {
+        const section = document.createElement("div");
+        section.className = "stats-section";
+
+        const stats = agendaData.estadisticas;
+
+        section.innerHTML = `
+                <div class="stat-card">
+                    <div class="number">${stats.total_citas_programadas}</div>
+                    <div>Citas Programadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">${stats.total_encuentros_individuales}</div>
+                    <div>Encuentros Individuales</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">${stats.porcentaje_utilizacion_slots}</div>
+                    <div>Utilización de Slots</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">${stats.preferencias_cumplidas}</div>
+                    <div>Preferencias Cumplidas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">${stats.citas_promedio_por_vendedor}</div>
+                    <div>Promedio por Vendedor</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">${stats.citas_promedio_por_comprador}</div>
+                    <div>Promedio por Comprador</div>
+                </div>
+            `;
+
+        return section;
+      }
+
+      // Crear sección de agenda
+      function createAgendaSection() {
+        const section = document.createElement("div");
+        section.className = "agenda-section";
+
+        let html = '<h2 class="section-title">📋 Agenda por Horarios</h2>';
+
+        Object.entries(agendaData.agenda).forEach(([time, meetings]) => {
+          html += `
+                    <div class="time-slot">
+                        <div class="time-header">🕐 ${time}</div>
+                `;
+
+          meetings.forEach((meeting, index) => {
+            html += `
+                        <div class="meeting">
+                            <div class="buyer">🏢 ${meeting.comprador}</div>
+                            <div class="sellers">
+                                ${meeting.vendedores
+                                  .map(
+                                    (seller) =>
+                                      `<span class="seller-tag">👤 ${seller}</span>`
+                                  )
+                                  .join("")}
+                            </div>
+                        </div>
+                    `;
+          });
+
+          html += "</div>";
+        });
+
+        section.innerHTML = html;
+        return section;
+      }
+
+      // Crear sección de preferencias
+      function createPreferencesSection() {
+        const section = document.createElement("div");
+        section.className = "preferences-section";
+
+        let html = '<h2 class="section-title">💼 Resumen de Preferencias</h2>';
+        html += '<div class="preferences-grid">';
+
+        Object.entries(agendaData.preferencias_cumplidas).forEach(
+          ([vendor, preferences]) => {
+            const fulfilledCount = preferences.filter((p) => p.cumplida).length;
+            const totalCount = preferences.length;
+            const percentage = ((fulfilledCount / totalCount) * 100).toFixed(1);
+
+            html += `
+                    <div class="preference-item ${
+                      fulfilledCount === 0 ? "not-fulfilled" : ""
+                    }">
+                        <div class="vendor-name">${vendor}</div>
+                        <div class="buyer-list">
+                            <strong>${fulfilledCount}/${totalCount} preferencias cumplidas (${percentage}%)</strong><br>
+                            ${preferences
+                              .map(
+                                (p) =>
+                                  `<span style="color: ${
+                                    p.cumplida ? "#27ae60" : "#e74c3c"
+                                  };">
+                                    ${p.cumplida ? "✅" : "❌"} ${p.comprador}
+                                </span>`
+                              )
+                              .join("<br>")}
+                        </div>
+                    </div>
+                `;
+          }
+        );
+
+        html += "</div>";
+        section.innerHTML = html;
+        return section;
+      }
+
+      // Cargar automáticamente el archivo por defecto al cargar la página
+      window.addEventListener("load", function () {
+        loadDefaultFile();
+      });
+    </script>
+  </body>
+</html>

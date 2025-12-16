@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rueda de Negocios - Panel de Control</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        color: white;
+        padding: 40px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 3em;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .header p {
+        font-size: 1.3em;
+        opacity: 0.9;
+      }
+
+      .content {
+        padding: 40px;
+      }
+
+      .views-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .view-card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .view-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        border-color: #3498db;
+      }
+
+      .view-icon {
+        font-size: 4em;
+        margin-bottom: 20px;
+        display: block;
+      }
+
+      .view-title {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 15px;
+      }
+
+      .view-description {
+        color: #666;
+        margin-bottom: 25px;
+        line-height: 1.6;
+      }
+
+      .view-button {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .view-button:hover {
+        background: linear-gradient(135deg, #2980b9, #1f639a);
+        transform: scale(1.05);
+      }
+
+      .stats-bar {
+        background: #34495e;
+        color: white;
+        padding: 25px;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .stat-item {
+        text-align: center;
+        flex: 1;
+        min-width: 120px;
+      }
+
+      .stat-number {
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #3498db;
+      }
+
+      .stat-label {
+        font-size: 0.9em;
+        margin-top: 5px;
+        opacity: 0.8;
+      }
+
+      .section-title {
+        font-size: 2em;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        text-align: center;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        display: block;
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        margin: 15px auto;
+        border-radius: 2px;
+      }
+
+      .matrix-highlight {
+        background: linear-gradient(135deg, #e8f4fd, #d6eaf8);
+        border: 2px solid #3498db;
+      }
+
+      .matrix-highlight:hover {
+        border-color: #2980b9;
+        background: linear-gradient(135deg, #d6eaf8, #aed6f1);
+      }
+
+      .vendor-matrix-highlight {
+        background: linear-gradient(135deg, #fadbd8, #f5b7b1);
+        border: 2px solid #e74c3c;
+      }
+
+      .vendor-matrix-highlight:hover {
+        border-color: #c0392b;
+        background: linear-gradient(135deg, #f5b7b1, #ec7063);
+      }
+
+      .downloads-section {
+        background: #ecf0f1;
+        padding: 30px;
+        border-radius: 12px;
+        margin-top: 30px;
+      }
+
+      .download-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .download-item {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .download-item h4 {
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      .download-item p {
+        color: #666;
+        font-size: 0.9em;
+        margin-bottom: 15px;
+      }
+
+      .download-button {
+        background: linear-gradient(135deg, #27ae60, #229954);
+        color: white;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 0.9em;
+        transition: all 0.3s ease;
+      }
+
+      .download-button:hover {
+        background: linear-gradient(135deg, #229954, #1e8449);
+        transform: scale(1.05);
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          margin: 10px;
+          border-radius: 10px;
+        }
+
+        .header {
+          padding: 25px;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .content {
+          padding: 25px;
+        }
+
+        .views-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .stats-bar {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .stat-item {
+          min-width: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>☕ RUEDA DE NEGOCIOS</h1>
+        <p>Panel de Control - Sistema de Gestión de Citas</p>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-number">61</div>
+          <div class="stat-label">Citas Programadas</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">141</div>
+          <div class="stat-label">Encuentros</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">31</div>
+          <div class="stat-label">Vendedores</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">11</div>
+          <div class="stat-label">Compradores</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">98.6%</div>
+          <div class="stat-label">Preferencias</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <h2 class="section-title">📊 Vistas Disponibles</h2>
+
+        <div class="views-grid">
+          <!-- Matriz Principal -->
+          <div class="view-card matrix-highlight">
+            <span class="view-icon">🎯</span>
+            <div class="view-title">Matriz Compradores-Horarios</div>
+            <div class="view-description">
+              Vista principal en formato tabla. Cada fila es un comprador, cada
+              columna un horario, cada celda contiene los vendedores asignados.
+              Navegación horizontal disponible.
+            </div>
+            <a href="matriz_compradores_horarios.html" class="view-button"
+              >Ver Matriz Maestra</a
+            >
+          </div>
+
+          <!-- Matriz Vendedores -->
+          <div class="view-card vendor-matrix-highlight">
+            <span class="view-icon">🏪</span>
+            <div class="view-title">Matriz Vendedores-Horarios</div>
+            <div class="view-description">
+              Vista complementaria por vendedor. Cada fila es un vendedor, cada
+              columna un horario, cada celda muestra el comprador asignado.
+              Perspectiva opuesta a la matriz de compradores.
+            </div>
+            <a href="matriz_vendedores_horarios.html" class="view-button"
+              >Ver Matriz Vendedores</a
+            >
+          </div>
+
+          <!-- Agenda Completa -->
+          <div class="view-card">
+            <span class="view-icon">📅</span>
+            <div class="view-title">Agenda Web Completa</div>
+            <div class="view-description">
+              Vista detallada con todas las citas organizadas por horarios.
+              Incluye información completa de vendedores y compradores.
+            </div>
+            <a href="agenda_web_completa.html" class="view-button"
+              >Ver Agenda Completa</a
+            >
+          </div>
+
+          <!-- Agenda Estática -->
+          <div class="view-card">
+            <span class="view-icon">📋</span>
+            <div class="view-title">Agenda Estática</div>
+            <div class="view-description">
+              Vista simplificada y optimizada para impresión. Formato estático
+              con estadísticas y resumen ejecutivo.
+            </div>
+            <a href="agenda_web_estatica.html" class="view-button"
+              >Ver Agenda Estática</a
+            >
+          </div>
+
+          <!-- Visualizador -->
+          <div class="view-card">
+            <span class="view-icon">🔍</span>
+            <div class="view-title">Visualizador de Agenda</div>
+            <div class="view-description">
+              Herramienta interactiva para visualizar y analizar la agenda.
+              Incluye configuraciones y preferencias detalladas.
+            </div>
+            <a href="visualizar_agenda.html" class="view-button"
+              >Abrir Visualizador</a
+            >
+          </div>
+        </div>
+
+        <!-- Sección de Descargas -->
+        <div class="downloads-section">
+          <h2 class="section-title">💾 Archivos Descargables</h2>
+
+          <div class="download-grid">
+            <div class="download-item">
+              <h4>📊 Excel Completo</h4>
+              <p>
+                Archivo Excel con 6 hojas: Resumen, Agenda, Vendedores,
+                Compradores, Matriz y Preferencias
+              </p>
+              <a
+                href="agenda_rueda_negocios.xlsx"
+                class="download-button"
+                download
+                >Descargar Excel</a
+              >
+            </div>
+
+            <div class="download-item">
+              <h4>📄 Agenda CSV</h4>
+              <p>
+                Formato CSV simple con todas las citas programadas para importar
+                a otros sistemas
+              </p>
+              <a
+                href="agenda_rueda_negocios.csv"
+                class="download-button"
+                download
+                >Descargar CSV</a
+              >
+            </div>
+
+            <div class="download-item">
+              <h4>👥 Resumen Vendedores</h4>
+              <p>Archivo CSV con el resumen detallado de citas por vendedor</p>
+              <a href="resumen_vendedores.csv" class="download-button" download
+                >Descargar Resumen</a
+              >
+            </div>
+
+            <div class="download-item">
+              <h4>⚙️ Configuración JSON</h4>
+              <p>
+                Archivo completo con toda la configuración y datos de la agenda
+                en formato JSON
+              </p>
+              <a href="agenda_completa.json" class="download-button" download
+                >Descargar JSON</a
+              >
+            </div>
+
+            <div class="download-item">
+              <h4>📝 Documentos Word</h4>
+              <p>
+                31 documentos individuales por vendedor en la carpeta
+                documentos_vendedores/
+              </p>
+              <a href="documentos_vendedores/" class="download-button"
+                >Ver Carpeta</a
+              >
+            </div>
+
+            <div class="download-item">
+              <h4>💼 Preferencias</h4>
+              <p>
+                Archivo CSV con todas las preferencias de citas configuradas
+              </p>
+              <a
+                href="preferencias_multiples.csv"
+                class="download-button"
+                download
+                >Descargar Preferencias</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Información del Sistema -->
+        <div
+          style="
+            margin-top: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 5px solid #3498db;
+          "
+        >
+          <h3 style="color: #2c3e50; margin-bottom: 15px">
+            ℹ️ Información del Sistema
+          </h3>
+          <ul style="color: #666; line-height: 1.8">
+            <li>
+              <strong>Restricciones aplicadas:</strong> Máximo 3 vendedores por
+              cita, horarios específicos por comprador
+            </li>
+            <li>
+              <strong>Horario de operación:</strong> 8:30 AM - 1:00 PM (períodos
+              de 15 minutos)
+            </li>
+            <li>
+              <strong>Regional SAS:</strong> Disponible solo de 8:30 AM - 10:30
+              AM
+            </li>
+            <li>
+              <strong>ENCADENAMIENTOS PRODUCTIVOS:</strong> Como comprador de
+              10:15 AM - 11:15 AM
+            </li>
+            <li>
+              <strong>Café Origen de la Montaña:</strong> Doble rol (comprador y
+              vendedor)
+            </li>
+            <li><strong>Última actualización:</strong> Diciembre 16, 2025</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Agregar efecto de carga suave
+      document.addEventListener("DOMContentLoaded", function () {
+        const cards = document.querySelectorAll(".view-card");
+        cards.forEach((card, index) => {
+          card.style.opacity = "0";
+          card.style.transform = "translateY(20px)";
+
+          setTimeout(() => {
+            card.style.transition = "all 0.6s ease";
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+          }, index * 150);
+        });
+      });
+
+      // Verificar disponibilidad de archivos
+      function checkFileAvailability() {
+        const links = document.querySelectorAll(
+          'a[href$=".html"], a[href$=".xlsx"], a[href$=".csv"], a[href$=".json"]'
+        );
+
+        links.forEach((link) => {
+          const fileName = link.getAttribute("href");
+
+          // Agregar indicador visual para archivos principales
+          if (fileName.includes("matriz_compradores_horarios.html")) {
+            link.parentElement.style.border = "3px solid #e74c3c";
+          }
+        });
+      }
+
+      // Ejecutar verificación cuando se carga la página
+      checkFileAvailability();
+    </script>
+  </body>
+</html>

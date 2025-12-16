@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda - Rueda de Negocios</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        color: white;
+        padding: 30px;
+        padding-left: 60px;
+        text-align: center;
+        position: relative;
+      }
+
+      .home-button {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 12px 20px;
+        margin: 10px 0;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-radius: 10px;
+        text-decoration: none;
+        text-align: left;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .home-button:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.7);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        font-weight: 300;
+      }
+
+      .header p {
+        font-size: 1.2em;
+        opacity: 0.9;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 30px;
+        background: #f8f9fa;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-number {
+        font-size: 2em;
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9em;
+      }
+
+      .schedule-container {
+        padding: 30px;
+      }
+
+      .schedule-title {
+        font-size: 2em;
+        margin-bottom: 30px;
+        text-align: center;
+        color: #2c3e50;
+      }
+
+      .time-slot {
+        margin-bottom: 30px;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .time-header {
+        background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+        color: white;
+        padding: 15px 20px;
+        font-size: 1.3em;
+        font-weight: 500;
+      }
+
+      .meetings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        background: #fafafa;
+      }
+
+      .meeting-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid #3498db;
+        transition: all 0.3s ease;
+      }
+
+      .meeting-card:hover {
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .meeting-title {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      .meeting-icon {
+        background: #3498db;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        font-weight: bold;
+      }
+
+      .buyer-name {
+        font-size: 1.2em;
+        color: #e74c3c;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .vendors-list {
+        list-style: none;
+      }
+
+      .vendor-item {
+        background: #ecf0f1;
+        padding: 8px 12px;
+        margin: 5px 0;
+        border-radius: 5px;
+        color: #2c3e50;
+        display: flex;
+        align-items: center;
+      }
+
+      .vendor-icon {
+        background: #27ae60;
+        color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 8px;
+        font-size: 0.8em;
+      }
+
+      .footer {
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: 0.9em;
+      }
+
+      .legend {
+        background: #f8f9fa;
+        padding: 20px;
+        margin: 20px 30px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+      }
+
+      .legend h3 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+      }
+
+      .legend-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .no-meetings {
+        text-align: center;
+        padding: 40px;
+        color: #7f8c8d;
+        font-style: italic;
+      }
+
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .meetings-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .header {
+          padding: 20px;
+        }
+
+        .schedule-container {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <a href="index.html" class="home-button">🏠 Inicio</a>
+        <h1>Agenda - Rueda de Negocios</h1>
+        <p>Programa de citas empresariales optimizado</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">25</div>
+          <div class="stat-label">Vendedores</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10</div>
+          <div class="stat-label">Compradores</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">15</div>
+          <div class="stat-label">Minutos por cita</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10:15 - 13:00</div>
+          <div class="stat-label">Horario</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Vendedores por cita</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">111</div>
+          <div class="stat-label">Preferencias cargadas</div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <h3>Información del evento:</h3>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #e74c3c"></div>
+          <span><strong>Comprador:</strong> Empresa que busca proveedores</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #27ae60"></div>
+          <span
+            ><strong>Vendedor:</strong> Empresa que ofrece
+            productos/servicios</span
+          >
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #3498db"></div>
+          <span
+            ><strong>Formato:</strong> 3 vendedores se reúnen simultáneamente
+            con 1 comprador</span
+          >
+        </div>
+      </div>
+
+      <div class="schedule-container">
+        <h2 class="schedule-title">Agenda por Horarios</h2>
+
+        <div class="time-slot">
+          <div class="time-header">10:15 - 10:30</div>
+          <div class="meetings-grid">
+            <div class="meeting-card">
+              <div class="meeting-title">
+                <div class="meeting-icon">1</div>
+                Cita de Negocios
+              </div>
+              <div class="buyer-name">🏢 [Nombre del Comprador]</div>
+              <ul class="vendors-list">
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  [Vendedor 1]
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  [Vendedor 2]
+                </li>
+                <li class="vendor-item">
+                  <div class="vendor-icon">V</div>
+                  [Vendedor 3]
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>
+          &copy; 2025 Sistema de Agenda para Rueda de Negocios | Generado
+          automáticamente
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // JavaScript para funcionalidades adicionales
+      document.addEventListener("DOMContentLoaded", function () {
+        // Efecto de hover en las tarjetas
+        const cards = document.querySelectorAll(".meeting-card, .stat-card");
+        cards.forEach((card) => {
+          card.addEventListener("mouseenter", function () {
+            this.style.transform = "translateY(-5px)";
+          });
+          card.addEventListener("mouseleave", function () {
+            this.style.transform = "translateY(0)";
+          });
+        });
+
+        // Scroll suave para navegación
+        const timeSlots = document.querySelectorAll(".time-slot");
+        timeSlots.forEach((slot, index) => {
+          slot.style.animationDelay = `${index * 0.1}s`;
+        });
+      });
+
+      // Función para actualizar estadísticas (se puede llamar desde Python)
+      function updateStats(data) {
+        if (data.stats) {
+          document.querySelector(
+            ".stat-card:nth-child(1) .stat-number"
+          ).textContent = data.stats.vendedores || "25";
+          document.querySelector(
+            ".stat-card:nth-child(2) .stat-number"
+          ).textContent = data.stats.compradores || "10";
+          document.querySelector(
+            ".stat-card:nth-child(6) .stat-number"
+          ).textContent = data.stats.preferencias || "111";
+        }
+      }
+
+      // Función para generar la agenda dinámicamente
+      function loadAgenda(agendaData) {
+        const container = document.querySelector(".schedule-container");
+        const existingSlots = container.querySelectorAll(".time-slot");
+
+        // Limpiar slots existentes excepto el template
+        existingSlots.forEach((slot, index) => {
+          if (index > 0) slot.remove();
+        });
+
+        // Generar nuevos slots
+        Object.entries(agendaData).forEach(([horario, citas]) => {
+          const timeSlot = createTimeSlot(horario, citas);
+          container.appendChild(timeSlot);
+        });
+      }
+
+      function createTimeSlot(horario, citas) {
+        const slot = document.createElement("div");
+        slot.className = "time-slot";
+
+        const header = document.createElement("div");
+        header.className = "time-header";
+        header.textContent = horario;
+
+        const grid = document.createElement("div");
+        grid.className = "meetings-grid";
+
+        if (citas && citas.length > 0) {
+          citas.forEach((cita, index) => {
+            const card = createMeetingCard(cita, index + 1);
+            grid.appendChild(card);
+          });
+        } else {
+          const noMeetings = document.createElement("div");
+          noMeetings.className = "no-meetings";
+          noMeetings.innerHTML = "<p>Sin citas programadas en este horario</p>";
+          grid.appendChild(noMeetings);
+        }
+
+        slot.appendChild(header);
+        slot.appendChild(grid);
+
+        return slot;
+      }
+
+      function createMeetingCard(cita, numero) {
+        const card = document.createElement("div");
+        card.className = "meeting-card";
+
+        card.innerHTML = `
+                <div class="meeting-title">
+                    <div class="meeting-icon">${numero}</div>
+                    Cita de Negocios
+                </div>
+                <div class="buyer-name">🏢 ${cita.comprador}</div>
+                <ul class="vendors-list">
+                    ${cita.vendedores
+                      .map(
+                        (vendedor) => `
+                        <li class="vendor-item">
+                            <div class="vendor-icon">V</div>
+                            ${vendedor}
+                        </li>
+                    `
+                      )
+                      .join("")}
+                </ul>
+            `;
+
+        return card;
+      }
+    </script>
+  </body>
+</html>
