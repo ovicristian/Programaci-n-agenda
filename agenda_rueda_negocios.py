@@ -28,6 +28,9 @@ class AgendaRuedaNegocios:
         self.num_compradores = 10
         self.vendedores_por_cita = 3  # Cambiado: 3 vendedores por cita por defecto (nueva restricción)
         
+        # RESTRICCIÓN COFFEE BREAK: Slot 6 (10:00-10:15) inhabilitado
+        self.slot_coffee_break = 6  # 10:00-10:15 es Coffee Break
+        
         # Calcular slots de tiempo disponibles
         total_minutos = int((self.fin - self.inicio).total_seconds() / 60)
         self.num_slots = total_minutos // self.duracion_cita
@@ -162,6 +165,10 @@ class AgendaRuedaNegocios:
 
     def _verificar_disponibilidad_horaria(self, participante: str, slot: int, es_vendedor: bool = True) -> bool:
         """Verifica si un participante está disponible en el horario del slot específico"""
+        # RESTRICCIÓN COFFEE BREAK: Slot 6 (10:00-10:15) inhabilitado para todos
+        if slot == self.slot_coffee_break:
+            return False
+            
         # NUEVA RESTRICCIÓN: Regional SAS solo disponible de 8:30 a 10:30 (slots 0-7 con 15 min cada uno desde 8:30)
         if participante == "REGIONAL S.A.S" and not es_vendedor:  # Es comprador
             return slot <= 7  # Slots 0-7 cubren desde 8:30 hasta 10:15
@@ -248,6 +255,10 @@ class AgendaRuedaNegocios:
         """Encuentra vendedores disponibles para un slot específico"""
         if excluir is None:
             excluir = set()
+        
+        # COFFEE BREAK: Slot 6 (10:00-10:15) inhabilitado
+        if slot == self.slot_coffee_break:
+            return []
         
         disponibles = []
         
@@ -458,6 +469,7 @@ class AgendaRuedaNegocios:
         print("   • Café Del Tajo (11:15-13:00)")
         print("   • Café Tradición Premium (11:15-13:00)")
         print("🚫 Restricciones específicas:")
+        print("   • ☕ COFFEE BREAK: 10:00-10:15 - Slot inhabilitado para citas")
         print("   • ENCADENAMIENTOS PRODUCTIVOS no se reúne con Café Del Tajo ni Café Tradición Premium")
         print("   • Ningún vendedor puede tener citas simultáneas con diferentes compradores")
         print("   • Máximo 3 vendedores por cita por comprador")
@@ -467,18 +479,23 @@ class AgendaRuedaNegocios:
         # PRIMERA PRIORIDAD: Asegurar citas críticas en los primeros slots
         self._procesar_citas_criticas()
         
-        # Usar SOLO los primeros 2 slots para concentrar a TODOS los compradores
-        slots_iniciales = 2
+        # DISTRIBUCIÓN EQUILIBRADA: Usar TODOS los slots disponibles con máximo 1 slot vacío consecutivo
         compradores_sin_cita = set(self.compradores)
         vendedores_sin_cita = set(self.vendedores)
         
-        print(f"📅 Usando SOLO slots 1-{slots_iniciales} para concentrar TODOS los compradores...")
+        # Tracking de slots vacíos por comprador (máximo 1 consecutivo permitido)
+        slots_vacios_consecutivos = {c: 0 for c in self.compradores}
         
-        # FASE 1: Distribución estratégica por slot
-        for slot in range(slots_iniciales):
+        print(f"📅 DISTRIBUCIÓN COMPLETA: Llenar TODOS los slots disponibles...")
+        
+        # FASE 1: Distribución completa por slot (prioridad: llenar slots)
+        for slot in range(self.num_slots):
+            # Saltar Coffee Break
+            if slot == self.slot_coffee_break:
+                continue
             print(f"\n⏰ PROCESANDO SLOT {slot+1} ({self.horarios[slot]})...")
             
-            # Determinar estrategia según el horario
+            # Determinar meta máxima según el horario
             # Slots 0-3: 10:15-11:15 (4 citas 2v + 6 citas 3v = 26 vendedores)
             # Slots 4+: 11:15-13:00 (4 citas 2v + 5 citas 3v = 23 vendedores)
             if slot <= 3:  # 10:15-11:15
@@ -492,53 +509,67 @@ class AgendaRuedaNegocios:
                 total_vendedores_meta = 23
                 periodo = "11:15-13:00"
             
-            print(f"   🎯 Meta ({periodo}): {target_citas_2v} citas (2v) + {target_citas_3v} citas (3v) = {total_vendedores_meta} vendedores")
+            print(f"   🎯 Meta MÁXIMA ({periodo}): {target_citas_2v} citas (2v) + {target_citas_3v} citas (3v) = {total_vendedores_meta} vendedores")
             
-            # Lista de compradores disponibles para este slot (considerando restricciones horarias)
-            compradores_disponibles = [c for c in compradores_sin_cita 
-                                     if not any(comp == c for comp, _ in self.agenda[slot])
-                                     and self._verificar_disponibilidad_horaria(c, slot, es_vendedor=False)]
+            # TODOS los compradores disponibles (prioridad: llenar slots)
+            compradores_disponibles = list(self.compradores)
+            
+            # Opcional: dar ligera prioridad a compradores con slots vacíos, pero SIN LIMITAR
+            compradores_con_slots_vacios = [c for c in self.compradores 
+                                          if (slots_vacios_consecutivos[c] >= 1 and 
+                                              not any(comp == c for comp, _ in self.agenda[slot]) and
+                                      self._verificar_disponibilidad_horaria(c, slot, es_vendedor=False))]
+            
+            # TODOS los compradores normales disponibles
+            compradores_normales = [c for c in self.compradores 
+                                  if (c not in compradores_con_slots_vacios and
+                                      not any(comp == c for comp, _ in self.agenda[slot]) and
+                                      self._verificar_disponibilidad_horaria(c, slot, es_vendedor=False))]
+            
+            # Dar ligera prioridad a compradores con slots vacíos, pero incluir TODOS
+            compradores_ordenados = compradores_con_slots_vacios + compradores_normales
             
             # Planificar distribución según el período
             citas_planificadas = []
             citas_con_2_vendedores = 0
             citas_con_3_vendedores = 0
             
-            # Asignar compradores con distribución estratégica
-            for i, comprador in enumerate(compradores_disponibles[:10]):  # Máximo 10 compradores
-                if comprador in compradores_sin_cita:
-                    # Buscar vendedores con preferencias para este comprador
-                    vendedores_preferidos = []
+            print(f"   📋 Compradores con slots vacíos: {len(compradores_con_slots_vacios)}")
+            print(f"   📋 Compradores normales: {len(compradores_normales)}")
+            print(f"   📋 TOTAL disponibles: {len(compradores_ordenados)}")
+            
+            # NO LIMITAR - Intentar llenar el slot con TODOS los compradores disponibles
+            compradores_para_slot = compradores_ordenados
+            
+            # Asignar compradores hasta llenar completamente el slot
+            for i, comprador in enumerate(compradores_para_slot):
+                # Verificar si ya alcanzamos la meta máxima de vendedores para este slot
+                vendedores_usados_actual = sum(len(vendedores) for _, vendedores in self.agenda[slot])
+                if vendedores_usados_actual >= total_vendedores_meta:
+                    print(f"   ⚡ Slot {slot+1} LLENO: {vendedores_usados_actual}/{total_vendedores_meta} vendedores usados")
+                    break
+                # Obtener vendedores disponibles para este slot
+                vendedores_disponibles_slot = self._encontrar_vendedores_disponibles(slot)
+                
+                # Buscar vendedores con preferencias para este comprador
+                candidatos = []
+                for vendedor, compradores_pref in self.preferencias_citas.items():
+                    if (comprador in compradores_pref and 
+                        vendedor in vendedores_disponibles_slot and
+                        vendedor not in self.encuentros_realizados[comprador]):
+                        candidatos.append(vendedor)
+                
+                # Si no hay suficientes preferidos, permitir repeticiones SOLO de vendedores que SÍ solicitaron
+                if len(candidatos) < 2:
                     for vendedor, compradores_pref in self.preferencias_citas.items():
-                        if (comprador in compradores_pref and vendedor in vendedores_sin_cita and
-                            self._verificar_disponibilidad_horaria(vendedor, slot, es_vendedor=True)):
-                            vendedores_preferidos.append(vendedor)
-                    
-                    # Obtener vendedores disponibles para este slot
-                    vendedores_disponibles_slot = self._encontrar_vendedores_disponibles(slot)
-                    
-                    # Combinar preferidos + disponibles (priorizando preferidos)
-                    candidatos = []
-                    # Primero los preferidos que están disponibles
-                    for v in vendedores_preferidos:
-                        if v in vendedores_disponibles_slot and v not in self.encuentros_realizados[comprador]:
-                            candidatos.append(v)
-                    
-                    # Luego otros vendedores disponibles
-                    for v in vendedores_disponibles_slot:
-                        if (v not in candidatos and 
-                            v not in self.encuentros_realizados[comprador] and
-                            v in vendedores_sin_cita):
-                            candidatos.append(v)
-                    
-                    # Si no hay suficientes sin repetir, usar cualquier disponible
-                    if len(candidatos) < 2:
-                        for v in vendedores_disponibles_slot:
-                            if v not in candidatos and v in vendedores_sin_cita:
-                                candidatos.append(v)
-                    
-                    # ESTRATEGIA DE DISTRIBUCIÓN: Alternar entre 2 y 3 vendedores
-                    if candidatos:
+                        if (comprador in compradores_pref and 
+                            vendedor in vendedores_disponibles_slot and
+                            vendedor not in candidatos and 
+                            self.citas_por_vendedor[vendedor] < self.max_citas_vendedor):
+                            candidatos.append(vendedor)
+                
+                # ESTRATEGIA DE DISTRIBUCIÓN: Alternar entre 2 y 3 vendedores
+                if candidatos:
                         # Decidir cuántos vendedores asignar basado en la meta estratégica
                         if citas_con_2_vendedores < target_citas_2v and len(candidatos) >= 2:
                             # Asignar 2 vendedores (primeras 5 citas)
@@ -594,33 +625,114 @@ class AgendaRuedaNegocios:
             print(f"      • Total vendedores usados: {total_vendedores_usados}/{total_vendedores_meta}")
             print(f"      • Total citas: {len(self.agenda[slot])}/10")
             
-            # Si ya todos los compradores tienen cita, salir del bucle
-            if not compradores_sin_cita:
-                print(f"   🎉 ¡TODOS los compradores asignados en primeros {slot+1} slots!")
-                break
-        
-        # EMERGENCIA: Si aún hay compradores sin cita después de 2 slots, forzar asignación
-        if compradores_sin_cita:
-            print(f"\n� MODO EMERGENCIA: {len(compradores_sin_cita)} compradores sin cita, forzando asignación...")
+            # ACTUALIZAR CONTADORES DE SLOTS VACÍOS
+            compradores_con_cita_este_slot = {comp for comp, _ in self.agenda[slot]}
             
-            for comprador in list(compradores_sin_cita):
-                # Buscar cualquier slot de los primeros 2 donde podamos meter este comprador
-                for slot in range(slots_iniciales):
-                    if (comprador in compradores_sin_cita and 
-                        self._verificar_disponibilidad_horaria(comprador, slot, es_vendedor=False)):  # Verificar restricción horaria
+            for comprador in self.compradores:
+                if self._verificar_disponibilidad_horaria(comprador, slot, es_vendedor=False):
+                    if comprador in compradores_con_cita_este_slot:
+                        # Comprador tiene cita: resetear contador de slots vacíos
+                        slots_vacios_consecutivos[comprador] = 0
+                        if comprador in compradores_sin_cita:
+                            compradores_sin_cita.remove(comprador)
+                    else:
+                        # Comprador no tiene cita: incrementar contador
+                        slots_vacios_consecutivos[comprador] += 1
+                # Si el comprador no está disponible por restricciones, no contar como vacío
+            
+            print(f"   📊 Slots vacíos consecutivos: {[(c, v) for c, v in slots_vacios_consecutivos.items() if v > 0]}")
+        
+        # FASE 2: COMPLETAR SLOTS INCOMPLETOS
+        print(f"\n🔧 FASE 2: Completando slots que no alcanzaron la meta máxima...")
+        for slot in range(self.num_slots):
+            if slot == self.slot_coffee_break:
+                continue
+                
+            # Calcular cuántos vendedores faltan para la meta máxima
+            vendedores_actuales = sum(len(vendedores) for _, vendedores in self.agenda[slot])
+            if slot <= 3:
+                meta_maxima = 26
+            else:
+                meta_maxima = 23
+                
+            if vendedores_actuales < meta_maxima:
+                vendedores_faltantes = meta_maxima - vendedores_actuales
+                print(f"   🎯 Slot {slot+1}: {vendedores_actuales}/{meta_maxima} vendedores - Faltan {vendedores_faltantes}")
+                
+                # Intentar agregar más citas hasta llenar
+                compradores_restantes = [c for c in self.compradores 
+                                       if not any(comp == c for comp, _ in self.agenda[slot]) and
+                                          self._verificar_disponibilidad_horaria(c, slot, es_vendedor=False)]
+                
+                for comprador in compradores_restantes:
+                    if vendedores_actuales >= meta_maxima:
+                        break
+                        
+                    # Buscar vendedores disponibles QUE SÍ SOLICITARON a este comprador
+                    vendedores_disponibles = self._encontrar_vendedores_disponibles(slot)
+                    candidatos = [v for v in vendedores_disponibles 
+                                if (v not in self.encuentros_realizados[comprador] and 
+                                    comprador in self.preferencias_citas.get(v, []))]
+                    
+                    if len(candidatos) >= 2:
+                        # Usar 2-3 vendedores según lo que falte
+                        num_vendedores = min(3, len(candidatos), meta_maxima - vendedores_actuales)
+                        if num_vendedores >= 2:
+                            grupo_vendedores = candidatos[:num_vendedores]
+                            
+                            if self._puede_agendar_cita_grupo(grupo_vendedores, comprador, slot):
+                                self.agenda[slot].append((comprador, grupo_vendedores))
+                                
+                                # Actualizar contadores
+                                for vendedor in grupo_vendedores:
+                                    self.citas_por_vendedor[vendedor] += 1
+                                    self.encuentros_realizados[comprador].add(vendedor)
+                                
+                                self.citas_por_comprador[comprador] += 1
+                                vendedores_actuales += num_vendedores
+                                print(f"      ✅ COMPLETADO: {comprador} ↔ [{', '.join(grupo_vendedores)}] ({num_vendedores}v)")
+        
+        # VERIFICACIÓN FINAL: Comprobar distribución (objetivo secundario)
+        compradores_problematicos = [(c, v) for c, v in slots_vacios_consecutivos.items() if v > 1]
+        
+        if compradores_problematicos:
+            print(f"\n⚠️  AJUSTE NECESARIO: {len(compradores_problematicos)} compradores con >1 slots vacíos:")
+            for comprador, slots_vacios in compradores_problematicos:
+                print(f"   • {comprador}: {slots_vacios} slots vacíos consecutivos")
+            
+            # Forzar asignación en slots posteriores para balancear
+            for comprador, _ in compradores_problematicos:
+                # Buscar el próximo slot disponible donde este comprador pueda tener cita
+                for slot in range(self.num_slots):
+                    # Saltar Coffee Break
+                    if slot == self.slot_coffee_break:
+                        continue
+                        
+                    # Solo asignar si el comprador no tiene cita ya en este slot y está disponible
+                    comprador_ya_tiene_cita = any(comp == comprador for comp, _ in self.agenda[slot])
+                    if (not comprador_ya_tiene_cita and 
+                        self._verificar_disponibilidad_horaria(comprador, slot, es_vendedor=False) and
+                        len(self.agenda[slot]) < 10):  # No sobrecargar slots
                         
                         # Buscar vendedores disponibles (incluso si solo hay 1)
                         vendedores_disponibles_slot = self._encontrar_vendedores_disponibles(slot)
                         
-                        # Filtrar vendedores que no se hayan reunido con este comprador
+                        # Filtrar vendedores que SÍ SOLICITARON a este comprador y no se hayan reunido
                         candidatos = []
                         for v in vendedores_disponibles_slot:
-                            if v not in self.encuentros_realizados[comprador]:
+                            # VERIFICAR QUE EL VENDEDOR SÍ SOLICITÓ A ESTE COMPRADOR
+                            if (v not in self.encuentros_realizados[comprador] and 
+                                comprador in self.preferencias_citas.get(v, [])):
                                 candidatos.append(v)
                         
-                        # Si no hay sin repetir, usar cualquier disponible
+                        # Si no hay candidatos válidos, NO asignar cita inválida
                         if not candidatos:
-                            candidatos = vendedores_disponibles_slot
+                            # Buscar candidatos que solicitaron al comprador (aunque ya se hayan reunido)
+                            candidatos_repetidos = []
+                            for v in vendedores_disponibles_slot:
+                                if comprador in self.preferencias_citas.get(v, []):
+                                    candidatos_repetidos.append(v)
+                            candidatos = candidatos_repetidos
                         
                         if candidatos:
                             # Usar estrategia balanceada incluso en emergencia según el período
@@ -665,12 +777,28 @@ class AgendaRuedaNegocios:
         compradores_con_cita = len(self.compradores) - len(compradores_sin_cita)
         vendedores_con_cita = len(self.vendedores) - len(vendedores_sin_cita)
         
-        print(f"\n📊 REPORTE FINAL DE DISTRIBUCIÓN ESTRATÉGICA:")
+        print(f"\n📊 REPORTE FINAL DE DISTRIBUCIÓN EQUILIBRADA:")
         print(f"   👥 Compradores asignados: {compradores_con_cita}/{len(self.compradores)}")
         print(f"   🏪 Vendedores asignados: {vendedores_con_cita}/{len(self.vendedores)}")
         
-        # Calcular distribución real por slot
-        for slot in range(slots_iniciales):
+        # Calcular distribución real por slot (todos los slots con citas)
+        slots_con_citas = [(slot, len(self.agenda[slot])) for slot in range(self.num_slots) if self.agenda[slot]]
+        
+        print(f"📈 DISTRIBUCIÓN FINAL EN {len(slots_con_citas)} SLOTS:")
+        for slot, num_citas in slots_con_citas:
+            print(f"   Slot {slot+1} ({self.horarios[slot]}): {num_citas} citas")
+        
+        # Verificar cumplimiento de la regla "máximo 1 slot vacío consecutivo"
+        violaciones = [(c, v) for c, v in slots_vacios_consecutivos.items() if v > 1]
+        if violaciones:
+            print(f"   ⚠️  VIOLACIONES (>1 slot vacío): {len(violaciones)} compradores")
+            for comprador, slots_vacios in violaciones[:3]:  # Mostrar solo primeros 3
+                print(f"      • {comprador}: {slots_vacios} slots vacíos consecutivos")
+        else:
+            print(f"   ✅ REGLA CUMPLIDA: Ningún comprador tiene >1 slot vacío consecutivo")
+        
+        # Mostrar distribución detallada solo para primeros slots
+        for slot in range(min(5, self.num_slots)):
             if self.agenda[slot]:
                 citas_2v = sum(1 for _, vendedores in self.agenda[slot] if len(vendedores) == 2)
                 citas_3v = sum(1 for _, vendedores in self.agenda[slot] if len(vendedores) == 3)
@@ -693,18 +821,14 @@ class AgendaRuedaNegocios:
         if not compradores_sin_cita:
             print(f"   🎉 ¡ÉXITO! TODOS los compradores asignados con distribución estratégica!")
         
-        # Mostrar distribución por slot
-        print(f"\n📈 DISTRIBUCIÓN FINAL EN {slots_iniciales} SLOTS:")
-        for slot in range(slots_iniciales):
-            num_citas = len(self.agenda[slot])
-            if num_citas > 0:
-                print(f"   Slot {slot+1} ({self.horarios[slot]}): {num_citas} citas")
-            else:
-                print(f"   Slot {slot+1} ({self.horarios[slot]}): Sin citas")
+        # Ya se mostró la distribución final arriba, no necesitamos duplicar
 
     def _buscar_slot_disponible(self, vendedores: List[str], comprador: str) -> Optional[int]:
         """Busca un slot disponible para el grupo de vendedores y comprador"""
         for slot in range(self.num_slots):
+            # Saltar Coffee Break (slot 6: 10:00-10:15)
+            if slot == self.slot_coffee_break:
+                continue
             if self._puede_agendar_cita_grupo(vendedores, comprador, slot):
                 return slot
         return None
@@ -716,6 +840,9 @@ class AgendaRuedaNegocios:
             
             # Intentar agregar a una cita existente del comprador preferido que tenga espacio
             for slot in range(self.num_slots):
+                # Saltar Coffee Break (slot 6: 10:00-10:15)
+                if slot == self.slot_coffee_break:
+                    continue
                 for i, (comprador, vendedores_en_cita) in enumerate(self.agenda[slot]):
                     if (comprador == comprador_preferido and 
                         len(vendedores_en_cita) < 3 and  # Máximo 3, pero preferir 2
@@ -801,6 +928,9 @@ class AgendaRuedaNegocios:
     def _completar_agenda_restante(self):
         """Completa la agenda manteniendo la estrategia: 4 citas (2v) + 6 citas (3v) antes 11:15, 4 citas (2v) + 5 citas (3v) después"""
         for slot in range(self.num_slots):
+            # Saltar Coffee Break (slot 6: 10:00-10:15)
+            if slot == self.slot_coffee_break:
+                continue
             # Para cada slot, intentar agendar citas manteniendo distribución estratégica
             citas_actuales_slot = len(self.agenda[slot])
             
@@ -820,11 +950,19 @@ class AgendaRuedaNegocios:
                     # Encontrar vendedores disponibles para este slot
                     vendedores_disponibles = self._encontrar_vendedores_disponibles(slot)
                     
-                    # Filtrar vendedores que no se hayan reunido con este comprador
+                    # Filtrar vendedores que SÍ SOLICITARON a este comprador y no se hayan reunido
                     vendedores_no_repetidos = [
                         v for v in vendedores_disponibles 
-                        if v not in self.encuentros_realizados[comprador]
+                        if (v not in self.encuentros_realizados[comprador] and
+                            comprador in self.preferencias_citas.get(v, []))
                     ]
+                    
+                    # Si no hay candidatos válidos sin repetir, buscar candidatos que solicitaron (aunque repetidos)
+                    if not vendedores_no_repetidos:
+                        vendedores_no_repetidos = [
+                            v for v in vendedores_disponibles
+                            if comprador in self.preferencias_citas.get(v, [])
+                        ]
                     
                     # Decidir número de vendedores según estrategia de distribución
                     if len(vendedores_no_repetidos) >= 2:

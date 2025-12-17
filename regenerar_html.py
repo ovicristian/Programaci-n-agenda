@@ -8,6 +8,12 @@ Script para regenerar los archivos HTML con los datos actualizados del JSON
 import json
 from datetime import datetime
 
+def formatear_nombre_comprador(nombre):
+    """Formatea nombres largos de compradores para mejor visualización"""
+    if "ENCADENAMIENTOS PRODUCTIVOS" in nombre:
+        return nombre.replace(" - ", "<br>")
+    return nombre
+
 def cargar_datos_json():
     """Cargar los datos desde agenda_completa.json"""
     try:
@@ -54,6 +60,8 @@ def regenerar_matriz_compradores():
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📊 Matriz Compradores-Horarios | Rueda de Negocios</title>
+    <!-- SheetJS CDN para generar Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * {{
             box-sizing: border-box;
@@ -194,8 +202,10 @@ def regenerar_matriz_compradores():
             border: 1px solid #dee2e6;
             text-align: left;
             color: #2196F3;
-            white-space: nowrap;
+            white-space: normal;
             min-width: 200px;
+            line-height: 1.3;
+            vertical-align: top;
         }}
 
         .vendor-cell {{
@@ -290,9 +300,18 @@ def regenerar_matriz_compradores():
                     <tr>
                         <th>🏢 COMPRADOR</th>"""
     
-    # Agregar encabezados de horarios
-    for horario in horarios[:12]:  # Limitar a los primeros 12 horarios para evitar tabla muy ancha
-        html_content += f'\n                        <th>⏰ {horario}</th>'
+    # Agregar encabezados de horarios incluyendo Coffee Break
+    horarios_display = []
+    for i, horario in enumerate(horarios[:18]):  # Mostrar todos los horarios
+        if i == 6:  # Insertar Coffee Break en posición 6 (10:00-10:15)
+            horarios_display.append("10:00 - 10:15")
+        horarios_display.append(horario)
+    
+    for horario in horarios_display:
+        if horario == "10:00 - 10:15":
+            html_content += f'\n                        <th style="background: linear-gradient(135deg, #ff9800, #f57c00); color: white;">☕ {horario}</th>'
+        else:
+            html_content += f'\n                        <th>⏰ {horario}</th>'
     
     html_content += """
                     </tr>
@@ -301,28 +320,33 @@ def regenerar_matriz_compradores():
     
     # Agregar filas de compradores
     for comprador in compradores:
-        html_content += f'\n                  <tr>\n                    <td class="buyer-name">🏢 {comprador}</td>'
+        comprador_formateado = formatear_nombre_comprador(comprador)
+        html_content += f'\n                  <tr>\n                    <td class="buyer-name">🏢 {comprador_formateado}</td>'
         
-        for horario in horarios[:12]:  # Limitar a los primeros 12 horarios
-            vendedores = matriz[comprador][horario]
-            if vendedores:
-                html_content += f'\n                    <td class="vendor-cell">'
-                for vendedor in vendedores:
-                    # Abreviar nombres inteligentemente
-                    if len(vendedor) > 20:
-                        # Para nombres muy largos, usar abreviación
-                        palabras = vendedor.split()
-                        if len(palabras) > 3:
-                            nombre_display = f"{palabras[0]} {palabras[1]}..."
-                        else:
-                            nombre_display = vendedor[:15] + "..."
-                    else:
-                        # Mantener nombres completos para casos como "FLOR A FRUTO"
-                        nombre_display = vendedor
-                    html_content += f'\n                      <span class="vendor-name">{nombre_display}</span>'
-                html_content += '\n                    </td>'
+        for horario in horarios_display:  # Mostrar TODOS los horarios disponibles incluyendo Coffee Break
+            if horario == "10:00 - 10:15":
+                # Coffee Break - mostrar texto especial
+                html_content += '\n                    <td class="vendor-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>'
             else:
-                html_content += '\n                    <td class="vendor-cell empty-cell">-</td>'
+                vendedores = matriz[comprador][horario] if horario in matriz[comprador] else []
+                if vendedores:
+                    html_content += f'\n                    <td class="vendor-cell">'
+                    for vendedor in vendedores:
+                        # Abreviar nombres inteligentemente
+                        if len(vendedor) > 20:
+                            # Para nombres muy largos, usar abreviación
+                            palabras = vendedor.split()
+                            if len(palabras) > 3:
+                                nombre_display = f"{palabras[0]} {palabras[1]}..."
+                            else:
+                                nombre_display = vendedor[:15] + "..."
+                        else:
+                            # Mantener nombres completos para casos como "FLOR A FRUTO"
+                            nombre_display = vendedor
+                        html_content += f'\n                      <span class="vendor-name">{nombre_display}</span>'
+                    html_content += '\n                    </td>'
+                else:
+                    html_content += '\n                    <td class="vendor-cell empty-cell">-</td>'
         
         html_content += '\n                  </tr>'
     
@@ -625,9 +649,18 @@ def regenerar_matriz_vendedores():
                     <tr>
                         <th>☕ VENDEDOR</th>"""
     
-    # Agregar encabezados de horarios
-    for horario in horarios[:12]:  # Limitar a los primeros 12 horarios
-        html_content += f'\n                        <th>⏰ {horario}</th>'
+    # Agregar encabezados de horarios incluyendo Coffee Break
+    horarios_display = []
+    for i, horario in enumerate(horarios[:18]):  # Mostrar todos los horarios
+        if i == 6:  # Insertar Coffee Break en posición 6 (10:00-10:15)
+            horarios_display.append("10:00 - 10:15")
+        horarios_display.append(horario)
+    
+    for horario in horarios_display:
+        if horario == "10:00 - 10:15":
+            html_content += f'\n                        <th style="background: linear-gradient(135deg, #ff9800, #f57c00); color: white;">☕ {horario}</th>'
+        else:
+            html_content += f'\n                        <th>⏰ {horario}</th>'
     
     html_content += """
                     </tr>
@@ -638,26 +671,30 @@ def regenerar_matriz_vendedores():
     for vendedor in vendedores:
         html_content += f'\n                  <tr>\n                    <td class="vendor-name">☕ {vendedor}</td>'
         
-        for horario in horarios[:12]:  # Limitar a los primeros 12 horarios
-            compradores = matriz[vendedor][horario]
-            if compradores:
-                html_content += f'\n                    <td class="buyer-cell">'
-                for comprador in compradores:
-                    # Abreviar nombres inteligentemente
-                    if len(comprador) > 20:
-                        # Para nombres muy largos, usar abreviación
-                        palabras = comprador.split()
-                        if len(palabras) > 3:
-                            nombre_display = f"{palabras[0]} {palabras[1]}..."
-                        else:
-                            nombre_display = comprador[:15] + "..."
-                    else:
-                        # Mantener nombres completos para casos normales
-                        nombre_display = comprador
-                    html_content += f'\n                      <span class="buyer-name">{nombre_display}</span>'
-                html_content += '\n                    </td>'
+        for horario in horarios_display:  # Mostrar TODOS los horarios incluyendo Coffee Break
+            if horario == "10:00 - 10:15":
+                # Coffee Break - mostrar texto especial
+                html_content += '\n                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>'
             else:
-                html_content += '\n                    <td class="buyer-cell empty-cell">-</td>'
+                compradores = matriz[vendedor][horario] if horario in matriz[vendedor] else []
+                if compradores:
+                    html_content += f'\n                    <td class="buyer-cell">'
+                    for comprador in compradores:
+                        # Abreviar nombres inteligentemente
+                        if len(comprador) > 20:
+                            # Para nombres muy largos, usar abreviación
+                            palabras = comprador.split()
+                            if len(palabras) > 3:
+                                nombre_display = f"{palabras[0]} {palabras[1]}..."
+                            else:
+                                nombre_display = comprador[:15] + "..."
+                        else:
+                            # Mantener nombres completos para casos normales
+                            nombre_display = comprador
+                        html_content += f'\n                      <span class="buyer-name">{nombre_display}</span>'
+                    html_content += '\n                    </td>'
+                else:
+                    html_content += '\n                    <td class="buyer-cell empty-cell">-</td>'
         
         html_content += '\n                  </tr>'
     

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prueba Excel - Rueda de Negocios</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        margin: 20px 0;
+      }
+      .button {
+        display: inline-block;
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        text-decoration: none;
+        padding: 15px 30px;
+        border-radius: 10px;
+        margin: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+      }
+      .compradores {
+        background: linear-gradient(135deg, #4caf50, #45a049);
+      }
+      .vendedores {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>📊 Sistema de Agenda - Rueda de Negocios</h1>
+      <p>
+        Accede a las matrices interactivas con funcionalidades de filtrado y
+        descarga Excel
+      </p>
+
+      <div style="margin: 30px 0">
+        <a href="matriz_compradores_horarios.html" class="button compradores">
+          🏢 Matriz Compradores-Horarios
+        </a>
+        <a href="matriz_vendedores_horarios.html" class="button vendedores">
+          ☕ Matriz Vendedores-Horarios
+        </a>
+      </div>
+
+      <div class="card" style="background: rgba(255, 255, 255, 0.05)">
+        <h3>✨ Nuevas Funcionalidades</h3>
+        <ul style="text-align: left; max-width: 500px; margin: 0 auto">
+          <li>
+            🔍 <strong>Filtros Dinámicos:</strong> Busca por horario,
+            comprador/vendedor
+          </li>
+          <li>
+            📊 <strong>Descarga Excel:</strong> Exporta las agendas filtradas a
+            Excel
+          </li>
+          <li>📱 <strong>Responsive:</strong> Funciona en móvil y desktop</li>
+          <li>
+            ⚡ <strong>Tiempo Real:</strong> Filtros se aplican instantáneamente
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

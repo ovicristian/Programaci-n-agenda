@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>📊 Matriz Compradores-Horarios | Rueda de Negocios</title>
+    <!-- SheetJS CDN para generar Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
       * {
         box-sizing: border-box;
@@ -95,90 +97,6 @@
         color: rgba(255, 255, 255, 0.8);
       }
 
-      .filters-container {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        margin: 20px 30px;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-      }
-
-      .filters-title {
-        font-size: 1.2em;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 15px;
-        text-align: center;
-      }
-
-      .filters-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 15px;
-        align-items: end;
-      }
-
-      .filter-group {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .filter-label {
-        font-weight: 600;
-        color: #555;
-        margin-bottom: 5px;
-        font-size: 0.9em;
-      }
-
-      .filter-input {
-        padding: 8px 12px;
-        border: 2px solid #e0e6ed;
-        border-radius: 8px;
-        font-size: 0.9em;
-        transition: border-color 0.3s ease;
-      }
-
-      .filter-input:focus {
-        outline: none;
-        border-color: #4caf50;
-        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
-      }
-
-      .filter-select {
-        padding: 8px 12px;
-        border: 2px solid #e0e6ed;
-        border-radius: 8px;
-        font-size: 0.9em;
-        background: white;
-        cursor: pointer;
-        transition: border-color 0.3s ease;
-      }
-
-      .filter-select:focus {
-        outline: none;
-        border-color: #4caf50;
-        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
-      }
-
-      .clear-filters {
-        background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 0.9em;
-      }
-
-      .clear-filters:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
-      }
-
       .container {
         padding: 30px;
         max-width: 100%;
@@ -226,8 +144,10 @@
         border: 1px solid #dee2e6;
         text-align: left;
         color: #2196f3;
-        white-space: nowrap;
+        white-space: normal;
         min-width: 200px;
+        line-height: 1.3;
+        vertical-align: top;
       }
 
       .vendor-cell {
@@ -258,7 +178,100 @@
         padding: 12px;
       }
 
+      /* Estilos para Filtros */
+      .filter-container {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e0e6ed;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: end;
+      }
+
+      .filter-section {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 200px;
+      }
+
+      .filter-section label {
+        font-weight: 600;
+        color: #333;
+        font-size: 0.9em;
+      }
+
+      .filter-section input,
+      .filter-section select {
+        padding: 8px 12px;
+        border: 2px solid #e0e6ed;
+        border-radius: 8px;
+        font-size: 0.9em;
+        transition: all 0.3s ease;
+      }
+
+      .filter-section input:focus,
+      .filter-section select:focus {
+        outline: none;
+        border-color: #2196f3;
+        box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+      }
+
+      .clear-btn {
+        background: linear-gradient(135deg, #ff6b6b, #ff5252);
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 0.9em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+      }
+
+      .clear-btn:hover {
+        background: linear-gradient(135deg, #ff5252, #f44336);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+      }
+
+      .excel-btn {
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 0.9em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      }
+
+      .excel-btn:hover {
+        background: linear-gradient(135deg, #45a049, #388e3c);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+      }
+      .hidden-row {
+        display: none !important;
+      }
+
       @media (max-width: 768px) {
+        .filter-container {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .filter-section {
+          min-width: 100%;
+        }
+
         .container {
           padding: 15px;
         }
@@ -299,7 +312,7 @@
         </p>
         <div class="stats">
           <div class="stat-item">
-            <span class="stat-number">65</span>
+            <span class="stat-number">86</span>
             <span class="stat-label">Citas Programadas</span>
           </div>
           <div class="stat-item">
@@ -307,7 +320,7 @@
             <span class="stat-label">Compradores</span>
           </div>
           <div class="stat-item">
-            <span class="stat-number">15</span>
+            <span class="stat-number">14</span>
             <span class="stat-label">Franjas Horarias</span>
           </div>
           <div class="stat-item">
@@ -319,45 +332,56 @@
     </div>
 
     <!-- Controles de Filtrado -->
-    <div class="filters-container">
-      <div class="filters-title">🔍 Filtros de Búsqueda</div>
-      <div class="filters-grid">
-        <div class="filter-group">
-          <label class="filter-label" for="timeFilter"
-            >⏰ Filtrar por Horario</label
-          >
-          <select id="timeFilter" class="filter-select">
-            <option value="">Todos los horarios</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label class="filter-label" for="buyerFilter"
-            >🏢 Filtrar por Comprador</label
-          >
-          <select id="buyerFilter" class="filter-select">
-            <option value="">Todos los compradores</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label class="filter-label" for="vendorSearch"
-            >🏪 Buscar Vendedor</label
-          >
+    <div class="container">
+      <div class="filter-container">
+        <div class="filter-section">
+          <label for="buyer-filter">🔍 Filtrar Comprador:</label>
           <input
             type="text"
-            id="vendorSearch"
-            class="filter-input"
-            placeholder="Escribir nombre del vendedor..."
+            id="buyer-filter"
+            placeholder="Escriba el nombre del comprador..."
           />
         </div>
-        <div class="filter-group">
-          <button class="clear-filters" onclick="clearAllFilters()">
+        <div class="filter-section">
+          <label for="vendor-filter">🔍 Filtrar Vendedor:</label>
+          <input
+            type="text"
+            id="vendor-filter"
+            placeholder="Escriba el nombre del vendedor..."
+          />
+        </div>
+        <div class="filter-section">
+          <label for="time-filter">⏰ Filtrar Horario:</label>
+          <select id="time-filter">
+            <option value="">Todos los horarios</option>
+            <option value="08:30">08:30 - 08:45</option>
+            <option value="08:45">08:45 - 09:00</option>
+            <option value="09:00">09:00 - 09:15</option>
+            <option value="09:15">09:15 - 09:30</option>
+            <option value="09:30">09:30 - 09:45</option>
+            <option value="09:45">09:45 - 10:00</option>
+            <option value="10:15">10:15 - 10:30</option>
+            <option value="10:30">10:30 - 10:45</option>
+            <option value="10:45">10:45 - 11:00</option>
+            <option value="11:00">11:00 - 11:15</option>
+            <option value="11:15">11:15 - 11:30</option>
+            <option value="11:30">11:30 - 11:45</option>
+            <option value="11:45">11:45 - 12:00</option>
+            <option value="12:00">12:00 - 12:15</option>
+          </select>
+        </div>
+        <div class="filter-section">
+          <button id="clear-filters" class="clear-btn">
             🗑️ Limpiar Filtros
           </button>
         </div>
+        <div class="filter-section">
+          <button id="download-excel" class="excel-btn">
+            📊 Descargar Excel
+          </button>
+        </div>
       </div>
-    </div>
 
-    <div class="container">
       <div class="table-container">
         <table class="matrix-table">
           <thead>
@@ -369,44 +393,70 @@
               <th>⏰ 09:15 - 09:30</th>
               <th>⏰ 09:30 - 09:45</th>
               <th>⏰ 09:45 - 10:00</th>
-              <th>⏰ 10:00 - 10:15</th>
+              <th
+                style="
+                  background: linear-gradient(135deg, #ff9800, #f57c00);
+                  color: white;
+                "
+              >
+                ☕ 10:00 - 10:15
+              </th>
               <th>⏰ 10:15 - 10:30</th>
               <th>⏰ 10:30 - 10:45</th>
               <th>⏰ 10:45 - 11:00</th>
               <th>⏰ 11:00 - 11:15</th>
               <th>⏰ 11:15 - 11:30</th>
+              <th>⏰ 11:30 - 11:45</th>
+              <th>⏰ 11:45 - 12:00</th>
+              <th>⏰ 12:00 - 12:15</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="buyer-name">🏢 ARMANDO VELÁSQUEZ</td>
               <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ MATILDE 1960</span>
+                <span class="vendor-name">YELLOW TREE</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+              </td>
+              <td class="vendor-cell">
                 <span class="vendor-name">CINCO DAMAS</span>
+                <span class="vendor-name">DE SOL A SOL</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DELUXE COFFEE</span>
+                <span class="vendor-name">DON HEBER CAFÉ</span>
+              </td>
+              <td class="vendor-cell">
                 <span class="vendor-name">FINCA EL CASCABEL</span>
                 <span class="vendor-name">LADERAS DEL TAPIAS</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">DON HEBER CAFÉ</span>
+                <span class="vendor-name">RUNA COFFEE</span>
+                <span class="vendor-name">FINCA LA FEDERICA</span>
+              </td>
+              <td
+                class="vendor-cell"
+                style="
+                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+                  color: #e65100;
+                  font-weight: bold;
+                  text-align: center;
+                "
+              >
+                ☕ Coffee break
+              </td>
+              <td class="vendor-cell">
                 <span class="vendor-name">CAFE FINCA MI TERRON</span>
               </td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell">
-                <span class="vendor-name">FINCA LA FEDERICA</span>
-                <span class="vendor-name">DE SOL A SOL</span>
-              </td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell">
-                <span class="vendor-name">DELUXE COFFEE</span>
-                <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                <span class="vendor-name">CAFÉ MATILDE 1960</span>
-              </td>
               <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell">
-                <span class="vendor-name">RUNA COFFEE</span>
-                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-              </td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
             </tr>
@@ -414,45 +464,62 @@
               <td class="buyer-name">🏢 BOX BRAND</td>
               <td class="vendor-cell">
                 <span class="vendor-name">D'CLEO COFFEE</span>
+                <span class="vendor-name">CAFÉ ORIGEN...</span>
               </td>
               <td class="vendor-cell">
                 <span class="vendor-name">CAFÉ MURAL</span>
                 <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">DELUXE COFFEE</span>
-                <span class="vendor-name">LADERAS DEL TAPIAS</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">RUNA COFFEE</span>
-                <span class="vendor-name">CAFE FINCA MI TERRON</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                <span class="vendor-name">FINCA EL CASCABEL</span>
-                <span class="vendor-name">FINCA LA RIVERA</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">SIETE LEONES CAFÉ</span>
-                <span class="vendor-name">ROJO PASIÓN</span>
-                <span class="vendor-name">VILLA CLARA...</span>
-              </td>
-              <td class="vendor-cell">
                 <span class="vendor-name">CAFÉ GRANADA</span>
-                <span class="vendor-name">SANTA CRUZ...</span>
                 <span class="vendor-name">CAFÉ MATILDE 1960</span>
               </td>
               <td class="vendor-cell">
                 <span class="vendor-name">CAFÉ ARENILLO</span>
+                <span class="vendor-name">CAFE FINCA MI TERRON</span>
               </td>
-              <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DELUXE COFFEE</span>
+                <span class="vendor-name">FINCA LA RIVERA</span>
+              </td>
               <td class="vendor-cell">
                 <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                <span class="vendor-name">DON HEBER CAFÉ</span>
-                <span class="vendor-name">CAFÉ ORIGEN...</span>
+                <span class="vendor-name">LADERAS DEL TAPIAS</span>
               </td>
+              <td
+                class="vendor-cell"
+                style="
+                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+                  color: #e65100;
+                  font-weight: bold;
+                  text-align: center;
+                "
+              >
+                ☕ Coffee break
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">RUNA COFFEE</span>
+                <span class="vendor-name">ROJO PASIÓN</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+                <span class="vendor-name">VILLA CLARA...</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DON HEBER CAFÉ</span>
+                <span class="vendor-name">FINCA LA FEDERICA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA EL CASCABEL</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">SANTA CRUZ...</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">SIETE LEONES CAFÉ</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
             </tr>
             <tr>
               <td class="buyer-name">🏢 CAFÉ MOLINA</td>
@@ -462,20 +529,32 @@
               </td>
               <td class="vendor-cell">
                 <span class="vendor-name">DELUXE COFFEE</span>
-                <span class="vendor-name">ROJO PASIÓN</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">FINCA LA FEDERICA</span>
-                <span class="vendor-name">CAFÉ AGUA VIVA</span>
-              </td>
-              <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell">
                 <span class="vendor-name">EL ORGASMO...</span>
               </td>
               <td class="vendor-cell">
                 <span class="vendor-name">RUNA COFFEE</span>
+                <span class="vendor-name">ROJO PASIÓN</span>
+              </td>
+              <td class="vendor-cell">
                 <span class="vendor-name">FINCA LA RIVERA</span>
               </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td
+                class="vendor-cell"
+                style="
+                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+                  color: #e65100;
+                  font-weight: bold;
+                  text-align: center;
+                "
+              >
+                ☕ Coffee break
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
@@ -486,41 +565,55 @@
             <tr>
               <td class="buyer-name">🏢 COLFRESH COFFEE</td>
               <td class="vendor-cell">
-                <span class="vendor-name">CAFÉ ERMITAÑO</span>
-                <span class="vendor-name">CAFÉ MATILDE 1960</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                <span class="vendor-name">CAFÉ AGUA VIVA</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">CAFÉ ARENILLO</span>
-                <span class="vendor-name">DE SOL A SOL</span>
-                <span class="vendor-name">EL ORGASMO...</span>
-              </td>
-              <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell">
-                <span class="vendor-name">DELUXE COFFEE</span>
                 <span class="vendor-name">LA PATRONA</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">CAFÉ MURAL</span>
-                <span class="vendor-name">FINCA LA FEDERICA</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">FINCA LA RIVERA</span>
                 <span class="vendor-name">RUNA COFFEE</span>
               </td>
               <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">CAFÉ ARENILLO</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ ERMITAÑO</span>
+                <span class="vendor-name">EL ORGASMO...</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ MURAL</span>
+                <span class="vendor-name">DE SOL A SOL</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td
+                class="vendor-cell"
+                style="
+                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+                  color: #e65100;
+                  font-weight: bold;
+                  text-align: center;
+                "
+              >
+                ☕ Coffee break
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ MATILDE 1960</span>
+                <span class="vendor-name">DELUXE COFFEE</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+                <span class="vendor-name">FINCA LA RIVERA</span>
+              </td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA FEDERICA</span>
+              </td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
             </tr>
             <tr>
               <td class="buyer-name">
-                🏢 ENCADENAMIENTOS PRODUCTIVOS - CAFE AROMAS DEL EJE / CAFÉ
-                GRANEAO.
+                🏢 ENCADENAMIENTOS PRODUCTIVOS<br />
+                CAFE AROMAS DEL EJE / CAFÉ GRANEAO.
               </td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
@@ -528,56 +621,87 @@
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell empty-cell">-</td>
+              <td
+                class="vendor-cell"
+                style="
+                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+                  color: #e65100;
+                  font-weight: bold;
+                  text-align: center;
+                "
+              >
+                ☕ Coffee break
+              </td>
               <td class="vendor-cell">
-                <span class="vendor-name">ROJO PASIÓN</span>
+                <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
+                <span class="vendor-name">CAFÉ OASIS DE SAMDA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ MATILDE 1960</span>
                 <span class="vendor-name">FINCA EL CASCABEL</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">CAFÉ OASIS DE SAMDA</span>
-                <span class="vendor-name">RUNA COFFEE</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">FINCA LA FEDERICA</span>
-                <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
-              </td>
-              <td class="vendor-cell">
                 <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">ROJO PASIÓN</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">RUNA COFFEE</span>
+                <span class="vendor-name">FINCA LA FEDERICA</span>
+              </td>
+              <td class="vendor-cell">
                 <span class="vendor-name">VILLA CLARA...</span>
               </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
             </tr>
             <tr>
               <td class="buyer-name">🏢 FLOR A FRUTO</td>
               <td class="vendor-cell">
                 <span class="vendor-name">CAFÉ CAMPOHERMOSO</span>
-                <span class="vendor-name">CAFÉ OASIS DE SAMDA</span>
-                <span class="vendor-name">RUNA COFFEE</span>
+                <span class="vendor-name">CAFÉ ERMITAÑO</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">FINCA EL CASCABEL</span>
                 <span class="vendor-name">CAFÉ ARENILLO</span>
+                <span class="vendor-name">CAFE FINCA MI TERRON</span>
               </td>
-              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DELUXE COFFEE</span>
+                <span class="vendor-name">FINCA EL CASCABEL</span>
+              </td>
               <td class="vendor-cell">
                 <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
                 <span class="vendor-name">DE SOL A SOL</span>
               </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ OASIS DE SAMDA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">ROJO PASIÓN</span>
+                <span class="vendor-name">SANTA CRUZ...</span>
+              </td>
+              <td
+                class="vendor-cell"
+                style="
+                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+                  color: #e65100;
+                  font-weight: bold;
+                  text-align: center;
+                "
+              >
+                ☕ Coffee break
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA RIVERA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">RUNA COFFEE</span>
+              </td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell">
                 <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                <span class="vendor-name">CAFE FINCA MI TERRON</span>
-                <span class="vendor-name">DELUXE COFFEE</span>
               </td>
               <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell">
-                <span class="vendor-name">FINCA LA RIVERA</span>
-                <span class="vendor-name">CAFÉ ERMITAÑO</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">SANTA CRUZ...</span>
-                <span class="vendor-name">ROJO PASIÓN</span>
-              </td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
@@ -589,36 +713,55 @@
                 <span class="vendor-name">CAFÉ LA AVANZANTE</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">RUNA COFFEE</span>
+                <span class="vendor-name">CAFÉ ERMITAÑO</span>
                 <span class="vendor-name">CINCO DAMAS</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">FINCA LA RIVERA</span>
-                <span class="vendor-name">ROJO PASIÓN</span>
+                <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
+                <span class="vendor-name">LADERAS DEL TAPIAS</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">RUNA COFFEE</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ ARENILLO</span>
+                <span class="vendor-name">CAFÉ MATILDE 1960</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ ORIGEN...</span>
+              </td>
+              <td
+                class="vendor-cell"
+                style="
+                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+                  color: #e65100;
+                  font-weight: bold;
+                  text-align: center;
+                "
+              >
+                ☕ Coffee break
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
               </td>
               <td class="vendor-cell">
                 <span class="vendor-name">DELUXE COFFEE</span>
                 <span class="vendor-name">FINCA LA FEDERICA</span>
-                <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">DON HEBER CAFÉ</span>
-                <span class="vendor-name">LADERAS DEL TAPIAS</span>
                 <span class="vendor-name">CAFÉ MURAL</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">CAFÉ ERMITAÑO</span>
+                <span class="vendor-name">DON HEBER CAFÉ</span>
                 <span class="vendor-name">CAFÉ OASIS DE SAMDA</span>
-                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">CAFÉ AGUA VIVA</span>
-                <span class="vendor-name">CAFÉ ARENILLO</span>
-                <span class="vendor-name">SIETE LEONES CAFÉ</span>
+                <span class="vendor-name">FINCA LA RIVERA</span>
               </td>
-              <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">ROJO PASIÓN</span>
+              </td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
             </tr>
@@ -629,39 +772,59 @@
                 <span class="vendor-name">CAFÉ ARENILLO</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">VILLA CLARA...</span>
                 <span class="vendor-name">CAFÉ GRANADA</span>
+                <span class="vendor-name">CAFÉ MATILDE 1960</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">CAFÉ MURAL</span>
-                <span class="vendor-name">DON HEBER CAFÉ</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">SIETE LEONES CAFÉ</span>
-                <span class="vendor-name">LA PATRONA</span>
+                <span class="vendor-name">CAFE FINCA MI TERRON</span>
                 <span class="vendor-name">CAFE MIS TAITAS</span>
               </td>
               <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ MURAL</span>
                 <span class="vendor-name">CAFÉ TRADICIÓN NEIRA</span>
-                <span class="vendor-name">CAFE ARTE</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
                 <span class="vendor-name">D'CLEO COFFEE</span>
               </td>
-              <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell">
-                <span class="vendor-name">CAFE FINCA MI TERRON</span>
-                <span class="vendor-name">FINCA EL CASCABEL</span>
+                <span class="vendor-name">DELUXE COFFEE</span>
+                <span class="vendor-name">DON HEBER CAFÉ</span>
+              </td>
+              <td
+                class="vendor-cell"
+                style="
+                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+                  color: #e65100;
+                  font-weight: bold;
+                  text-align: center;
+                "
+              >
+                ☕ Coffee break
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">SANTA CRUZ...</span>
-                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-                <span class="vendor-name">CAFE GRANEAO</span>
+                <span class="vendor-name">FINCA EL CASCABEL</span>
+                <span class="vendor-name">LA PATRONA</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">FINCA LA RIVERA</span>
+                <span class="vendor-name">LADERAS DEL TAPIAS</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">SIETE LEONES CAFÉ</span>
+                <span class="vendor-name">VILLA CLARA...</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFE ARTE</span>
               </td>
               <td class="vendor-cell">
                 <span class="vendor-name">FINCA LA FEDERICA</span>
-                <span class="vendor-name">DELUXE COFFEE</span>
-                <span class="vendor-name">CAFÉ MATILDE 1960</span>
               </td>
-              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ ORIGEN...</span>
+                <span class="vendor-name">SANTA CRUZ...</span>
+                <span class="vendor-name">CAFE GRANEAO</span>
+              </td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
             </tr>
@@ -673,23 +836,40 @@
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell empty-cell">-</td>
+              <td
+                class="vendor-cell"
+                style="
+                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+                  color: #e65100;
+                  font-weight: bold;
+                  text-align: center;
+                "
+              >
+                ☕ Coffee break
+              </td>
               <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ CAMPOHERMOSO</span>
                 <span class="vendor-name">CAFÉ LA AVANZANTE</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">CINCO DAMAS</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">DE SOL A SOL</span>
                 <span class="vendor-name">RUNA COFFEE</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">CINCO DAMAS</span>
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
                 <span class="vendor-name">FINCA LA RIVERA</span>
               </td>
               <td class="vendor-cell">
                 <span class="vendor-name">ROJO PASIÓN</span>
-                <span class="vendor-name">CAFÉ CAMPOHERMOSO</span>
               </td>
               <td class="vendor-cell">
                 <span class="vendor-name">CAFÉ MURAL</span>
-                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
               </td>
+              <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
             </tr>
             <tr>
@@ -698,14 +878,33 @@
                 <span class="vendor-name">FINCA LA RIVERA</span>
                 <span class="vendor-name">CAFE ARTE</span>
               </td>
-              <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell empty-cell">-</td>
-              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell">
+                <span class="vendor-name">CAFÉ ORIGEN...</span>
+                <span class="vendor-name">YELLOW TREE</span>
+              </td>
               <td class="vendor-cell">
                 <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+                <span class="vendor-name">D'CLEO COFFEE</span>
               </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">LADERAS DEL TAPIAS</span>
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td
+                class="vendor-cell"
+                style="
+                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+                  color: #e65100;
+                  font-weight: bold;
+                  text-align: center;
+                "
+              >
+                ☕ Coffee break
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
+              <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
@@ -717,23 +916,36 @@
               <td class="vendor-cell">
                 <span class="vendor-name">DELUXE COFFEE</span>
                 <span class="vendor-name">DON HEBER CAFÉ</span>
-                <span class="vendor-name">EL ORGASMO...</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">CAFÉ MATILDE 1960</span>
+                <span class="vendor-name">ROJO PASIÓN</span>
+                <span class="vendor-name">VILLA CLARA...</span>
+              </td>
+              <td class="vendor-cell">
+                <span class="vendor-name">EL ORGASMO...</span>
                 <span class="vendor-name">FINCA LA FEDERICA</span>
               </td>
               <td class="vendor-cell">
-                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
-              </td>
-              <td class="vendor-cell">
-                <span class="vendor-name">FINCA LA RIVERA</span>
                 <span class="vendor-name">CAFÉ AGUA VIVA</span>
+                <span class="vendor-name">CAFÉ MATILDE 1960</span>
               </td>
+              <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell">
-                <span class="vendor-name">VILLA CLARA...</span>
-                <span class="vendor-name">ROJO PASIÓN</span>
+                <span class="vendor-name">CAFÉ VALLE DE LIRIO</span>
+                <span class="vendor-name">FINCA LA RIVERA</span>
               </td>
+              <td
+                class="vendor-cell"
+                style="
+                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+                  color: #e65100;
+                  font-weight: bold;
+                  text-align: center;
+                "
+              >
+                ☕ Coffee break
+              </td>
+              <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
               <td class="vendor-cell empty-cell">-</td>
@@ -748,171 +960,151 @@
     </div>
 
     <script>
-      // Inicializar filtros cuando se carga la página
+      // Funcionalidad de Filtros
       document.addEventListener("DOMContentLoaded", function () {
-        populateFilterOptions();
-        setupFilterListeners();
-      });
-
-      function populateFilterOptions() {
-        const table = document.querySelector(".matrix-table");
-        if (!table) return;
-
-        // Obtener horarios únicos de los encabezados
-        const timeHeaders = Array.from(
-          table.querySelectorAll("th:not(:first-child)")
+        const buyerFilter = document.getElementById("buyer-filter");
+        const vendorFilter = document.getElementById("vendor-filter");
+        const timeFilter = document.getElementById("time-filter");
+        const clearButton = document.getElementById("clear-filters");
+        const tableRows = document.querySelectorAll(".matrix-table tbody tr");
+        const tableHeaders = document.querySelectorAll(
+          ".matrix-table thead th"
         );
-        const timeSelect = document.getElementById("timeFilter");
 
-        timeHeaders.forEach((th) => {
-          if (th.textContent.trim() && th.textContent.includes("⏰")) {
-            const option = document.createElement("option");
-            const timeText = th.textContent.replace("⏰ ", "");
-            option.value = timeText;
-            option.textContent = timeText;
-            timeSelect.appendChild(option);
-          }
-        });
+        function applyFilters() {
+          const buyerText = buyerFilter.value.toLowerCase().trim();
+          const vendorText = vendorFilter.value.toLowerCase().trim();
+          const timeValue = timeFilter.value;
 
-        // Obtener compradores únicos de las filas
-        const buyerCells = Array.from(table.querySelectorAll(".buyer-name"));
-        const buyerSelect = document.getElementById("buyerFilter");
-        const uniqueBuyers = new Set();
+          // Ocultar/mostrar columnas basado en filtro de tiempo
+          tableHeaders.forEach((header, index) => {
+            if (index === 0) return; // Saltar primera columna (compradores)
 
-        buyerCells.forEach((cell) => {
-          if (cell.textContent.trim()) {
-            uniqueBuyers.add(cell.textContent.trim());
-          }
-        });
+            const shouldHideColumn =
+              timeValue && !header.textContent.includes(timeValue);
 
-        Array.from(uniqueBuyers)
-          .sort()
-          .forEach((buyer) => {
-            const option = document.createElement("option");
-            option.value = buyer;
-            option.textContent = buyer;
-            buyerSelect.appendChild(option);
-          });
-      }
+            header.style.display = shouldHideColumn ? "none" : "";
 
-      function setupFilterListeners() {
-        document
-          .getElementById("timeFilter")
-          .addEventListener("change", applyFilters);
-        document
-          .getElementById("buyerFilter")
-          .addEventListener("change", applyFilters);
-        document
-          .getElementById("vendorSearch")
-          .addEventListener("input", applyFilters);
-      }
-
-      function applyFilters() {
-        const timeFilter = document
-          .getElementById("timeFilter")
-          .value.toLowerCase();
-        const buyerFilter = document
-          .getElementById("buyerFilter")
-          .value.toLowerCase();
-        const vendorSearch = document
-          .getElementById("vendorSearch")
-          .value.toLowerCase();
-
-        const table = document.querySelector(".matrix-table");
-        if (!table) return;
-
-        // Filtrar columnas por horario
-        const headers = Array.from(table.querySelectorAll("th"));
-        const rows = Array.from(table.querySelectorAll("tr"));
-
-        // Mostrar/ocultar columnas basado en filtro de tiempo
-        headers.forEach((th, colIndex) => {
-          if (colIndex === 0) return; // Siempre mostrar primera columna (compradores)
-
-          const shouldShow =
-            !timeFilter || th.textContent.toLowerCase().includes(timeFilter);
-          th.style.display = shouldShow ? "" : "none";
-
-          // Aplicar el mismo filtro a todas las celdas de esta columna
-          rows.forEach((row) => {
-            const cell = row.cells[colIndex];
-            if (cell) {
-              cell.style.display = shouldShow ? "" : "none";
-            }
-          });
-        });
-
-        // Filtrar filas por comprador y vendedor
-        rows.forEach((row, rowIndex) => {
-          if (rowIndex === 0) return; // Siempre mostrar encabezado
-
-          const buyerCell = row.querySelector(".buyer-name");
-          if (!buyerCell) return;
-
-          const buyerName = buyerCell.textContent.toLowerCase();
-          const buyerMatch = !buyerFilter || buyerName.includes(buyerFilter);
-
-          // Verificar si alguna celda de la fila contiene el vendedor buscado
-          let vendorMatch = true;
-          if (vendorSearch) {
-            vendorMatch = false;
-            const cells = Array.from(
-              row.querySelectorAll("td:not(.buyer-name)")
-            );
-            cells.forEach((cell) => {
-              if (
-                cell.style.display !== "none" &&
-                cell.textContent.toLowerCase().includes(vendorSearch)
-              ) {
-                vendorMatch = true;
+            // Ocultar/mostrar celdas correspondientes
+            tableRows.forEach((row) => {
+              const cells = row.querySelectorAll("td");
+              if (cells[index]) {
+                cells[index].style.display = shouldHideColumn ? "none" : "";
               }
             });
-          }
+          });
 
-          row.style.display = buyerMatch && vendorMatch ? "" : "none";
-        });
+          // Filtrar filas
+          tableRows.forEach((row) => {
+            const buyerCell = row.querySelector(".buyer-name");
+            const vendorCells = row.querySelectorAll(".vendor-name");
 
-        updateVisibleCount();
-      }
+            if (!buyerCell) return;
 
-      function updateVisibleCount() {
-        const table = document.querySelector(".matrix-table");
-        if (!table) return;
+            let showRow = true;
 
-        const visibleRows = Array.from(table.querySelectorAll("tr")).filter(
-          (row) =>
-            row.style.display !== "none" && row.querySelector(".buyer-name")
-        ).length;
+            // Filtro de comprador
+            if (buyerText) {
+              const buyerName = buyerCell.textContent.toLowerCase();
+              if (!buyerName.includes(buyerText)) {
+                showRow = false;
+              }
+            }
 
-        const visibleCols =
-          Array.from(table.querySelectorAll("th")).filter(
-            (th) => th.style.display !== "none"
-          ).length - 1; // -1 para excluir columna de compradores
+            // Filtro de vendedor
+            if (vendorText && showRow) {
+              let hasMatchingVendor = false;
+              vendorCells.forEach((vendorCell) => {
+                if (vendorCell.textContent.toLowerCase().includes(vendorText)) {
+                  hasMatchingVendor = true;
+                }
+              });
+              if (!hasMatchingVendor) {
+                showRow = false;
+              }
+            }
 
-        // Actualizar estadísticas si existen
-        const statItems = document.querySelectorAll(".stat-item");
-        if (statItems.length >= 2) {
-          const buyerStat = statItems[1].querySelector(".stat-number");
-          const timeStat = statItems[2].querySelector(".stat-number");
-          if (buyerStat) buyerStat.textContent = visibleRows;
-          if (timeStat) timeStat.textContent = visibleCols;
+            // Aplicar visibilidad
+            if (showRow) {
+              row.classList.remove("hidden-row");
+            } else {
+              row.classList.add("hidden-row");
+            }
+          });
+
+          updateVisibleCount();
         }
-      }
 
-      function clearAllFilters() {
-        document.getElementById("timeFilter").value = "";
-        document.getElementById("buyerFilter").value = "";
-        document.getElementById("vendorSearch").value = "";
-
-        // Mostrar todas las filas y columnas
-        const table = document.querySelector(".matrix-table");
-        if (table) {
-          const allElements = table.querySelectorAll("tr, th, td");
-          allElements.forEach((el) => (el.style.display = ""));
+        function updateVisibleCount() {
+          const visibleRows = document.querySelectorAll(
+            ".matrix-table tbody tr:not(.hidden-row)"
+          );
+          console.log(
+            `Mostrando ${visibleRows.length} de ${tableRows.length} compradores`
+          );
         }
 
+        function clearFilters() {
+          buyerFilter.value = "";
+          vendorFilter.value = "";
+          timeFilter.value = "";
+
+          // Mostrar todas las filas
+          tableRows.forEach((row) => {
+            row.classList.remove("hidden-row");
+          });
+
+          // Mostrar todas las columnas
+          tableHeaders.forEach((header) => {
+            header.style.display = "";
+          });
+
+          tableRows.forEach((row) => {
+            const cells = row.querySelectorAll("td");
+            cells.forEach((cell) => {
+              cell.style.display = "";
+            });
+          });
+
+          updateVisibleCount();
+        }
+
+        function downloadExcel() {
+          // Crear workbook
+          const wb = XLSX.utils.book_new();
+
+          // Obtener datos de la tabla
+          const table = document.querySelector(".matrix-table");
+          const ws = XLSX.utils.table_to_sheet(table);
+
+          // Configurar el nombre de la hoja
+          XLSX.utils.book_append_sheet(wb, ws, "Matriz Compradores-Horarios");
+
+          // Generar nombre del archivo con fecha
+          const now = new Date();
+          const fileName = `Matriz_Compradores_Horarios_${now.getFullYear()}-${(
+            now.getMonth() + 1
+          )
+            .toString()
+            .padStart(2, "0")}-${now
+            .getDate()
+            .toString()
+            .padStart(2, "0")}.xlsx`;
+
+          // Descargar archivo
+          XLSX.writeFile(wb, fileName);
+        }
+
+        // Event listeners
+        buyerFilter.addEventListener("input", applyFilters);
+        vendorFilter.addEventListener("input", applyFilters);
+        timeFilter.addEventListener("change", applyFilters);
+        clearButton.addEventListener("click", clearFilters);
+        excelButton.addEventListener("click", downloadExcel);
+
+        // Aplicar filtros iniciales
         updateVisibleCount();
-      }
+      });
     </script>
   </body>
 </html>
