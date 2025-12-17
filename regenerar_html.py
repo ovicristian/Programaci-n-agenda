@@ -51,7 +51,7 @@ def regenerar_matriz_compradores():
         for cita in citas:
             comprador = cita['comprador']
             vendedores = cita['vendedores']
-            matriz[comprador][horario] = vendedores
+            matriz[comprador][horario].extend(vendedores)
     
     # Generar HTML
     html_content = f"""<!DOCTYPE html>
