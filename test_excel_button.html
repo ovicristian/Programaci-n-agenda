@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Excel Button</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+      .excel-btn {
+        background-color: #0e7434;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin: 10px;
+      }
+      .excel-btn:hover {
+        background-color: #0a5a2a;
+      }
+      table {
+        border-collapse: collapse;
+        margin: 20px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Test de Descarga Excel</h1>
+
+    <button id="download-excel" class="excel-btn">📥 Descargar Excel</button>
+
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Comprador</th>
+          <th>9:00-9:15</th>
+          <th>9:15-9:30</th>
+          <th>9:30-9:45</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>INMERSSO BOUTIQUE</strong></td>
+          <td>FINCA LA RIVERA</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td><strong>CAFÉ MOLINA</strong></td>
+          <td>-</td>
+          <td>FINCA LA RIVERA</td>
+          <td>-</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const excelButton = document.getElementById("download-excel");
+
+        console.log("Excel button:", excelButton);
+        console.log("XLSX available:", typeof XLSX !== "undefined");
+
+        function downloadExcel() {
+          console.log("downloadExcel function called");
+
+          try {
+            // Crear workbook
+            const wb = XLSX.utils.book_new();
+            console.log("Workbook created:", wb);
+
+            // Obtener datos de la tabla
+            const table = document.querySelector(".matrix-table");
+            console.log("Table found:", table);
+
+            const ws = XLSX.utils.table_to_sheet(table);
+            console.log("Worksheet created:", ws);
+
+            // Configurar el nombre de la hoja
+            XLSX.utils.book_append_sheet(wb, ws, "Test-Matrix");
+            console.log("Sheet appended");
+
+            // Generar nombre del archivo
+            const fileName = "Test_Matrix.xlsx";
+            console.log("Filename:", fileName);
+
+            // Descargar archivo
+            XLSX.writeFile(wb, fileName);
+            console.log("File download initiated");
+          } catch (error) {
+            console.error("Error in downloadExcel:", error);
+            alert("Error: " + error.message);
+          }
+        }
+
+        excelButton.addEventListener("click", function () {
+          console.log("Button clicked!");
+          downloadExcel();
+        });
+
+        console.log("Event listener attached");
+      });
+    </script>
+  </body>
+</html>
