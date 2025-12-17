@@ -637,7 +637,7 @@
       ]
     },
     "SIETE LEONES CAFÉ": {
-      "total_citas": 2,
+      "total_citas": 3,
       "citas": [
         {
           "horario": "11:30 - 11:45",
@@ -646,6 +646,11 @@
             "CAFÉ ORIGEN DE LA MONTAÑA",
             "SANTA CRUZ DE LAS AGUAS"
           ]
+        },
+        {
+          "horario": "11:15 - 11:30",
+          "comprador": "INMERSSO BOUTIQUE",
+          "otros_vendedores": ["FINCA LA RIVERA"]
         },
         {
           "horario": "10:45 - 11:00",

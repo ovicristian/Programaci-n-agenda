@@ -1,1792 +1,1165 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🏪 Matriz Vendedores-Horarios | Rueda de Negocios</title>
-    <!-- SheetJS CDN para generar Excel -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-        min-height: 100vh;
-      }
-
-      .header {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        padding: 15px 25px;
-
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .home-button {
-        position: absolute;
-        top: 25px;
-        left: 25px;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        padding: 8px 16px;
-        border-radius: 20px;
-        text-decoration: none;
-        color: white;
-        font-size: 18px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      }
-
-      .home-button:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-      }
-
-      .header-content {
-        text-align: center;
-        padding-left: 60px;
-      }
-
-      .header h1 {
-        color: white;
-        font-size: 2.2em;
-        margin-bottom: 8px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      }
-
-      .header p {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.1em;
-        margin-bottom: 15px;
-      }
-
-      .stats {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        flex-wrap: wrap;
-      }
-
-      .stat-item {
-        background: rgba(255, 255, 255, 0.15);
-        padding: 8px 16px;
-        border-radius: 15px;
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .stat-number {
-        display: block;
-        font-size: 1.4em;
-        font-weight: bold;
-        color: #ffd700;
-      }
-
-      .stat-label {
-        font-size: 0.9em;
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      .container {
-        padding: 30px;
-        max-width: 100%;
-        margin: 0 auto;
-      }
-
-      .table-container {
-        background: white;
-        border-radius: 20px;
-        padding: 25px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-        overflow-x: auto;
-        border: 1px solid #e0e6ed;
-      }
-
-      .matrix-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.85em;
-        min-width: 1200px;
-      }
-
-      .matrix-table th {
-        background: linear-gradient(135deg, #e74c3c, #c0392b);
-        color: white;
-        padding: 12px 8px;
-        text-align: center;
-        font-weight: 600;
-        border: 1px solid #c0392b;
-
-        white-space: nowrap;
-        font-size: 0.8em;
-      }
-
-      .matrix-table th:first-child {
-        background: linear-gradient(135deg, #d32f2f, #b71c1c);
-        border-color: #b71c1c;
-
-        z-index: 11;
-        min-width: 200px;
-      }
-
-      .vendor-name {
-        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        font-weight: 600;
-        padding: 12px;
-        border: 1px solid #dee2e6;
-        text-align: left;
-        color: #d32f2f;
-
-        white-space: nowrap;
-        min-width: 200px;
-      }
-
-      .buyer-cell {
-        padding: 8px;
-        border: 1px solid #dee2e6;
-        text-align: center;
-        vertical-align: top;
-        background-color: #fafafa;
-        min-width: 100px;
-      }
-
-      .buyer-name {
-        display: inline-block;
-        background: linear-gradient(135deg, #2196f3, #1976d2);
-        color: white;
-        padding: 4px 8px;
-        border-radius: 12px;
-        margin: 2px;
-        font-size: 0.75em;
-        font-weight: 500;
-        box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
-        white-space: nowrap;
-      }
-
-      .empty-cell {
-        color: #999;
-        font-style: italic;
-        padding: 12px;
-      }
-
-      /* Estilos para Filtros */
-      .filter-container {
-        background: white;
-        border-radius: 15px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        border: 1px solid #e0e6ed;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        align-items: end;
-      }
-
-      .filter-section {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        min-width: 200px;
-      }
-
-      .filter-section label {
-        font-weight: 600;
-        color: #333;
-        font-size: 0.9em;
-      }
-
-      .filter-section input,
-      .filter-section select {
-        padding: 8px 12px;
-        border: 2px solid #e0e6ed;
-        border-radius: 8px;
-        font-size: 0.9em;
-        transition: all 0.3s ease;
-      }
-
-      .filter-section input:focus,
-      .filter-section select:focus {
-        outline: none;
-        border-color: #ff6b6b;
-        box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
-      }
-
-      .clear-btn {
-        background: linear-gradient(135deg, #ff6b6b, #ff5252);
-        color: white;
-        border: none;
-        padding: 10px 16px;
-        border-radius: 8px;
-        font-size: 0.9em;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-      }
-
-      .clear-btn:hover {
-        background: linear-gradient(135deg, #ff5252, #f44336);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
-      }
-
-      .excel-btn {
-        background: linear-gradient(135deg, #4caf50, #45a049);
-        color: white;
-        border: none;
-        padding: 10px 16px;
-        border-radius: 8px;
-        font-size: 0.9em;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-      }
-
-      .excel-btn:hover {
-        background: linear-gradient(135deg, #45a049, #388e3c);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-      }
-      .hidden-row {
-        display: none !important;
-      }
-
-      @media (max-width: 768px) {
-        .filter-container {
-          flex-direction: column;
-          align-items: stretch;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        .filter-section {
-          min-width: 100%;
-        }
-        .container {
-          padding: 15px;
-        }
-
-        .header h1 {
-          font-size: 1.8em;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            min-height: 100vh;
         }
 
-        .stats {
-          gap: 15px;
-        }
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
 
-        .matrix-table {
-          font-size: 0.75em;
+
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .home-button {
-          font-size: 16px;
-          padding: 6px 12px;
-          top: 20px;
-          left: 20px;
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .home-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .header-content {
-          padding-left: 50px;
+            text-align: center;
+            padding-left: 60px;
         }
-      }
+
+        .header h1 {
+            color: white;
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 16px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .container {
+            padding: 30px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            border: 1px solid #e0e6ed;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+            min-width: 1200px;
+        }
+
+        .matrix-table th {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid #c0392b;
+
+
+
+            white-space: nowrap;
+            font-size: 0.8em;
+        }
+
+        .matrix-table th:first-child {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            border-color: #b71c1c;
+
+
+            z-index: 11;
+            min-width: 200px;
+        }
+
+        .vendor-name {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            font-weight: 600;
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            text-align: left;
+            color: #d32f2f;
+
+
+
+            white-space: nowrap;
+            min-width: 200px;
+        }
+
+        .buyer-cell {
+            padding: 8px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+            vertical-align: top;
+            background-color: #fafafa;
+            min-width: 100px;
+        }
+
+        .buyer-name {
+            display: inline-block;
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            margin: 2px;
+            font-size: 0.75em;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
+            white-space: nowrap;
+        }
+
+        .empty-cell {
+            color: #999;
+            font-style: italic;
+            padding: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .stats {
+                gap: 15px;
+            }
+
+            .matrix-table {
+                font-size: 0.75em;
+            }
+
+            .home-button {
+                font-size: 16px;
+                padding: 6px 12px;
+                top: 20px;
+                left: 20px;
+            }
+
+            .header-content {
+                padding-left: 50px;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="header">
-      <a href="index.html" class="home-button">🏠 Inicio</a>
-      <div class="header-content">
-        <h1>🏪 Matriz Vendedores-Horarios</h1>
-        <p>
-          Vista complementaria - Vendedores como filas, horarios como columnas
-        </p>
-        <div class="stats">
-          <div class="stat-item">
-            <span class="stat-number">86</span>
-            <span class="stat-label">Citas Programadas</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">33</span>
-            <span class="stat-label">Vendedores</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">14</span>
-            <span class="stat-label">Franjas Horarias</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">16/12/2025</span>
-            <span class="stat-label">Última Actualización</span>
-          </div>
+        <a href="index.html" class="home-button">🏠 Inicio</a>
+        <div class="header-content">
+            <h1>🏪 Matriz Vendedores-Horarios</h1>
+            <p>Vista complementaria - Vendedores como filas, horarios como columnas</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">86</span>
+                    <span class="stat-label">Citas Programadas</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">33</span>
+                    <span class="stat-label">Vendedores</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">14</span>
+                    <span class="stat-label">Franjas Horarias</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">17/12/2025</span>
+                    <span class="stat-label">Última Actualización</span>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
-    <!-- Controles de Filtrado -->
     <div class="container">
-      <div class="filter-container">
-        <div class="filter-section">
-          <label for="vendor-filter">🔍 Filtrar Vendedor:</label>
-          <input
-            type="text"
-            id="vendor-filter"
-            placeholder="Escriba el nombre del vendedor..."
-          />
+        <div class="table-container">
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th>☕ VENDEDOR</th>
+                        <th>⏰ 08:30 - 08:45</th>
+                        <th>⏰ 08:45 - 09:00</th>
+                        <th>⏰ 09:00 - 09:15</th>
+                        <th>⏰ 09:15 - 09:30</th>
+                        <th>⏰ 09:30 - 09:45</th>
+                        <th>⏰ 09:45 - 10:00</th>
+                        <th style="background: linear-gradient(135deg, #ff9800, #f57c00); color: white;">☕ 10:00 - 10:15</th>
+                        <th>⏰ 10:15 - 10:30</th>
+                        <th>⏰ 10:30 - 10:45</th>
+                        <th>⏰ 10:45 - 11:00</th>
+                        <th>⏰ 11:00 - 11:15</th>
+                        <th>⏰ 11:15 - 11:30</th>
+                        <th>⏰ 11:30 - 11:45</th>
+                        <th>⏰ 11:45 - 12:00</th>
+                        <th>⏰ 12:00 - 12:15</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="vendor-name">☕ CAFE ARTE</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">PROCOLOMBIA</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFE FINCA MI TERRON</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFE GRANEAO</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFE MIS TAITAS</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ AGUA VIVA</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">REGIONAL S.A.S</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">CAFÉ MOLINA</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">NEIRA YORK COFFEE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ ARENILLO</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ CAMPOHERMOSO</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">NEIRA YORK COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ ERMITAÑO</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ GRANADA</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ LA AVANZANTE</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">NEIRA YORK COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ MATILDE 1960</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">REGIONAL S.A.S</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ MURAL</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">NEIRA YORK COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ OASIS DE SAMDA</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ ORIGEN DE LA MONTAÑA</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">PROCOLOMBIA</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ TRADICIÓN NEIRA</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CAFÉ VALLE DE LIRIO</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">CAFÉ MOLINA</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">PROCOLOMBIA</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">REGIONAL S.A.S</span>
+                    </td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">NEIRA YORK COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ CINCO DAMAS</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">NEIRA YORK COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ D'CLEO COFFEE</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">PROCOLOMBIA</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ DE SOL A SOL</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">CAFÉ MOLINA</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">NEIRA YORK COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ DELUXE COFFEE</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">REGIONAL S.A.S</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">CAFÉ MOLINA</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ DON HEBER CAFÉ</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">REGIONAL S.A.S</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ EL ORGASMO DE LOS SAINOS</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">CAFÉ MOLINA</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">REGIONAL S.A.S</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ FINCA EL CASCABEL</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ FINCA LA FEDERICA</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">REGIONAL S.A.S</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">CAFÉ MOLINA</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ FINCA LA RIVERA</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">PROCOLOMBIA</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">CAFÉ MOLINA</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">REGIONAL S.A.S</span>
+                    </td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">NEIRA YORK COFFEE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ LA PATRONA</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ LADERAS DEL TAPIAS</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">PROCOLOMBIA</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ ROJO PASIÓN</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">REGIONAL S.A.S</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">CAFÉ MOLINA</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">NEIRA YORK COFFEE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ RUNA COFFEE</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">COLFRESH COFFEE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">CAFÉ MOLINA</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">NEIRA YORK COFFEE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ SANTA CRUZ DE LAS AGUAS</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">FLOR A FRUTO</span>
+                    </td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ SIETE LEONES CAFÉ</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INMERSSO BOUTIQUE</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">REGIONAL S.A.S</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">BOX BRAND</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">INTERLINK2AMERICAS</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                  <tr>
+                    <td class="vendor-name">☕ YELLOW TREE</td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
+                    </td>
+                    <td class="buyer-cell">
+                      <span class="buyer-name">PROCOLOMBIA</span>
+                    </td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; font-weight: bold; text-align: center;">☕ Coffee break</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                    <td class="buyer-cell empty-cell">-</td>
+                  </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="filter-section">
-          <label for="buyer-filter">🔍 Filtrar Comprador:</label>
-          <input
-            type="text"
-            id="buyer-filter"
-            placeholder="Escriba el nombre del comprador..."
-          />
-        </div>
-        <div class="filter-section">
-          <label for="time-filter">⏰ Filtrar Horario:</label>
-          <select id="time-filter">
-            <option value="">Todos los horarios</option>
-            <option value="08:30">08:30 - 08:45</option>
-            <option value="08:45">08:45 - 09:00</option>
-            <option value="09:00">09:00 - 09:15</option>
-            <option value="09:15">09:15 - 09:30</option>
-            <option value="09:30">09:30 - 09:45</option>
-            <option value="09:45">09:45 - 10:00</option>
-            <option value="10:15">10:15 - 10:30</option>
-            <option value="10:30">10:30 - 10:45</option>
-            <option value="10:45">10:45 - 11:00</option>
-            <option value="11:00">11:00 - 11:15</option>
-            <option value="11:15">11:15 - 11:30</option>
-            <option value="11:30">11:30 - 11:45</option>
-            <option value="11:45">11:45 - 12:00</option>
-            <option value="12:00">12:00 - 12:15</option>
-          </select>
-        </div>
-        <div class="filter-section">
-          <button id="clear-filters" class="clear-btn">
-            🗑️ Limpiar Filtros
-          </button>
-        </div>
-        <div class="filter-section">
-          <button id="download-excel" class="excel-btn">
-            📊 Descargar Excel
-          </button>
-        </div>
-      </div>
-
-      <div class="table-container">
-        <table class="matrix-table">
-          <thead>
-            <tr>
-              <th>☕ VENDEDOR</th>
-              <th>⏰ 08:30 - 08:45</th>
-              <th>⏰ 08:45 - 09:00</th>
-              <th>⏰ 09:00 - 09:15</th>
-              <th>⏰ 09:15 - 09:30</th>
-              <th>⏰ 09:30 - 09:45</th>
-              <th>⏰ 09:45 - 10:00</th>
-              <th
-                style="
-                  background: linear-gradient(135deg, #ff9800, #f57c00);
-                  color: white;
-                "
-              >
-                ☕ 10:00 - 10:15
-              </th>
-              <th>⏰ 10:15 - 10:30</th>
-              <th>⏰ 10:30 - 10:45</th>
-              <th>⏰ 10:45 - 11:00</th>
-              <th>⏰ 11:00 - 11:15</th>
-              <th>⏰ 11:15 - 11:30</th>
-              <th>⏰ 11:30 - 11:45</th>
-              <th>⏰ 11:45 - 12:00</th>
-              <th>⏰ 12:00 - 12:15</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="vendor-name">☕ CAFE ARTE</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">PROCOLOMBIA</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFE FINCA MI TERRON</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFE GRANEAO</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFE MIS TAITAS</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ AGUA VIVA</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">REGIONAL S.A.S</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">CAFÉ MOLINA</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">NEIRA YORK COFFEE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ ARENILLO</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ CAMPOHERMOSO</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">NEIRA YORK COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ ERMITAÑO</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ GRANADA</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ LA AVANZANTE</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">NEIRA YORK COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ MATILDE 1960</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">REGIONAL S.A.S</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ MURAL</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">NEIRA YORK COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ OASIS DE SAMDA</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ ORIGEN DE LA MONTAÑA</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">PROCOLOMBIA</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ TRADICIÓN NEIRA</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CAFÉ VALLE DE LIRIO</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">CAFÉ MOLINA</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">PROCOLOMBIA</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">REGIONAL S.A.S</span>
-              </td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">NEIRA YORK COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ CINCO DAMAS</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">NEIRA YORK COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ D'CLEO COFFEE</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">PROCOLOMBIA</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ DE SOL A SOL</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">CAFÉ MOLINA</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">NEIRA YORK COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ DELUXE COFFEE</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">REGIONAL S.A.S</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">CAFÉ MOLINA</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ DON HEBER CAFÉ</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">REGIONAL S.A.S</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ EL ORGASMO DE LOS SAINOS</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">CAFÉ MOLINA</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">REGIONAL S.A.S</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ FINCA EL CASCABEL</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ FINCA LA FEDERICA</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">REGIONAL S.A.S</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">CAFÉ MOLINA</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ FINCA LA RIVERA</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">PROCOLOMBIA</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">CAFÉ MOLINA</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">REGIONAL S.A.S</span>
-              </td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">NEIRA YORK COFFEE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ LA PATRONA</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ LADERAS DEL TAPIAS</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">PROCOLOMBIA</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ ROJO PASIÓN</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">REGIONAL S.A.S</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">CAFÉ MOLINA</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">NEIRA YORK COFFEE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ RUNA COFFEE</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">COLFRESH COFFEE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">CAFÉ MOLINA</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">NEIRA YORK COFFEE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ SANTA CRUZ DE LAS AGUAS</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">FLOR A FRUTO</span>
-              </td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ SIETE LEONES CAFÉ</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INMERSSO BOUTIQUE</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">
-                ☕ VILLA CLARA IMPORTACIONES Y EXPORTACIONES SAS
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">REGIONAL S.A.S</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">BOX BRAND</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">INTERLINK2AMERICAS</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ENCADENAMIENTOS PRODUCTIVOS...</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-            <tr>
-              <td class="vendor-name">☕ YELLOW TREE</td>
-              <td class="buyer-cell">
-                <span class="buyer-name">ARMANDO VELÁSQUEZ</span>
-              </td>
-              <td class="buyer-cell">
-                <span class="buyer-name">PROCOLOMBIA</span>
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td
-                class="buyer-cell"
-                style="
-                  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-                  color: #e65100;
-                  font-weight: bold;
-                  text-align: center;
-                "
-              >
-                ☕ Coffee break
-              </td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-              <td class="buyer-cell empty-cell">-</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
-
-    <script>
-      // Funcionalidad de Filtros para Vendedores
-      document.addEventListener("DOMContentLoaded", function () {
-        const vendorFilter = document.getElementById("vendor-filter");
-        const buyerFilter = document.getElementById("buyer-filter");
-        const timeFilter = document.getElementById("time-filter");
-        const clearButton = document.getElementById("clear-filters");
-        const excelButton = document.getElementById("download-excel");
-        const tableRows = document.querySelectorAll(".matrix-table tbody tr");
-        const tableHeaders = document.querySelectorAll(
-          ".matrix-table thead th"
-        );
-
-        function applyFilters() {
-          const vendorText = vendorFilter.value.toLowerCase().trim();
-          const buyerText = buyerFilter.value.toLowerCase().trim();
-          const timeValue = timeFilter.value;
-
-          // Ocultar/mostrar columnas basado en filtro de tiempo
-          tableHeaders.forEach((header, index) => {
-            if (index === 0) return; // Saltar primera columna (vendedores)
-
-            const shouldHideColumn =
-              timeValue && !header.textContent.includes(timeValue);
-
-            header.style.display = shouldHideColumn ? "none" : "";
-
-            // Ocultar/mostrar celdas correspondientes
-            tableRows.forEach((row) => {
-              const cells = row.querySelectorAll("td");
-              if (cells[index]) {
-                cells[index].style.display = shouldHideColumn ? "none" : "";
-              }
-            });
-          });
-
-          // Filtrar filas
-          tableRows.forEach((row) => {
-            const vendorCell = row.querySelector(".vendor-name");
-            const buyerCells = row.querySelectorAll(".buyer-name");
-
-            if (!vendorCell) return;
-
-            let showRow = true;
-
-            // Filtro de vendedor
-            if (vendorText) {
-              const vendorName = vendorCell.textContent.toLowerCase();
-              if (!vendorName.includes(vendorText)) {
-                showRow = false;
-              }
-            }
-
-            // Filtro de comprador
-            if (buyerText && showRow) {
-              let hasMatchingBuyer = false;
-              buyerCells.forEach((buyerCell) => {
-                if (buyerCell.textContent.toLowerCase().includes(buyerText)) {
-                  hasMatchingBuyer = true;
-                }
-              });
-              if (!hasMatchingBuyer) {
-                showRow = false;
-              }
-            }
-
-            // Aplicar visibilidad
-            if (showRow) {
-              row.classList.remove("hidden-row");
-            } else {
-              row.classList.add("hidden-row");
-            }
-          });
-
-          updateVisibleCount();
-        }
-
-        function updateVisibleCount() {
-          const visibleRows = document.querySelectorAll(
-            ".matrix-table tbody tr:not(.hidden-row)"
-          );
-          console.log(
-            `Mostrando ${visibleRows.length} de ${tableRows.length} vendedores`
-          );
-        }
-
-        function clearFilters() {
-          vendorFilter.value = "";
-          buyerFilter.value = "";
-          timeFilter.value = "";
-
-          // Mostrar todas las filas
-          tableRows.forEach((row) => {
-            row.classList.remove("hidden-row");
-          });
-
-          // Mostrar todas las columnas
-          tableHeaders.forEach((header) => {
-            header.style.display = "";
-          });
-
-          tableRows.forEach((row) => {
-            const cells = row.querySelectorAll("td");
-            cells.forEach((cell) => {
-              cell.style.display = "";
-            });
-          });
-
-          updateVisibleCount();
-        }
-
-        function downloadExcel() {
-          // Crear workbook
-          const wb = XLSX.utils.book_new();
-
-          // Obtener datos de la tabla
-          const table = document.querySelector(".matrix-table");
-          const ws = XLSX.utils.table_to_sheet(table);
-
-          // Configurar el nombre de la hoja
-          XLSX.utils.book_append_sheet(wb, ws, "Matriz Vendedores-Horarios");
-
-          // Generar nombre del archivo con fecha
-          const now = new Date();
-          const fileName = `Matriz_Vendedores_Horarios_${now.getFullYear()}-${(
-            now.getMonth() + 1
-          )
-            .toString()
-            .padStart(2, "0")}-${now
-            .getDate()
-            .toString()
-            .padStart(2, "0")}.xlsx`;
-
-          // Descargar archivo
-          XLSX.writeFile(wb, fileName);
-        }
-
-        // Event listeners
-        vendorFilter.addEventListener("input", applyFilters);
-        buyerFilter.addEventListener("input", applyFilters);
-        timeFilter.addEventListener("change", applyFilters);
-        clearButton.addEventListener("click", clearFilters);
-        excelButton.addEventListener("click", downloadExcel);
-
-        // Aplicar filtros iniciales
-        updateVisibleCount();
-      });
-    </script>
-  </body>
+</body>
 </html>
