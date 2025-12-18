@@ -259,6 +259,10 @@
     ],
     "10:30 - 10:45": [
       {
+        "comprador": "ARMANDO VELÁSQUEZ",
+        "vendedores": ["ABBA CAFÉ"]
+      },
+      {
         "comprador": "INTERLINK2AMERICAS",
         "vendedores": ["FINCA LA RIVERA", "LADERAS DEL TAPIAS"]
       },
@@ -322,7 +326,7 @@
       },
       {
         "comprador": "BOX BRAND",
-        "vendedores": ["FINCA EL CASCABEL"]
+        "vendedores": ["FINCA EL CASCABEL", "ABBA CAFÉ"]
       },
       {
         "comprador": "NEIRA YORK COFFEE",
@@ -348,7 +352,7 @@
       },
       {
         "comprador": "INTERLINK2AMERICAS",
-        "vendedores": ["FINCA LA FEDERICA"]
+        "vendedores": ["FINCA LA FEDERICA", "ABBA CAFÉ"]
       },
       {
         "comprador": "NEIRA YORK COFFEE",
